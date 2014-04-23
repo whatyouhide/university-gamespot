@@ -1,0 +1,7 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+# Redirect every URL in the form of:
+#   /a-controller/an_action.php
+# to index.php, passing "a-controller" and "an_action".
+RewriteRule ^(.*?)/?([a-zA-Z0-9_\-]*?\.php)?$ index.php?controller=$1&action=$2 [QSA]

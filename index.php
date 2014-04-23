@@ -1,7 +1,6 @@
 <?php
-include 'app/setup.php';
+$controller = $_GET['controller'];
+$action = empty($_GET['action']) ? 'index.php' : $_GET['action'];
 
-$smarty = new GamespotSmarty();
-
-$smarty->display('index.tpl');
+include 'app/controllers/' . $controller . '/' . $action;
 ?>
