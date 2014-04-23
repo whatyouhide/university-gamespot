@@ -1,6 +1,4 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/gamespot/app/setup.php';
-
 $smarty = new GamespotSmarty();
 $db = new DB();
 
