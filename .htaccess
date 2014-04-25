@@ -4,4 +4,6 @@ RewriteEngine On
 # Redirect every URL in the form of:
 #   /a-controller/an_action.php
 # to index.php, passing "a-controller" and "an_action".
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*?)/?([a-zA-Z0-9_\-]*?\.php)?$ index.php?controller=$1&action=$2 [QSA]
