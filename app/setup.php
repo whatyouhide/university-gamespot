@@ -15,8 +15,13 @@ include ROOT . '/app/model.class.php';
 // Include some utility functions.
 include ROOT . '/app/functions.php';
 
-// Include all the models.
-foreach (glob(ROOT . '/app/models/*') as $filename) {
+
+// Include all the models and the controllers.
+$files_to_include = array_merge(
+  glob(ROOT . '/app/models/*'),
+  glob(ROOT . '/app/controllers/*')
+);
+foreach ($files_to_include as $filename) {
   include $filename;
 }
 ?>
