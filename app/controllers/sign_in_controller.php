@@ -7,14 +7,7 @@ class SignInController {
     $this->wrong_password = false;
   }
 
-  public function init() {
-    // If the user has just visited this page (a GET request), render it and
-    // exit.
-    if (empty($_POST)) {
-      $this->render();
-      return;
-    }
-
+  public function post() {
     $matching_users = User::where_attribute_is('email', $_POST['email']);
 
     // Wrong email: if there's no user with the given email, render (with
@@ -40,16 +33,16 @@ class SignInController {
     }
   }
 
+  public function index() {
+    $this->render();
+  }
+
   // Render the Smarty template.
   private function render() {
     $this->smarty->assign( 'email_not_found', $this->email_not_found );
     $this->smarty->assign( 'wrong_password', $this->wrong_password );
 
-    $this->smarty->display( 'sign-in/index.tpl' );
+    $this->smarty->display( 'sign_in/index.tpl' );
   }
 }
-
-// Start up the controller.
-$controller = new SignInController();
-$controller->init();
 ?>

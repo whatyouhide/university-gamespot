@@ -14,7 +14,7 @@
       <div class="wrong-password">Wrong password.</div>
     {/if}
 
-    <form action="{$site_root}/sign-in" method="POST">
+    <form action="{$site_root}/sign_in/post" method="POST">
       <div class="field-set">
         <label for="email">Email</label>
         <input name="email" type="email" placeholder="john.doe@example.com">
