@@ -11,6 +11,8 @@ session_start();
 include ROOT . '/app/gamespot-smarty.class.php';
 include ROOT . '/app/db.class.php';
 include ROOT . '/app/model.class.php';
+include ROOT . '/app/controller.class.php';
+
 
 // Include some utility functions.
 include ROOT . '/app/functions.php';
