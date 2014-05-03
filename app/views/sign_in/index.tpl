@@ -8,10 +8,8 @@
 
   <div id="form-container">
 
-    {if $email_not_found}
-      <div class="email-not-found">Sorry, email not found.</div>
-    {elseif $wrong_password}
-      <div class="wrong-password">Wrong password.</div>
+    {if $sign_in_error}
+      <div class="sign-in-error error">Wrong email or password.</div>
     {/if}
 
     <form action="{$site_root}/sign_in/post" method="POST">

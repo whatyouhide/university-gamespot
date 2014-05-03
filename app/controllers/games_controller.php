@@ -1,5 +1,5 @@
 <?php
-class GamesController {
+class GamesController extends Controller {
 
   public function index() {
     $smarty = new GamespotSmarty();
