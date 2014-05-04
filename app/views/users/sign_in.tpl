@@ -12,7 +12,7 @@
       <div class="sign-in-error error">Wrong email or password.</div>
     {/if}
 
-    <form action="{$site_root}/sign_in/post" method="POST">
+    <form action="{$site_root}/users/sign_in" method="POST">
       <div class="field-set">
         <label for="email">Email</label>
         <input name="email" type="email" placeholder="john.doe@example.com">

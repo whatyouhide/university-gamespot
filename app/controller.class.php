@@ -25,6 +25,9 @@ class Controller {
 
     // Render the smarty template.
     $this->smarty->display($template);
+
+    // Kill the script. Rendering is the last thing you want to do anyway.
+    die();
   }
 }
 ?>
