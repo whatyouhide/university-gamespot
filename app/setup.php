@@ -19,7 +19,9 @@ include ROOT . '/app/functions.php';
 
 
 // Include all the models and the controllers.
+// Also include all the Smarty helpers.
 $files_to_include = array_merge(
+  glob(ROOT . '/app/helpers/*'),
   glob(ROOT . '/app/models/*'),
   glob(ROOT . '/app/controllers/*')
 );

@@ -2,8 +2,7 @@
 
 {block name=container}
 
+{include file='partials/main-header.tpl'}
 {include file='partials/main-nav.tpl'}
-
-<h1>Gamespot</h1>
 
 {/block}

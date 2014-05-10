@@ -10,7 +10,7 @@ class DB {
   // Create a new object and set its `connection` property by creating a new
   // mysqli instance which is connected to te MySQL db.
   function __construct() {
-    $this->connection = new mysqli( 'localhost', 'root', 'root', 'gamespot', 8889 );
+    $this->connection = new mysqli( 'localhost', 'root', 'root', 'gamespot', 3306 );
     $error = $this->connection->error;
     if ( $error ) {
       throw new Exception("Unable to connect to the db ({$db->connection->errno}): {$error}");
