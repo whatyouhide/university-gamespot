@@ -4,6 +4,7 @@ class Controller {
   // instance).
   function __construct() {
     $this->smarty = new GamespotSmarty();
+    $this->smarty->assign('globals', $GLOBALS);
     $this->db = new DB();
   }
 
@@ -11,7 +12,7 @@ class Controller {
   // conventionally is inside a directory named after the controller.
   // `$template` refers to a Smarty template. If `$template` doesn't end with
   // '.tpl', add it to the name.
-  public function render($template, $assigns) {
+  public function render($template, $assigns = array()) {
     // Assign stuff to Smarty variables.
     foreach ($assigns as $key => $val) {
       $this->smarty->assign($key, $val);

@@ -17,6 +17,8 @@ class GamespotSmarty extends Smarty {
     $this->assign('controllers', SITE_ROOT . '/app/controllers');
 
     $this->assign('uploads', SITE_ROOT . '/public/uploads');
+
+    $this->assign('globals', $GLOBALS);
   }
 }
 ?>

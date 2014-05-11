@@ -32,6 +32,17 @@ class UsersController extends Controller {
     }
   }
 
+  // GET /users/profile
+  // Displays the user profile if a user is logged in, otherwise it redirects to
+  // the home page.
+  public function profile() {
+    if (is_signed_in()) {
+      $this->render('users/profile');
+    } else {
+      redirect('/');
+    }
+  }
+
 
 
   // Private methods
@@ -75,7 +86,7 @@ class UsersController extends Controller {
 
   // Display the sign up form.
   private function sign_up_get() {
-    $this->render('users/sign_up', array());
+    $this->render('users/sign_up');
   }
 
   // Sign up the user and redirect to /users/signed_up.
@@ -88,7 +99,7 @@ class UsersController extends Controller {
     ));
 
     // Render the confirmation page (successfully signed up).
-    $this->render('users/signed_up', array());
+    $this->render('users/signed_up');
   }
 
 }

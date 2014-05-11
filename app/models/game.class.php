@@ -1,5 +1,9 @@
 <?php
 class Game extends Model {
+  public static function all() {
+    return parent::all_the_records('games');
+  }
+
   public static function recently_added($limit = 5) {
     $tbl = self::$table_name;
     $q = "SELECT * FROM `games` ORDER BY `added_at` DESC LIMIT $limit";

@@ -3,6 +3,11 @@ class Model {
   static $db;
   static $table_name;
 
+  // Find all the records (with all the attributes) for this model.
+  public static function all_the_records($table_name) {
+    return self::$db->get_rows("SELECT * FROM `" . $table_name . "`");
+  }
+
   // Find a record given a column name. The column name is assumed to be unique,
   // so the first record is returned (or null if no records were found).
   public static function find_unique($table_name, $attr, $val) {
