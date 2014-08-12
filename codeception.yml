@@ -10,10 +10,10 @@ settings:
   memory_limit: 1024M
   log: true
 modules:
-  enabled: [PhpBrowser]
+  enabled: [PhpBrowser Db]
   config:
     Db:
-      dsn: 'localhost:8889'
+      dsn: 'mysql:host=localhost;port=8889;dbname=gamespot'
       user: 'root'
       password: 'root'
       dump: db/development.sql

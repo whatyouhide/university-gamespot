@@ -93,7 +93,7 @@ class UsersController extends Controller {
   private function sign_up_post() {
     User::create(array(
       'email' => $_POST['email'],
-      'hashed_password' => md5($_POST['password']),
+      'hashed_password' => $_POST['password'],
       'first_name' => $_POST['first_name'],
       'last_name' => $_POST['last_name']
     ));

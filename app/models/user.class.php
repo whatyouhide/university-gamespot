@@ -13,6 +13,8 @@ class User extends Model {
 
   // Create a new user with the given `$attributes`.
   public static function create($attributes) {
+    $attributes['hashed_password'] = md5($attributes['password']);
+    unset($attributes['password']);
     parent::create_record(self::$table_name, $attributes);
   }
 }
