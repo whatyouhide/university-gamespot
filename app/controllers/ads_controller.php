@@ -1,5 +1,24 @@
 <?php
 class AdsController extends Controller {
+  // GET /ads
+  // List all the ads on the website.
+  public function index() {
+    $ads = Ad::all();
+    $this->render('ads/index', array('ads' => $ads));
+  }
+
+  // GET /ads/show?id=1
+  // Show a single ad.
+  public function show() {
+    $ad = Ad::find_by_id($_GET['id']);
+
+    if ($ad) {
+      $this->render('ads/show', array('ad' => $ad));
+    } else {
+      $this->render_error(404);
+    }
+  }
+
   // GET /ads/nuevo
   // Display the form which creates a new ad.
   public function nuevo() {
@@ -46,7 +65,7 @@ class AdsController extends Controller {
 
     Ad::$db->query($type_related_query);
 
-    redirect_with_data('/users/profile', array('flash_message' => 'Ad created'));
+    redirect_with_data('/users/profile', array('flash_ok' => 'Ad created'));
   }
 }
 ?>

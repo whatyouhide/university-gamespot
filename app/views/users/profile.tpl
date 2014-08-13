@@ -2,7 +2,7 @@
 
 {block name=container}
 
-<div class="flash">{$smarty.get.flash_message}</div>
+<div class="flash">{$smarty.get.flash_ok}</div>
 
 <h1 class="welcome">Welcome {$smarty.session.user.first_name}</h1>
 

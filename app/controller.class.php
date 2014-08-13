@@ -27,8 +27,14 @@ class Controller {
     // Render the smarty template.
     $this->smarty->display($template);
 
-    // Kill the script. Rendering is the last thing you want to do anyway.
+    // Kill the script. Rendering is the last thing you want to do.
     die();
+  }
+
+  // Render an error page (404.tpl, 500.tpl and so on).
+  public function render_error($error_no) {
+    http_response_code($error_no);
+    $this->render('errors/' . $error_no);
   }
 }
 ?>
