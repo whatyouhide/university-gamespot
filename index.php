@@ -2,26 +2,47 @@
 // Include the necessary setup for the application.
 include 'app/setup.php';
 
+// Handle internal server errors.
+register_shutdown_function('error_handler');
+function error_handler() {
+  // An array of errors which need to be handled with a 500 Internal Server
+  // Error.
+  $fatalErrors = array(
+    E_ERROR,
+    E_PARSE,
+    E_CORE_ERROR,
+    E_COMPILE_ERROR,
+    E_USER_ERROR
+  );
+
+  // Render a 500 Internal Server Error page if the last error type is a fatal
+  // one.
+  $error = error_get_last();
+  if ($error && in_array($error['type'], $fatalErrors)) {
+    (new Controller)->render_error(500);
+  }
+}
+
 
 // Retrieve the controller and the action (default to index) from $_GET, which
 // is itself set by .htaccess.
 // The controller name and the action have the form:
 //   some_controller/some_action      # the action is 'some_action'
 //   some_controller/                 # defaults to the 'index' action
-$controller_name = empty($_GET['controller']) ? 'application' : $_GET['controller'];
+$controllerName = empty($_GET['controller']) ? 'application' : $_GET['controller'];
 $action = empty($_GET['action']) ? 'index' : $_GET['action'];
 
 
-// Convert the `$controller_name` into an actual class name. Practically,
+// Convert the `$controllerName` into an actual class name. Practically,
 // remove underscores and make it CamelCase, then add the 'Controller' word at
 // the end.
-$controller_class = str_replace('_', ' ', $controller_name);
-$controller_class = ucwords($controller_class);
-$controller_class = str_replace(' ', '', $controller_class);
-$controller_class = $controller_class . 'Controller';
+$controllerClass = str_replace('_', ' ', $controllerName);
+$controllerClass = ucwords($controllerClass);
+$controllerClass = str_replace(' ', '', $controllerClass);
+$controllerClass = $controllerClass . 'Controller';
 
 
 // Create the controller and call the provided action on it.
-$controller = new $controller_class;
+$controller = new $controllerClass;
 $controller->$action();
 ?>

@@ -1,23 +1,24 @@
 <?php
 class Game extends Model {
+  // Fetch all the records.
   public static function all() {
     return parent::all_the_records('games');
   }
 
+  // Fetch the most recently added games.
   public static function recently_added($limit = 5) {
-    $tbl = self::$table_name;
     $q = "SELECT * FROM `games` ORDER BY `added_at` DESC LIMIT $limit";
     return self::$db->get_rows($q);
   }
 
+  // Fetch the most recently released games.
   public static function newest($limit = 5) {
-    $tbl = self::$table_name;
     $q = "SELECT * FROM `games` ORDER BY `release_date` DESC LIMIT $limit";
     return self::$db->get_rows($q);
   }
 
+  // Fetch the games with most ads.
   public static function with_most_ads($limit = 5) {
-    $tbl = self::$table_name;
     $q = "SELECT
       `ads`.`id` AS `ad_id`, `games`.*,
       COUNT(*) `number_of_ads`

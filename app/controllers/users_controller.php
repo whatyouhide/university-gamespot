@@ -43,15 +43,11 @@ class UsersController extends Controller {
     }
   }
 
-
-
   // Private methods
 
   // Display the sign in form.
   private function sign_in_get() {
-    $this->render('users/sign_in', array(
-      'sign_in_error' => false
-    ));
+    $this->render('users/sign_in', array('sign_in_error' => false));
   }
 
   // Actually sign in the user.
@@ -65,23 +61,18 @@ class UsersController extends Controller {
 
     // No user with the given email: render the sign-in form with an error.
     if (!$user) {
-      $this->render('users/sign_in', array(
-        'sign_in_error' => true
-      ));
+      $this->render('users/sign_in', ['sign_in_error' => true]);
     }
 
     // Check if the password is correct: if it is, store the user's infos in the
     // $_SESSION array and redirect to the homepage; if it isn't, re-render this
     // template with error infos.
-    if (md5($_POST['password']) == $user['hashed_password']) {
-      $_SESSION['user'] = $user;
+    if (User::hash_password($_POST['password']) == $user['hashed_password']) {
+      Session::store_user($user);
       redirect('/');
     } else {
-      $this->render('users/sign_in', array(
-        'sign_in_error' => true
-      ));
+      $this->render('users/sign_in', ['sign_in_error' => true]);
     }
-
   }
 
   // Display the sign up form.
@@ -93,7 +84,7 @@ class UsersController extends Controller {
   private function sign_up_post() {
     User::create(array(
       'email' => $_POST['email'],
-      'hashed_password' => $_POST['password'],
+      'password' => $_POST['password'],
       'first_name' => $_POST['first_name'],
       'last_name' => $_POST['last_name']
     ));
@@ -101,6 +92,5 @@ class UsersController extends Controller {
     // Render the confirmation page (successfully signed up).
     $this->render('users/signed_up');
   }
-
 }
 ?>

@@ -1,15 +1,18 @@
 <?php
 // Redirect to a page in the site, relative to SITE_ROOT.
 // For example, to redirect to 'SITE_ROOT/games', just redirect('/games').
-function redirect($location) {
+function redirect($location, $data = null) {
+  if ($data) {
+    $location .= '?' . http_build_query($data);
+  }
+
   header("Location: " . SITE_ROOT . $location);
   die();
 }
 
 // Redirect to a page passing some data in the GET request.
 function redirect_with_data($location, $data) {
-  $new_url = $location . '?' . http_build_query($data);
-  redirect($new_url);
+  redirect($location, $data);
 }
 
 

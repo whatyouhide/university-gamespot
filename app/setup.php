@@ -12,6 +12,7 @@ include ROOT . '/app/gamespot-smarty.class.php';
 include ROOT . '/app/db.class.php';
 include ROOT . '/app/model.class.php';
 include ROOT . '/app/controller.class.php';
+include ROOT . '/app/session.class.php';
 
 
 // Include some utility functions.

@@ -6,6 +6,7 @@
   <header>
     <h1>
       <a href="{$site_root}/games/show?name={$ad.game.name}">{$ad.game.name}</a>
+      <img src="{$uploads}/{$ad.game.cover_image}">
     </h1>
     <div class="price">{$ad.price}€</div>
     <div class="city">{$ad.city}</div>

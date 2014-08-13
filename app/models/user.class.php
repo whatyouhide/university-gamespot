@@ -13,9 +13,14 @@ class User extends Model {
 
   // Create a new user with the given `$attributes`.
   public static function create($attributes) {
-    $attributes['hashed_password'] = md5($attributes['password']);
+    $attributes['hashed_password'] = self::hash_password($attributes['password']);
     unset($attributes['password']);
     parent::create_record(self::$table_name, $attributes);
+  }
+
+  // Hash a password.
+  public static function hash_password($password) {
+    return md5($password);
   }
 }
 
