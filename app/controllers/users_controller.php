@@ -4,7 +4,6 @@ class UsersController extends Controller {
   // POST /users/sign_in
   // This action will be redirected to the appropriate private method based on
   // the type of the current request being POST or GET.
-  // Render the sign in form.
   public function sign_in() {
     if (is_post_request()) {
       $this->sign_in_post();
@@ -17,7 +16,7 @@ class UsersController extends Controller {
   // Remove the 'user' field from the session and redirect to the home page.
   public function sign_out() {
     unset($_SESSION['user']);
-    redirect('/');
+    redirect('/', ['notice' => 'Signed out successfully.']);
   }
 
   // GET /users/sign_up
@@ -39,7 +38,7 @@ class UsersController extends Controller {
     if (is_signed_in()) {
       $this->render('users/profile');
     } else {
-      redirect('/');
+      redirect('/', ['error' => 'You need to be logged in.']);
     }
   }
 

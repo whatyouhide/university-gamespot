@@ -65,7 +65,7 @@ class AdsController extends Controller {
 
     Ad::$db->query($type_related_query);
 
-    redirect_with_data('/users/profile', array('flash_ok' => 'Ad created'));
+    redirect('/users/profile', ['notice' => 'Ad created successfully.']);
   }
 }
 ?>

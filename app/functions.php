@@ -1,18 +1,18 @@
 <?php
 // Redirect to a page in the site, relative to SITE_ROOT.
 // For example, to redirect to 'SITE_ROOT/games', just redirect('/games').
-function redirect($location, $data = null) {
-  if ($data) {
-    $location .= '?' . http_build_query($data);
+function redirect($location, $flash_messages = array(), $data = null) {
+  // Append the data to the url (if present).
+  if ($data) $location .= '?' . http_build_query($data);
+
+  // Store flash messages in the session.
+  foreach ($flash_messages as $type => $msg) {
+    $_SESSION['flash'][$type] = $msg;
   }
 
+  // Actual redirect.
   header("Location: " . SITE_ROOT . $location);
   die();
-}
-
-// Redirect to a page passing some data in the GET request.
-function redirect_with_data($location, $data) {
-  redirect($location, $data);
 }
 
 
