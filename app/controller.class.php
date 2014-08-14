@@ -1,35 +1,28 @@
 <?php
 class Controller {
-  // Set up some common instance variables (like a Smarty instance and a DB
-  // instance).
   function __construct() {
     // Setup some instance variables.
-    $this->smarty = new GamespotSmarty();
-    $this->db = new DB();
-    $this->request = new Request();
+    $this->smarty = new GamespotSmarty;
+    $this->db = new DB;
+    $this->request = new Request;
+    $this->mailer = new Mailer;
 
     // Just a proxy to access the current request params.
     $this->params = $this->request->params;
 
-    if (Session::user()) {
-      $this->current_user = Session::user();
-      $this->smarty->assign('current_user', $this->current_user);
-    }
+    // Setup the current user.
+    $this->setup_current_user();
   }
 
   // Render the Smarty template asosciated with a given `$template` (which
   // conventionally is inside a directory named after the controller.
   // `$template` refers to a Smarty template.
+  // If `$template` doesn't end with '.tpl', GamespotSmarty will take care of
+  // that.
   public function render($template, $assigns = array()) {
-    // Assign stuff to Smarty variables.
-    foreach ($assigns as $key => $val) {
-      $this->smarty->assign($key, $val);
-    }
-
+    $this->smarty->mass_assign($assigns);
     $this->setup_and_clean_flash();
-
-    // Render the smarty template.
-    $this->displayTemplate($template);
+    $this->smarty->display($template);
 
     // Kill the script. Rendering is the last thing you want to do.
     die();
@@ -49,21 +42,13 @@ class Controller {
     $_SESSION['flash'] = array();
   }
 
-  // Add a .tpl extension to a template name if needed.
-  private function with_tpl_extension($template_name) {
-    // Prefix the template (like 'controller/template') with a trailing
-    // extension ('.tpl') if it doesn't have one.
-    if (!preg_match('/\.tpl$/', $template_name)) {
-      $template_name .= '.tpl';
-    }
+  // Setup the `current_user` instance variable and make it available to
+  // Smarty if the user is present.
+  private function setup_current_user() {
+    if (!Session::user()) return;
 
-    return $template_name;
-  }
-
-  // Display a Smarty template. If `$template` doesn't end with '.tpl', add it
-  // to the name.
-  private function displayTemplate($template) {
-    $this->smarty->display($this->with_tpl_extension($template));
+    $this->current_user = Session::user();
+    $this->smarty->assign('current_user', $this->current_user);
   }
 }
 ?>
