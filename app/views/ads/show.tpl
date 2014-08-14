@@ -15,4 +15,17 @@
   <section class="description">{$ad.description}</section>
 </div>
 
+<section class="contact">
+  <h1>Send a message to the seller</h1>
+
+  <form action="{$site_root}/ads/contact" method="POST">
+    {if !$current_user}
+      <input type="name" placeholder="Your name">
+      <input type="email" placeholder="Your email">
+    {/if}
+
+    <textarea name="message" placeholder="Your message goes here."></textarea>
+  </form>
+</section>
+
 {/block}

@@ -67,7 +67,7 @@ class UsersController extends Controller {
     // $_SESSION array and redirect to the homepage; if it isn't, re-render this
     // template with error infos.
     if (User::hash_password($_POST['password']) == $user['hashed_password']) {
-      Session::store_user($user);
+      Session::user($user);
       redirect('/');
     } else {
       $this->render('users/sign_in', ['sign_in_error' => true]);

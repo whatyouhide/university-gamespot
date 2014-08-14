@@ -1,8 +1,12 @@
 <?php
 class Session {
   // Store a user in the 'user' session key.
-  public static function store_user($user) {
-    $_SESSION['user'] = $user;
+  public static function user($user = null) {
+    if ($user) {
+      $_SESSION['user'] = $user;
+    }
+
+    return $_SESSION['user'];
   }
 
   // Add/set a flash message.

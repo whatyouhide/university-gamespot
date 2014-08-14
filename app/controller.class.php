@@ -3,9 +3,18 @@ class Controller {
   // Set up some common instance variables (like a Smarty instance and a DB
   // instance).
   function __construct() {
+    // Setup some instance variables.
     $this->smarty = new GamespotSmarty();
-    $this->smarty->assign('globals', $GLOBALS);
     $this->db = new DB();
+    $this->request = new Request();
+
+    // Just a proxy to access the current request params.
+    $this->params = $this->request->params;
+
+    if (Session::user()) {
+      $this->current_user = Session::user();
+      $this->smarty->assign('current_user', $this->current_user);
+    }
   }
 
   // Render the Smarty template asosciated with a given `$template` (which

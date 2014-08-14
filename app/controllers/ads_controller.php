@@ -10,7 +10,7 @@ class AdsController extends Controller {
   // GET /ads/show?id=1
   // Show a single ad.
   public function show() {
-    $ad = Ad::find_by_id($_GET['id']);
+    $ad = Ad::find_by_id($this->params['id']);
 
     if ($ad) {
       $this->render('ads/show', array('ad' => $ad));
@@ -47,15 +47,15 @@ class AdsController extends Controller {
   // Create a new ad record in the db and then redirects to the user's profile.
   public function create() {
     Ad::create(array(
-      'user_email' => $_SESSION['user']['email'],
+      'user_email' => $this->current_user['email'],
       'created_at' => mysql_timestamp(),
-      'price' => $_POST['price'],
-      'description' => $_POST['description'],
-      'city' => $_POST['city'],
-      'console_name' => $_POST['console_name']
+      'price' => $this->params['price'],
+      'description' => $this->params['description'],
+      'city' => $this->params['city'],
+      'console_name' => $this->params['console_name']
     ));
 
-    $type = $_POST['ad_type'];
+    $type = $this->params['ad_type'];
     $last_insert_id = Ad::$db->last_insert_id();
 
     $type_related_query = "INSERT
@@ -66,6 +66,15 @@ class AdsController extends Controller {
     Ad::$db->query($type_related_query);
 
     redirect('/users/profile', ['notice' => 'Ad created successfully.']);
+  }
+
+  // POST /ads/contact
+  // Contact the owner of the ad.
+  public function contact() {
+    $sender_email = $this->current_user ?
+      $this->current_user['email'] : $this->params['email'];
+
+    // TODO Fix this after setting up PHPMailer.
   }
 }
 ?>
