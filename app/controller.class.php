@@ -20,9 +20,9 @@ class Controller {
   // If `$template` doesn't end with '.tpl', GamespotSmarty will take care of
   // that.
   public function render($template, $assigns = array()) {
-    $this->smarty->mass_assign($assigns);
     $this->setup_and_clean_flash();
-    $this->smarty->display($template);
+    $this->smarty->mass_assign($assigns);
+    $this->smarty->render($template);
 
     // Kill the script. Rendering is the last thing you want to do.
     die();
@@ -34,11 +34,12 @@ class Controller {
     $this->render('errors/' . $error_no);
   }
 
-  // Private functions
+  // Private methods
 
   // Assign flash variables to smarty and clean the session.
   private function setup_and_clean_flash() {
     $this->smarty->assign('flash', $_SESSION['flash']);
+    // Clean the flash.
     $_SESSION['flash'] = array();
   }
 

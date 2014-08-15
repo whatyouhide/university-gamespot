@@ -69,12 +69,43 @@ class AdsController extends Controller {
   }
 
   // POST /ads/contact
-  // Contact the owner of the ad.
+  // Contact the owner of the ad (via email) and redirect to the ad's page.
   public function contact() {
-    $sender_email = $this->current_user ?
-      $this->current_user['email'] : $this->params['email'];
+    // Retrieve the ad from the params.
+    $ad = Ad::find_by_id($this->params['ad_id']);
 
-    // TODO Fix this after setting up PHPMailer.
+    // Send the email.
+    $this->mailer->send([
+      'from' => $this->email_for_contact(),
+      'from_name' => $this->name_for_contact(),
+      'to' => $ad['user_email'],
+      'subject' => 'Someone from gamespot.com contacted you',
+      'body' => $this->params['message']
+    ]);
+
+    // Redirect back to the ads page.
+    $flash = $this->mailer->sent_successfully ?
+      ['notice' => 'Sent successfully.'] : ['error' => 'There was an error'];
+
+    redirect( "/ads/show?id={$ad['id']}", $flash);
+  }
+
+  // Retrieve the sender's name from the form or the current logged in user.
+  private function name_for_contact() {
+    if ($this->current_user) {
+      return $this->current_user['first_name'] . $this->current_user['last_name'];
+    } else {
+      return $this->params['name'];
+    }
+  }
+
+  // Retrieve the sender's email from the form or the current logged in user.
+  private function email_for_contact() {
+    if ($this->current_user) {
+      return $this->current_user['email'];
+    } else {
+      return $this->params['sender_email'];
+    }
   }
 }
 ?>

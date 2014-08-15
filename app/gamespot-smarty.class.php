@@ -17,12 +17,8 @@ class GamespotSmarty extends Smarty {
 
   // Override the `display` function so that it adds '.tpl' at the end of the
   // template name if it's not already there.
-  public function display($template, $cache_id, $compile_id) {
-    parent::display(
-      $this->with_tpl_extension($template),
-      $cache_id,
-      $compile_id
-    );
+  public function render($template) {
+    parent::display($this->with_tpl_extension($template));
   }
 
   // Private methods
