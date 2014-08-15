@@ -84,7 +84,7 @@ class AdsController extends Controller {
     ]);
 
     // Redirect back to the ads page.
-    $flash = $this->mailer->sent_successfully ?
+    $flash = $this->mailer->sent_successfully() ?
       ['notice' => 'Sent successfully.'] : ['error' => 'There was an error'];
 
     redirect( "/ads/show?id={$ad['id']}", $flash);

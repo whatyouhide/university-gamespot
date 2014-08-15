@@ -26,7 +26,7 @@ class Mailer {
 
   // Return true if the last email was sent successfully.
   public function sent_successfully() {
-    return $sent_successfully;
+    return $this->sent_successfully;
   }
 
   // Private methods

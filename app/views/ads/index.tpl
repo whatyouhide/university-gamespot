@@ -1,6 +1,6 @@
-{extends 'skeleton.tpl'}
+{extends 'frontend.tpl'}
 
-{block name=container}
+{block name=content}
 
 <div class="ads-listing">
   {foreach from=$ads item=ad}

@@ -1,6 +1,6 @@
-{extends 'skeleton.tpl'}
+{extends 'frontend.tpl'}
 
-{block name=container}
+{block name=content}
 <form action="{$site_root}/ads/create" method="POST">
   <div class="field">
     <label for="city">City</label>
