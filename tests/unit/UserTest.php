@@ -29,6 +29,6 @@ class UserTest extends \Codeception\TestCase\Test {
     $this->codeGuy->seeInDatabase('users', array('email' => $email));
 
     $user = User::find($email);
-    $this->assertEquals($user['hashed_password'], md5($pass));
+    $this->assertEquals($user->hashed_password, md5($pass));
   }
 }

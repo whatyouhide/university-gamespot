@@ -40,8 +40,8 @@ class ModelTest extends \Codeception\TestCase\Test {
     ]);
 
     $user = User::find($email);
-    $this->assertEquals($user['email'], $email);
-    $this->assertEquals($user['first_name'], 'A');
+    $this->assertEquals($user->email, $email);
+    $this->assertEquals($user->first_name, 'A');
   }
 
   private function create_user_called($first_name = 'a', $last_name = 'b') {
