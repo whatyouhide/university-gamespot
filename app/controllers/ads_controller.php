@@ -10,7 +10,7 @@ class AdsController extends Controller {
   // GET /ads/show?id=1
   // Show a single ad.
   public function show() {
-    $ad = Ad::find_by_id($this->params['id']);
+    $ad = Ad::find($this->params['id']);
 
     if ($ad) {
       $this->render('ads/show', array('ad' => $ad));
@@ -72,7 +72,7 @@ class AdsController extends Controller {
   // Contact the owner of the ad (via email) and redirect to the ad's page.
   public function contact() {
     // Retrieve the ad from the params.
-    $ad = Ad::find_by_id($this->params['ad_id']);
+    $ad = Ad::find($this->params['ad_id']);
 
     // Send the email.
     $this->mailer->send([

@@ -1,31 +1,59 @@
 <?php
 class Model {
-  static $db;
-  static $table_name;
+  public static $db;
+  protected static $table_name;
+  protected static $key_column;
 
-  // Find all the records (with all the attributes) for this model.
-  public static function all_the_records($table_name) {
-    return self::$db->get_rows("SELECT * FROM `" . $table_name . "`");
+  /**
+   * Return all the records for the current model.
+   * @return array An array of records.
+   */
+  public static function all() {
+    $t = static::$table_name;
+    return static::$db->get_rows("SELECT * FROM `$t`");
   }
 
-  // Find a record given a column name. The column name is assumed to be unique,
-  // so the first record is returned (or null if no records were found).
-  public static function find_unique($table_name, $attr, $val) {
-    $q = "SELECT * FROM `" . $table_name .  "` WHERE `$attr` = '$val'";
-    $result = self::$db->get_rows($q);
+  /**
+   * Find a record based on the value of its key column (which is unique).
+   * @param string|int $key_attribute The value of the key attribute (usually an
+   *        id)
+   * @return null|array The searched record if present, otherwise null.
+   */
+  public static function find($key_attribute) {
+    $records = self::where([static::$key_column => $key_attribute]);
 
-    // Return null or the first match.
-    if (empty($result)) {
+    if (empty($records)) {
       return null;
     } else {
-      return $result[0];
+      return $records[0];
     }
   }
 
-  // Find all the records in a given table where `$attr` is equal to `$val`.
-  public static function find_in_table_by_attribute($table_name, $attr, $val) {
-    $q = "SELECT * FROM `" . $table_name .  "` WHERE `$attr` = '$val'";
-    return self::$db->get_rows($q);
+  /**
+   * Find a set of records that match a set of attributes.
+   * @param array $attributes An array of 'attr_name' => 'attr_value' which will
+   *        produce a set of WHERE clauses.
+   * @return array A set of matching records
+   */
+  public static function where($attributes) {
+    $number_of_attributes = count($attributes);
+
+    // Return now if there are no attributes to search on.
+    if ($number_of_attributes == 0) { return self::all(); }
+
+    // Build the query.
+    $t = static::$table_name;
+    $query = "SELECT * FROM `$t` WHERE";
+
+    $i = 0;
+    foreach ($attributes as $attr => $val) {
+      $query .= " `$t`.`$attr` = '$val'";
+      // Append AND if this is not the last element.
+      if ($i < $number_of_attributes - 1) { $query .= " AND"; }
+      $i++;
+    }
+
+    return static::$db->get_rows($query);
   }
 
   // Create a new record in the `$table_name` table of the db.
@@ -33,18 +61,22 @@ class Model {
   // values.
   // This is meant to be overridden by child classes in order to remove the need
   // for a `$table_name` argument.
-  public static function create_record($tbl_name, $attributes) {
+  public static function create($attributes) {
     $attrs_names = self::implode_array_keys($attributes);
     $attrs_values = self::implode_array_values($attributes);
-    $tbl_name = "`$tbl_name`";
+    $tbl = static::$table_name;
 
     // Build the query and issue it against the db.
-    $q = "INSERT INTO $tbl_name($attrs_names) VALUES ($attrs_values)";
+    $q = "INSERT INTO `$tbl`($attrs_names) VALUES ($attrs_values)";
     self::$db->query($q);
   }
 
+  public static function create_record($attributes) {
+    self::create($attributes);
+  }
 
-  // Private helper methods
+
+  // Private methods
 
   // Given an array of key => value pairs, return a string with all the keys
   // quoted with a ` and separated by a comma.

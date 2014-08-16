@@ -1,19 +1,17 @@
 <?php
 class Ad extends Model {
-  // Create a new ad.
-  public static function create($attrs) {
-    parent::create_record('ads', $attrs);
-  }
+  public static $table_name = 'ads';
+  public static $key_column = 'id';
 
   // Fetch all the ads in the database and their associated games.
   public static function all() {
-    $all = parent::all_the_records('ads');
+    $all = parent::all();
     return array_map('self::ad_with_associated_game', $all);
   }
 
   // Find a specific ad based on its id.
-  public static function find_by_id($id) {
-    $ad = parent::find_unique('ads', 'id', $id);
+  public static function find($id) {
+    $ad = parent::find($id);
     if (!$ad) return null;
     return self::ad_with_associated_game($ad);
   }
@@ -33,5 +31,4 @@ class Ad extends Model {
 }
 
 Ad::$db = new DB();
-Ad::$table_name = 'ads';
 ?>

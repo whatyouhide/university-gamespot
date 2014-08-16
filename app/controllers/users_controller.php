@@ -5,9 +5,9 @@ class UsersController extends Controller {
   // This action will be redirected to the appropriate private method based on
   // the type of the current request being POST or GET.
   public function sign_in() {
-    if (is_post_request()) {
+    if ($this->request->is_post()) {
       $this->sign_in_post();
-    } else if (is_get_request()) {
+    } else if ($this->request->is_get()) {
       $this->sign_in_get();
     }
   }
@@ -24,9 +24,9 @@ class UsersController extends Controller {
   // Display the sign up form if the request type is GET, otherwise sign up a
   // new user (if the request type is POST).
   public function sign_up() {
-    if (is_post_request()) {
+    if ($this->request->is_post()) {
       $this->sign_up_post();
-    } else if (is_get_request()) {
+    } else if ($this->request->is_get()) {
       $this->sign_up_get();
     }
   }
@@ -51,12 +51,7 @@ class UsersController extends Controller {
 
   // Actually sign in the user.
   private function sign_in_post() {
-    // Issue a query for user matching the email in the POST request.
-    $query_results = User::where_attribute_is('email', $_POST['email']);
-
-    // Set a $user variable, which is null if the query results are empty,
-    // otherwise it's the first (and only given db constraints) user.
-    $user = empty($query_results) ? null : $query_results[0];
+    $user = User::find($this->params['email']);
 
     // No user with the given email: render the sign-in form with an error.
     if (!$user) {
@@ -64,7 +59,7 @@ class UsersController extends Controller {
     }
 
     // Check if the password is correct: if it is, store the user's infos in the
-    // $_SESSION array and redirect to the homepage; if it isn't, re-render this
+    // Session and redirect to the homepage; if it isn't, re-render this
     // template with error infos.
     if (User::hash_password($_POST['password']) == $user['hashed_password']) {
       Session::user($user);
@@ -82,10 +77,10 @@ class UsersController extends Controller {
   // Sign up the user and redirect to /users/signed_up.
   private function sign_up_post() {
     User::create(array(
-      'email' => $_POST['email'],
-      'password' => $_POST['password'],
-      'first_name' => $_POST['first_name'],
-      'last_name' => $_POST['last_name']
+      'email' => $this->params['email'],
+      'password' => $this->params['password'],
+      'first_name' => $this->params['first_name'],
+      'last_name' => $this->params['last_name']
     ));
 
     // Render the confirmation page (successfully signed up).

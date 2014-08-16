@@ -11,7 +11,12 @@ class UserTest extends \Codeception\TestCase\Test {
   protected function _after() {}
 
   public function testPasswordHashing() {
-    $email = 'unique@unique.unique';
+    $p = 'passw0rD';
+    $this->assertEquals(User::hash_password($p), md5($p));
+  }
+
+  public function testPasswordHashingOnCreation() {
+    $email = "unique@unique.unique";
     $pass = 'test';
 
     User::create(array(
@@ -23,7 +28,7 @@ class UserTest extends \Codeception\TestCase\Test {
 
     $this->codeGuy->seeInDatabase('users', array('email' => $email));
 
-    $user = User::find('email', $email);
+    $user = User::find($email);
     $this->assertEquals($user['hashed_password'], md5($pass));
   }
 }

@@ -1,10 +1,5 @@
 <?php
 class Game extends Model {
-  // Fetch all the records.
-  public static function all() {
-    return parent::all_the_records('games');
-  }
-
   // Fetch the most recently added games.
   public static function recently_added($limit = 5) {
     $q = "SELECT * FROM `games` ORDER BY `added_at` DESC LIMIT $limit";
@@ -33,7 +28,5 @@ class Game extends Model {
   }
 }
 
-// Initialize some class static attributes.
 Game::$db = new DB();
-Game::$table_name = 'games';
 ?>
