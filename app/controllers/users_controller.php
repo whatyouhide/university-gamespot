@@ -1,9 +1,10 @@
 <?php
 class UsersController extends Controller {
-  // GET /users/sign_in
-  // POST /users/sign_in
-  // This action will be redirected to the appropriate private method based on
-  // the type of the current request being POST or GET.
+  /**
+   * GET /users/sign_in
+   * POST /users/sign_in
+   * Dispatcher based on the request's type.
+   */
   public function sign_in() {
     if ($this->request->is_post()) {
       $this->sign_in_post();
@@ -12,17 +13,11 @@ class UsersController extends Controller {
     }
   }
 
-  // POST /users/sign_out
-  // Remove the 'user' field from the session and redirect to the home page.
-  public function sign_out() {
-    unset($_SESSION['user']);
-    redirect('/', ['notice' => 'Signed out successfully.']);
-  }
-
-  // GET /users/sign_up
-  // POST /users/sign_up
-  // Display the sign up form if the request type is GET, otherwise sign up a
-  // new user (if the request type is POST).
+  /**
+   * GET /users/sign_up
+   * POST /users/sign_up
+   * Dispatcher based on the request's type.
+   */
   public function sign_up() {
     if ($this->request->is_post()) {
       $this->sign_up_post();
@@ -31,25 +26,38 @@ class UsersController extends Controller {
     }
   }
 
-  // GET /users/profile
-  // Displays the user profile if a user is logged in, otherwise it redirects to
-  // the home page.
+  /**
+   * POST /users/sign_out
+   * Sign out a user.
+   */
+  public function sign_out() {
+    Session::sign_out_user();
+    redirect('/', ['notice' => 'Signed out successfully.']);
+  }
+
+  /**
+   * GET /users/profile
+   * Display a user's profile if she's logged in, or redirect to the home page.
+   */
   public function profile() {
-    if (is_signed_in()) {
+    if (Session::user()) {
       $this->render('users/profile');
     } else {
       redirect('/', ['error' => 'You need to be logged in.']);
     }
   }
 
-  // Private methods
-
-  // Display the sign in form.
+  /**
+   * Display the sign in form.
+   */
   private function sign_in_get() {
     $this->render('users/sign_in', array('sign_in_error' => false));
   }
 
-  // Actually sign in the user.
+  /**
+   * Sign in the user if sign in infos are correct, otherwise re-render the sign
+   * in form with errors displayed.
+   */
   private function sign_in_post() {
     $user = User::find($this->params['email']);
 
@@ -61,20 +69,25 @@ class UsersController extends Controller {
     // Check if the password is correct: if it is, store the user's infos in the
     // Session and redirect to the homepage; if it isn't, re-render this
     // template with error infos.
-    if (User::hash_password($_POST['password']) == $user['hashed_password']) {
-      Session::user($user);
-      redirect('/');
+    $hashed_password = User::hash_password($this->params['password']);
+    if ($hashed_password == $user->hashed_password) {
+      Session::store_user($user);
+      redirect('/', ['notice' => 'Successfully logged in.']);
     } else {
       $this->render('users/sign_in', ['sign_in_error' => true]);
     }
   }
 
-  // Display the sign up form.
+  /**
+   * Display the sign up form.
+   */
   private function sign_up_get() {
     $this->render('users/sign_up');
   }
 
-  // Sign up the user and redirect to /users/signed_up.
+  /**
+   * Sign up a user and redirect to the welcome page.
+   */
   private function sign_up_post() {
     User::create(array(
       'email' => $this->params['email'],
@@ -83,7 +96,6 @@ class UsersController extends Controller {
       'last_name' => $this->params['last_name']
     ));
 
-    // Render the confirmation page (successfully signed up).
     $this->render('users/signed_up');
   }
 }

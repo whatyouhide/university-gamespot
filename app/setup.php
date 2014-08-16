@@ -1,7 +1,4 @@
 <?php
-// Make $_SESSION available.
-session_start();
-
 // Define some constants.
 define('SITE_NAME', 'gamespot');
 define('SITE_ROOT', '/' . SITE_NAME);
@@ -30,4 +27,7 @@ $files_to_include = array_merge(
 );
 
 foreach ($files_to_include as $filename) include $filename;
+
+// Make $_SESSION available.
+session_start();
 ?>

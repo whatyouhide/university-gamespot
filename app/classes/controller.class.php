@@ -14,37 +14,44 @@ class Controller {
     $this->setup_current_user();
   }
 
-  // Render the Smarty template asosciated with a given `$template` (which
-  // conventionally is inside a directory named after the controller.
-  // `$template` refers to a Smarty template.
-  // If `$template` doesn't end with '.tpl', GamespotSmarty will take care of
-  // that.
+  /**
+   * Render the Smarty template at `$template` (which is conventionally located
+   * inside a directory with the same name of the current controller).
+   * @param string $template A template path. If this doesn't end with '.tpl',
+   *        it will be taken care of automagically.
+   * @param array $assigns An array of 'name' => 'value' which is passed to
+   *        Smarty in order to assign variables.
+   */
   public function render($template, $assigns = array()) {
     $this->setup_and_clean_flash();
     $this->smarty->mass_assign($assigns);
     $this->smarty->render($template);
 
-    // Kill the script. Rendering is the last thing you want to do.
+    // Rendering is the last thing you want to do.
     die();
   }
 
-  // Render an error page (404.tpl, 500.tpl and so on).
+  /** Render an error page and set the HTTP response code.
+   * @param int|string $error_no An error number which will render the
+   *        corresponding template in 'errors/', like 'errors/404.tpl'.
+   */
   public function render_error($error_no) {
     http_response_code($error_no);
     $this->render('errors/' . $error_no);
   }
 
-  // Private methods
-
-  // Assign flash variables to smarty and clean the session.
+  /**
+   * Assign the 'flash' Smarty variable and clean the flash from the session.
+   */
   private function setup_and_clean_flash() {
-    $this->smarty->assign('flash', $_SESSION['flash']);
-    // Clean the flash.
-    $_SESSION['flash'] = array();
+    $this->smarty->assign('flash', Session::current_flash());
+    Session::empty_flash();
   }
 
-  // Setup the `current_user` instance variable and make it available to
-  // Smarty if the user is present.
+  /**
+   * Setup the `current_user` instance variable if there's a logged in user, and
+   * assign that same variable to Smarty.
+   */
   private function setup_current_user() {
     if (!Session::user()) return;
 

@@ -3,7 +3,11 @@ class User extends Model {
   public static $table_name = 'users';
   public static $key_column = 'email';
 
-  // Create a new user with the given `$attributes`.
+  /**
+   * {@inheritdoc}
+   * This function also hashes the 'password' attribute before passing it to the
+   * 'create' parent's mathod.
+   */
   public static function create($attrs) {
     $attrs['hashed_password'] = self::hash_password($attrs['password']);
     unset($attrs['password']);
