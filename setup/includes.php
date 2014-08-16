@@ -1,9 +1,4 @@
 <?php
-// Define some constants.
-define('SITE_NAME', 'gamespot');
-define('SITE_ROOT', '/' . SITE_NAME);
-define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . SITE_NAME);
-
 // Augment the include path.
 set_include_path(ROOT);
 
@@ -27,7 +22,4 @@ $files_to_include = array_merge(
 );
 
 foreach ($files_to_include as $filename) include $filename;
-
-// Make $_SESSION available.
-session_start();
 ?>

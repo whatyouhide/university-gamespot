@@ -1,9 +1,6 @@
 <?php
-// Include the necessary setup for the application.
-include 'app/setup.php';
-
-// Handle internal server errors.
-register_shutdown_function('error_handler');
+// Handle internal server errors first, so that every PHP error is presented as
+// a 500 error.
 function error_handler() {
   // An array of errors which need to be handled with a 500 Internal Server
   // Error.
@@ -22,6 +19,14 @@ function error_handler() {
     (new Controller)->render_error(500);
   }
 }
+register_shutdown_function('error_handler');
+
+// Include the necessary setup for the application.
+include 'setup/defines.php';
+include 'setup/includes.php';
+
+// Make $_SESSION available.
+session_start();
 
 
 // Retrieve the controller and the action (default to index) from $_GET, which
