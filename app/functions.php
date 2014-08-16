@@ -19,4 +19,11 @@ function redirect($location, $flash_messages = array(), $data = null) {
 function mysql_timestamp() {
   return date('Y-m-d H:i:s', time());
 }
+
+// Print an object surrounded by a <pre> tag.
+function echo_debug($obj) {
+  echo '<pre>';
+  print_r($obj);
+  echo '</pre>';
+}
 ?>
