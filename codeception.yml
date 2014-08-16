@@ -17,3 +17,4 @@ modules:
       user: 'root'
       password: 'root'
       dump: db/development.sql
+      cleanup: true
