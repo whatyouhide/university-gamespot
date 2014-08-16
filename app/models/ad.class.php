@@ -3,30 +3,28 @@ class Ad extends Model {
   public static $table_name = 'ads';
   public static $key_column = 'id';
 
-  // Fetch all the ads in the database and their associated games.
-  public static function all() {
-    $all = parent::all();
-    return array_map('self::ad_with_associated_game', $all);
+  /**
+   * {@inheritdoc}
+   * Also fetch the game associated with this ad.
+   */
+  public function __construct($attributes) {
+    parent::__construct($attributes);
+    $this->game = $this->associated_game();
   }
 
-  // Find a specific ad based on its id.
-  public static function find($id) {
-    $ad = parent::find($id);
-    if (!$ad) return null;
-    return self::ad_with_associated_game($ad);
-  }
+  /**
+   * Find the game associated with this ad.
+   * @return Game The game associated with this ad.
+   */
+  private function associated_game() {
+    $q = "SELECT * "
+      . "FROM `game_ads` "
+      . "JOIN `games` "
+      . "ON `game_ads`.`game_name` = `games`.`name` "
+      . "WHERE `game_ads`.`ad_id` = {$this->id}";
 
-  // Find the game associated with the given ad.
-  private static function ad_with_associated_game($ad) {
-    $q = "SELECT *
-      FROM `game_ads`
-      JOIN `games`
-      ON `game_ads`.`game_name` = `games`.`name`
-      WHERE `game_ads`.`ad_id` = {$ad['id']}
-    ";
-
-    $ad['game'] = self::$db->get_rows($q)[0];
-    return $ad;
+    $game_attributes = static::$db->get_rows($q)[0];
+    return new Game($game_attributes);
   }
 }
 

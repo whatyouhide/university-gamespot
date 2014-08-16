@@ -8,7 +8,6 @@ class Model {
   // Instance attributes
   private $attrs;
 
-
   public function __construct($attributes) {
     $this->attrs = $attributes;
   }
@@ -17,11 +16,21 @@ class Model {
     // Bubble up this call if the $field attribute is not in the current
     // record's attributes.
     if (!array_key_exists($field, $this->attrs)) {
-      trigger_error("Undefined property $field", E_USER_NOTICE);
+      user_error("Undefined property $field in __get");
     }
 
     return $this->attrs[$field];
   }
+
+  /**
+   * @todo I should define a static variable which holds all the associations so
+   * that I can check for existence in the $this->attrs attributes like in
+   * `__get`.
+   */
+  public function __set($field, $value) {
+    $this->attrs[$field] = $value;
+  }
+
 
   /**
    * Return all the records for the current model.
@@ -45,7 +54,6 @@ class Model {
 
   /**
    * Find a set of records that match a set of attributes.
-   * @static
    * @param array $attributes An array of 'attr_name' => 'attr_value' which will
    *        produce a set of WHERE clauses.
    * @return array A set of matching records
@@ -61,33 +69,37 @@ class Model {
     return self::new_instances_from_query($q);
   }
 
-  // Create a new record in the `$table_name` table of the db.
-  // `$attributes` is a key=>value array with column names as keys and values as
-  // values.
-  // This is meant to be overridden by child classes in order to remove the need
-  // for a `$table_name` argument.
+  /**
+   * Create a new instance of the calling model and save it to the db.
+   * @param array $attribtutes An array of 'name' => 'value attributes
+   * @return mixed The record just inserted in the db
+   */
   public static function create($attributes) {
     $attrs_names = self::to_attribute_names(array_keys($attributes));
     $attrs_values = self::to_attributes_values(array_values($attributes));
-    $tbl = static::$table_name;
+    $t = static::$table_name;
 
     // Build the query and issue it against the db.
-    $q = "INSERT INTO `$tbl`($attrs_names) VALUES ($attrs_values)";
+    $q = "INSERT INTO `$t`($attrs_names) VALUES ($attrs_values)";
     self::$db->query($q);
-  }
 
-  // Private methods
+    // Return the newly inserted record.
+    if (static::$key_column == 'id') {
+      $last_insert_id = static::$db->last_insert_id();
+      return self::find($last_insert_id);
+    } else {
+      return self::find($attributes[static::$key_column]);
+    }
+  }
 
   /**
    * Given an array, return a new array where every element is a new instance of
    * the calling class build with the attributes that were the element of the
    * argument array.
-   * @static
-   * @access private
    * @param array $arr An array of sets of attributes
    * @return array An array of instances of the calling class
    */
-  private static function new_instances_from_query($query) {
+  public static function new_instances_from_query($query) {
     $results = static::$db->get_rows($query);
     return array_map('self::instantiate', $results);
   }
@@ -108,8 +120,6 @@ class Model {
   /**
    * Return a WHERE clause in the form 'WHERE a1 = v1 AND a2 = v2' from a given
    * set of attributes.
-   * @static
-   * @access private
    * @param array $attributes An arrau of 'attr' => 'val' attributes
    * @return string A MySQL WHERE clause
    */
@@ -132,8 +142,6 @@ class Model {
 
   /**
    * Convert an array of attribute names to a list of `name1`,`name2`... .
-   * @static
-   * @access private
    * @param array $attrs An array of attribute names
    * @return string A list of comma-separated and quoted attribute names
    */
@@ -143,8 +151,6 @@ class Model {
 
   /**
    * Convert an array of attribute names to a list of `value1`,`value2`... .
-   * @static
-   * @access private
    * @param array $values An array of attribute values
    * @return string A list of comma-separated and quoted attribute values
    */
@@ -154,8 +160,6 @@ class Model {
 
   /**
    * Return a function that quotes a string with the given char.
-   * @static
-   * @access private
    * @param string $ch A string (like ' or `), usually a char
    * @return function A function that surrounds a string with the char passed to
    *         this function.

@@ -9,10 +9,10 @@
 
       {foreach from=$games item=game}
         <div class="single-game">
-          <h2>{$game.name}</h2>
-          <img src="{$uploads}/{$game.cover_image}">
+          <h2>{$game->name}</h2>
+          <img src="{$uploads}/{$game->cover_image}">
           <section class="game-description">
-            {$game.description|truncate:200:"..."}
+            {$game->description|truncate:200:"..."}
           </section>
         </div>
       {/foreach}
