@@ -1,15 +1,18 @@
 <?php
 class Game extends Model {
+  public static $table_name = 'games';
+  public static $key_column = 'name';
+
   // Fetch the most recently added games.
   public static function recently_added($limit = 5) {
     $q = "SELECT * FROM `games` ORDER BY `added_at` DESC LIMIT $limit";
-    return self::$db->get_rows($q);
+    return self::new_instances_from_query($q);
   }
 
   // Fetch the most recently released games.
   public static function newest($limit = 5) {
     $q = "SELECT * FROM `games` ORDER BY `release_date` DESC LIMIT $limit";
-    return self::$db->get_rows($q);
+    return self::new_instances_from_query($q);
   }
 
   // Fetch the games with most ads.
@@ -24,7 +27,7 @@ class Game extends Model {
       ORDER BY `number_of_ads` DESC
       LIMIT $limit
     ";
-    return self::$db->get_rows($q);
+    return self::new_instances_from_query($q);
   }
 }
 

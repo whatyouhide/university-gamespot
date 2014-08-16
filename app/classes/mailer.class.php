@@ -10,7 +10,11 @@ class Mailer {
     $this->setup_common_properties();
   }
 
-  // Send an email using a bunch of easy to guess parameters.
+  /**
+   * Send an email.
+   * @param array $pars An easy to guess array of parameters (from, to, etc)
+   * @return bool True if the email was sent successfully, false otherwise
+   */
   public function send($pars) {
     $this->mail->From = $pars['from'];
     $this->mail->FromName = $pars['from_name'];
@@ -24,14 +28,17 @@ class Mailer {
     return $this->sent_successfully;
   }
 
-  // Return true if the last email was sent successfully.
+  /**
+   * Returns true if the last email was sent successfully, false otherwise.
+   * @return bool Whether the last email was sent successfully.
+   */
   public function sent_successfully() {
     return $this->sent_successfully;
   }
 
-  // Private methods
-
-  // Setup properties that all sent emails should have in common.
+  /**
+   * Setup common properties that all sent emails should share.
+   */
   private function setup_common_properties() {
     $this->mail->isSMTP();
     $this->mail->Host = '127.0.0.1:1025';

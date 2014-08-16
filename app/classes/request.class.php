@@ -1,6 +1,9 @@
 <?php
 class Request {
-  // Set the `params` instance variable according to the request type.
+  /**
+   * Create a new Request object and set the `params` instance variable based on
+   * the request method.
+   */
   public function __construct() {
     switch($this->method()) {
     case 'GET':
@@ -12,19 +15,26 @@ class Request {
     }
   }
 
-  // Whether the request is a GET one.
+  /**
+   * Whether the request is a GET one.
+   * @return bool True if the request is a GET, false otherwise
+   */
   public function is_get() {
     return $this->method() == 'GET';
   }
 
-  // Whether the request is a POST one.
+  /**
+   * Whether the request is a POST one.
+   * @return bool True if the request is a POST, false otherwise
+   */
   public function is_post() {
     return $this->method() == 'POST';
   }
 
-  // Private methods
-
-  // Extract the request type from the $_SERVER superglobal.
+  /**
+   * Extract the request method from the CGI $_SERVER array.
+   * @return string The request method
+   */
   private function method() {
     return $_SERVER['REQUEST_METHOD'];
   }
