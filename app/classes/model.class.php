@@ -31,6 +31,23 @@ class Model {
     $this->attrs[$field] = $value;
   }
 
+  /**
+   * Reload a record, returning a new instance for that record.
+   * @param mixed $key_value The key attribute in order to find the record
+   *        again. If $key_value is null, the standard key attribute (already
+   *        present on the record) will be used.
+   * @return mixed A new instance for the reloaded record.
+   */
+  public function reload($key_value = null) {
+    $calling_class = get_called_class();
+
+    // The attribute will be the standard key if no arguments were passed to
+    // this function, otherwise the argument will be used to find the record
+    // again.
+    $attribute = ($key_value == null) ? $this->key_value() : $key_value;
+
+    return $calling_class::find($attribute);
+  }
 
   /**
    * Return all the records for the current model.
@@ -105,10 +122,46 @@ class Model {
   }
 
   /**
+   * Update a record with a new set of attributes.
+   * @param array $attributes A new set of attributes.
+   */
+  public function update($attributes) {
+    // Return the untouched record if there are no attributes.
+    if (empty($attributes)) return $this;
+
+    $t = static::$table_name;
+    $key_col = static::$key_column;
+
+    // Build the query.
+    $q = "UPDATE `$t` SET";
+
+    $i = 0;
+    foreach ($attributes as $attr => $val) {
+      $q .= " `$t`.`$attr` = '$val'";
+
+      // If it's not the last iteration, append a comma.
+      if ($i < count($attributes) - 1) $q .= ', ';
+
+      $i++;
+    }
+
+    $q .= " WHERE `$t`.`$key_col` = '{$this->key_value()}'";
+
+    static::$db->query($q);
+  }
+
+  /**
+   * Return the value of the key attribute for this instance.
+   * @return mixed The value of the key attribute.
+   */
+  private function key_value() {
+    $key_col = static::$key_column;
+    return $this->$key_col;
+  }
+
+  /**
    * Given a set of attributes, return an instance of the calling class build
    * with the argument attributes.
-   * @static
-   * @access private
    * @param array $attributes An array of 'name' => 'val' attributes
    * @return array An array of instances of the calling class
    */

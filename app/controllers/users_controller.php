@@ -48,6 +48,53 @@ class UsersController extends Controller {
   }
 
   /**
+   * GET /users/settings
+   * The settings for a specific user.
+   */
+  public function settings() {
+    $this->render('users/settings');
+  }
+
+  /**
+   * POST /users/save_settings
+   * Save the settings for a specific user and redirect to the settings page
+   * with a flash message.
+   */
+  public function save_settings() {
+    $this->current_user->update([
+      'first_name' => $this->params['first_name'],
+      'last_name' => $this->params['last_name'],
+      'email' => $this->params['email']
+    ]);
+
+    $this->update_current_user($this->current_user->reload($this->params['email']));
+    redirect('/users/settings', ['notice' => 'Updated successfully']);
+  }
+
+  /**
+   * POST /users/change_password
+   * Change the password of the current user.
+   */
+  public function change_password() {
+    $old_hashed = User::hash_password($this->params['old_password']);
+    $new_pass = $this->params['new_password'];
+
+    if ($old_hashed != $this->current_user->hashed_password) {
+      $flash = ['error' => 'Wrong password.'];
+    } else if (empty($new_pass)) {
+      $flash = ['error' => "New password can't be empty."];
+    } else if ($old_hashed == User::hash_password($new_pass)) {
+      $flash = ['error' => "Password must change."];
+    } else {
+      $this->current_user->update_password($new_pass);
+      $this->update_current_user($this->current_user->reload());
+      $flash = ['notice' => 'Password updated successfully.'];
+    }
+
+    redirect('/users/settings', $flash);
+  }
+
+  /**
    * Display the sign in form.
    */
   private function sign_in_get() {
@@ -97,6 +144,16 @@ class UsersController extends Controller {
     ));
 
     $this->render('users/signed_up');
+  }
+
+  /**
+   * Update the `current_user` and update the session too.
+   * This is useful for reloading the current user too.
+   * @param User $new_user The new user to save in the session.
+   */
+  private function update_current_user($new_user) {
+    $this->current_user = $new_user;
+    Session::store_user($new_user);
   }
 }
 ?>

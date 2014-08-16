@@ -4,14 +4,20 @@ class User extends Model {
   public static $key_column = 'email';
 
   /**
+   * Update the user's password.
+   * @param string $new_pass The new password (still non hashed)
+   */
+  public function update_password($new_pass) {
+    $this->update(['hashed_password' => self::hash_password($new_pass)]);
+  }
+
+  /**
    * {@inheritdoc}
    * This function also hashes the 'password' attribute before passing it to the
    * 'create' parent's mathod.
    */
   public static function create($attrs) {
-    $attrs['hashed_password'] = self::hash_password($attrs['password']);
-    unset($attrs['password']);
-    return parent::create($attrs);
+    return parent::create(self::with_hashed_password($attrs));
   }
 
   /**
@@ -22,8 +28,20 @@ class User extends Model {
   public static function hash_password($password) {
     return md5($password);
   }
+
+  /**
+   * Replace the 'passoword' key with an hashed passowrd.
+   * @param array $attrs An array of attributes containing a 'password'
+   *        attribute.
+   * @return array A new array of attributes without 'password' but with an
+   *         updated hashed password in 'hashed_password'.
+   */
+  private static function with_hashed_password($attrs) {
+    $attrs['hashed_password'] = self::hash_password($attrs['password']);
+    unset($attrs['password']);
+    return $attrs;
+  }
 }
 
-// Initialize some class static attributes.
 User::$db = new DB();
 ?>
