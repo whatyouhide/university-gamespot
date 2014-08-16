@@ -44,6 +44,51 @@ class ModelTest extends \Codeception\TestCase\Test {
     $this->assertEquals($user->first_name, 'A');
   }
 
+  public function testCreate() {
+    $attrs = [
+      'email' => 'test@test.test',
+      'password' => '67890',
+      'first_name' => 'A',
+      'last_name' => 'B'
+    ];
+
+    $user = User::create($attrs);
+
+    $this->assertNotNull($user);
+    $this->assertEquals($user->email, $attrs['email']);
+    $this->assertEquals($user->first_name, $attrs['first_name']);
+
+    $game = Game::create(['name' => 'PES']);
+    $this->assertNotNull($game);
+  }
+
+  public function testGet() {
+    $email = 'my@email.com';
+    User::create([
+      'email' => $email,
+      'password' => '67890',
+      'first_name' => 'A',
+      'last_name' => 'B'
+    ]);
+
+    $user = User::find($email);
+    $this->assertEquals($user->email, $email);
+  }
+
+  public function testSet() {
+    $email = 'he@llo.com';
+    User::create([
+      'email' => $email,
+      'password' => '67890',
+      'first_name' => 'A',
+      'last_name' => 'B'
+    ]);
+
+    $user = User::find($email);
+    $user->test_property_yeah = 10;
+    $this->assertEquals($user->test_property_yeah, 10);
+  }
+
   private function create_user_called($first_name = 'a', $last_name = 'b') {
     User::create([
       'email' => $this->next_email(),
