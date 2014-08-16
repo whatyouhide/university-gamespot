@@ -18,13 +18,15 @@ class DB {
   }
 
   // Execute a query on the underlying db
-  public function query( $q ) {
-    return $this->connection->query( $q );
+  public function query($q) {
+    return $this->connection->query($q);
   }
 
   // Transform the result of a previously executed query into an array of rows.
-  public function query_to_rows( $query_result ) {
+  public function query_to_rows($query_result) {
     $rows = array();
+
+    if (!$query_result) return $rows;
 
     for ($row_no = 0; $row_no < $query_result->num_rows; $row_no++) {
       $query_result->data_seek($row_no);
@@ -36,9 +38,9 @@ class DB {
   }
 
   // Get the rows associated with the query `$q`
-  public function get_rows( $q ) {
-    $res = $this->query( $q );
-    return $this->query_to_rows( $res );
+  public function get_rows($q) {
+    $res = $this->query($q);
+    return $this->query_to_rows($res);
   }
 
   // Retrieve the error number of the underlying db
