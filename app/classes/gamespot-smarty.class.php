@@ -35,6 +35,7 @@ class GamespotSmarty extends Smarty {
     $this->setCompileDir(ROOT . '/templates_c/');
     $this->setConfigDir(ROOT . '/configs/');
     $this->setCacheDir(ROOT . '/cache/');
+    $this->setPluginsDir(ROOT . '/app/plugins/');
   }
 
   /**

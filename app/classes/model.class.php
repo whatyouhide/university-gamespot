@@ -177,7 +177,7 @@ class Model {
    * @param array $arr An array of sets of attributes
    * @return array An array of instances of the calling class
    */
-  public static function new_instances_from_query($query) {
+  protected static function new_instances_from_query($query) {
     $results = static::$db->get_rows($query);
     return array_map('self::instantiate', $results);
   }
@@ -191,6 +191,19 @@ class Model {
   private static function instantiate($attributes) {
     $calling_class = get_called_class();
     return new $calling_class($attributes);
+  }
+
+  /**
+   * Return a new instance of a model retrieved from the given query.
+   * @param string $model The name of the model you want to instantiate.
+   * @param string $query The query to retrieve the target record.
+   * @return mixed A new instance of `$model`.
+   */
+  protected static function instantiate_model_from_query($model, $query) {
+    $records = static::$db->get_rows($query);
+    if (empty($records)) return null;
+
+    return new $model($records[0]);
   }
 
   /**

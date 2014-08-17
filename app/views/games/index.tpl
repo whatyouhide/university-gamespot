@@ -8,13 +8,11 @@
     <section class="{$games_column}-games game-column">
 
       {foreach from=$games item=game}
-        <div class="single-game">
-          <h2>{$game->name}</h2>
-          <img src="{$uploads}/{$game->cover_image}">
-          <section class="game-description">
-            {$game->description|truncate:200:"..."}
-          </section>
-        </div>
+        <article class="single-game">
+          <h1>{$game->name}</h1>
+          {image_path image=$game->cover_image}
+          <section class="description">{$game->description}</section>
+        </article>
       {/foreach}
 
     </section>
