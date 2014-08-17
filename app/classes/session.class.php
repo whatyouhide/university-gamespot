@@ -4,7 +4,6 @@ class Session {
    * Setup the session, create some useful variables like the flash.
    */
   public static function init() {
-    self::empty_flash();
   }
 
   /**
@@ -39,6 +38,8 @@ class Session {
    * @param string $message The message to set
    */
   public static function flash($type, $msg) {
+    if (!isset($_SESSION['flash'])) self::empty_flash();
+
     $_SESSION['flash'][$type] = $msg;
   }
 

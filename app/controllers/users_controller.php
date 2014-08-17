@@ -87,7 +87,7 @@ class UsersController extends Controller {
       $flash = ['error' => "Password must change."];
     } else {
       $this->current_user->update_password($new_pass);
-      $this->update_current_user($this->current_user->reload());
+      $this->reload_current_user();
       $flash = ['notice' => 'Password updated successfully.'];
     }
 
