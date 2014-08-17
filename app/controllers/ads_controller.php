@@ -30,8 +30,8 @@ class AdsController extends Controller {
    * Display the form which creates a new ad.
    */
   public function nuevo() {
-    $consoles = $this->model_names_for_select('Console');
-    $games = $this->model_names_for_select('Game');
+    $consoles = $this->all_records_for_select('Console');
+    $games = $this->all_records_for_select('Game');
 
     // TODO we're still missing an Accessory model
     $accessories = array();
@@ -49,25 +49,19 @@ class AdsController extends Controller {
    * Create a new ad and then redirect to the current user's profile.
    */
   public function create() {
+    $type = $this->params['ad_type'];
+
     Ad::create([
-      'user_email' => $this->current_user['email'],
-      'price' => $this->params['price'],
-      'description' => $this->params['description'],
       'city' => $this->params['city'],
-      'console_name' => $this->params['console_name']
+      'description' => $this->params['description'],
+      'price' => $this->params['price'],
+      'type' => $type,
+      'author_id' => $this->current_user->id,
+      'console_id' => $this->params['console_id'],
+      "{$type}_id" => $this->params[$type . '_id']
     ]);
 
-    $type = $this->params['ad_type'];
-    $last_insert_id = Ad::$db->last_insert_id();
-
-    $type_related_query = "INSERT
-      INTO `{$type}_ads`(`ad_id`, `{$type}_name`)
-      VALUES ('$last_insert_id', '{$_POST[$type . '_name']}')
-    ";
-
-    Ad::$db->query($type_related_query);
-
-    redirect('/users/profile', ['notice' => 'Ad created successfully.']);
+    redirect('/users/profile', $flash);
   }
 
   /**
@@ -82,7 +76,7 @@ class AdsController extends Controller {
     $this->mailer->send([
       'from' => $this->email_for_contact(),
       'from_name' => $this->name_for_contact(),
-      'to' => $ad->user_email,
+      'to' => $ad->author->email,
       'subject' => 'Someone from gamespot.com contacted you',
       'body' => $this->params['message']
     ]);
@@ -91,7 +85,7 @@ class AdsController extends Controller {
     $flash = $this->mailer->sent_successfully() ?
       ['notice' => 'Sent successfully.'] : ['error' => 'There was an error'];
 
-    redirect( "/ads/show?id={$ad['id']}", $flash);
+    redirect("/ads/show?id={$ad->id}", $flash);
   }
 
   /**
@@ -124,10 +118,13 @@ class AdsController extends Controller {
    * @param string $model Instances of this model will be fetched (e.g. 'Game')
    * @return array An array in the form [name1 => name1, name2 => name2...]
    */
-  private function model_names_for_select($model) {
-    $extract_name = function ($record) { return $record->name; };
-    $names = array_map($extract_name, $model::all());
-    return array_combine($names, $names);
+  private function all_records_for_select($model) {
+    $all = $model::all();
+
+    $ids = array_map(function ($r) { return $r->id; }, $all);
+    $names = array_map(function ($r) { return $r->name; }, $all);
+
+    return array_combine($ids, $names);
   }
 }
 ?>

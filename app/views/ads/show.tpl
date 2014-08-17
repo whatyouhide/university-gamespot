@@ -5,9 +5,9 @@
 <div class="single-ad">
   <header>
     <h1>
-      <a href="{$site_root}/games/show?name={$ad->game->name}">{$ad->game->name}</a>
+      <a href="{$site_root}/games/show?id={$ad->game->id}">{$ad->game->name}</a>
     </h1>
-    <img src="{$uploads}/{$ad->game->cover_image}">
+    {image_path image=$ad->game->cover_image}
     <div class="price">{$ad->price}€</div>
     <div class="city">{$ad->city}</div>
   </header>
