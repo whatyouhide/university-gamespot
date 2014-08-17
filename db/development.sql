@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34)
 # Database: gamespot
-# Generation Time: 2014-08-17 11:08:16 +0000
+# Generation Time: 2014-08-17 16:44:30 +0000
 # ************************************************************
 
 
@@ -72,19 +72,19 @@ CREATE TABLE `ads` (
   `price` float unsigned NOT NULL,
   `description` text,
   `city` varchar(50) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
+  `author_id` int(11) unsigned NOT NULL,
   `console_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `ad_belongs_to_user` (`user_id`),
+  KEY `ad_belongs_to_user` (`author_id`),
   KEY `ad_belongs_to_console` (`console_id`),
-  CONSTRAINT `ad_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `ad_belongs_to_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `ad_belongs_to_author` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `ad_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `ads` WRITE;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
 
-INSERT INTO `ads` (`id`, `created_at`, `price`, `description`, `city`, `user_id`, `console_id`)
+INSERT INTO `ads` (`id`, `created_at`, `price`, `description`, `city`, `author_id`, `console_id`)
 VALUES
 	(3,'2014-08-17 12:56:18',69.99,'Sed cursus rhoncus erat et porta. Cras in sem porttitor, pretium sapien vel, dignissim dolor. Quisque feugiat est eu lectus lobortis scelerisque. Donec mollis eros ut nibh rhoncus, quis facilisis nunc eleifend. Donec imperdiet gravida mattis. Maecenas hendrerit placerat velit nec pulvinar. Mauris accumsan eros non neque ultricies, id gravida purus sollicitudin. Donec lacinia dapibus lectus ultrices placerat.','Roma',1,1),
 	(5,'2014-08-17 12:56:19',66,'Donec lectus orci, vehicula quis mi at, eleifend euismod dolor. Suspendisse euismod tempus diam non vehicula. Duis lacinia porta nibh, id porta nisi posuere nec. Morbi consectetur velit et elit ornare aliquam. Cras pellentesque purus ut dignissim euismod. Nunc varius lobortis massa non pretium. Nam convallis sed dui non euismod. Maecenas consequat metus non magna ultrices vestibulum. Vestibulum egestas volutpat est ac condimentum. Maecenas neque lacus, venenatis auctor placerat vel, consectetur id magna. Donec vel consequat turpis, non gravida diam.','Roma',1,2),
@@ -375,6 +375,15 @@ CREATE TABLE `uploads` (
   CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `uploads` WRITE;
+/*!40000 ALTER TABLE `uploads` DISABLE KEYS */;
+
+INSERT INTO `uploads` (`id`, `url`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`)
+VALUES
+	(1,'codg.jpg','2014-08-17 18:20:31',NULL,4);
+
+/*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table users
