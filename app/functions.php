@@ -26,4 +26,11 @@ function echo_debug($obj) {
   print_r($obj);
   echo '</pre>';
 }
+
+// Return a function that surrounds a string with another string.
+function surround_with($surrounder) {
+  return function ($str) use ($surrounder) {
+    return $surrounder . $str . $surrounder;
+  };
+}
 ?>

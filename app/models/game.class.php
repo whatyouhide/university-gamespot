@@ -1,7 +1,6 @@
 <?php
 class Game extends Model {
   public static $table_name = 'games';
-  public static $key_column = 'name';
 
   // Fetch the most recently added games.
   public static function recently_added($limit = 5) {
@@ -21,9 +20,9 @@ class Game extends Model {
       `ads`.`id` AS `ad_id`, `games`.*,
       COUNT(*) `number_of_ads`
       FROM `game_ads`
-      JOIN `games` ON `game_ads`.`game_name` = `games`.`name`
-      JOIN `ads` ON `game_ads`.`ad_id` = `ads`.`id`
-      GROUP BY `game_name`
+      JOIN `games` ON `games_ads`.`game_id` = `games`.`id`
+      JOIN `ads` ON `games_ads`.`ad_id` = `ads`.`id`
+      GROUP BY `games`.`name`
       ORDER BY `number_of_ads` DESC
       LIMIT $limit
     ";

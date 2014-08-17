@@ -1,7 +1,6 @@
 <?php
 class User extends Model {
   public static $table_name = 'users';
-  public static $key_column = 'email';
 
   /**
    * Update the user's password.

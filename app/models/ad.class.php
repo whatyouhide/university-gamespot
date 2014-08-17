@@ -1,7 +1,6 @@
 <?php
 class Ad extends Model {
   public static $table_name = 'ads';
-  public static $key_column = 'id';
 
   /**
    * {@inheritdoc}

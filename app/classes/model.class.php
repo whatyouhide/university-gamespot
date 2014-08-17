@@ -1,28 +1,49 @@
 <?php
 class Model {
-  // Static attributes
-  public static $db;
-  protected static $table_name;
-  protected static $key_column;
-
-  // Instance attributes
+  /**
+   * @var array An array of attributes for the current instance.
+   */
   private $attrs;
 
+  /**
+   * @var DB A reference to the db for this model.
+   */
+  public static $db;
+
+  /**
+   * @var string The table name of the current model.
+   * @abstract
+   */
+  protected static $table_name;
+
+  /**
+   * Create an instance of the calling model based on a set of attributes.
+   * @param array $attributes An array of attributes.
+   */
   public function __construct($attributes) {
     $this->attrs = $attributes;
   }
 
+  /**
+   * Get an attribute of this instance without accessing the internal attribute
+   * representation.
+   * @param string $field The attribute to retrieve.
+   * @return mixed The value of the attribute if present, otherwise an error.
+   */
   public function __get($field) {
-    // Bubble up this call if the $field attribute is not in the current
-    // record's attributes.
-    if (!array_key_exists($field, $this->attrs)) {
+    if (array_key_exists($field, $this->attrs)) {
+      return $this->attrs[$field];
+    } else {
       user_error("Undefined property $field in __get");
     }
-
-    return $this->attrs[$field];
   }
 
   /**
+   * Set an attribute of this instance without accessing the internal attribute
+   * representation.
+   * @param string $field The attribute to set.
+   * @param mixed $value The new value for that attribute.
+   *
    * @todo I should define a static variable which holds all the associations so
    * that I can check for existence in the $this->attrs attributes like in
    * `__get`.
@@ -32,21 +53,57 @@ class Model {
   }
 
   /**
-   * Reload a record, returning a new instance for that record.
-   * @param mixed $key_value The key attribute in order to find the record
-   *        again. If $key_value is null, the standard key attribute (already
-   *        present on the record) will be used.
-   * @return mixed A new instance for the reloaded record.
+   * This instance's attributes.
+   * @return array An array of 'attr' => 'val' attributes.
    */
-  public function reload($key_value = null) {
+  public function attributes() {
+    return $this->attrs;
+  }
+
+  /**
+   * Reload a record modifying the original one.
+   * @return mixed The modified instance.
+   */
+  public function reload() {
     $calling_class = get_called_class();
+    $new_record = $calling_class::find($this->id);
 
-    // The attribute will be the standard key if no arguments were passed to
-    // this function, otherwise the argument will be used to find the record
-    // again.
-    $attribute = ($key_value == null) ? $this->key_value() : $key_value;
+    foreach ($new_record->attributes() as $attr => $new_val) {
+      $this->$attr = $new_val;
+    }
 
-    return $calling_class::find($attribute);
+    return $this;
+  }
+
+  /**
+   * Update a record with a new set of attributes.
+   * @param array $attributes A new set of attributes.
+   * @return mixed The updated record.
+   */
+  public function update($attributes) {
+    // Return the untouched record if there are no attributes.
+    if (empty($attributes)) return $this;
+
+    $t = static::$table_name;
+
+    // Build the query.
+    $q = "UPDATE `$t` SET";
+
+    $i = 0;
+    foreach ($attributes as $attr => $val) {
+      $q .= " `$t`.`$attr` = '$val'";
+
+      // If it's not the last iteration, append a comma.
+      if ($i < count($attributes) - 1) $q .= ', ';
+
+      $i++;
+    }
+
+    $q .= " WHERE `$t`.`id` = '{$this->id}'";
+
+    static::$db->query($q);
+
+    return $this->reload();
   }
 
   /**
@@ -59,14 +116,23 @@ class Model {
   }
 
   /**
-   * Find a record based on the value of its key column (which is unique).
-   * @param string|int $key_attribute The value of the key attribute (usually an
-   *        id)
-   * @return null|array The searched record if present, otherwise null.
+   * Find a record by its id.
+   * @param integer|string $id The id of the record to be found.
+   * @return mixed The found record if present, otherwise null.
    */
-  public static function find($key_attribute) {
-    $records = self::where([static::$key_column => $key_attribute]);
-    return empty($records) ? null : $records[0];
+  public static function find($id) {
+    $instances = self::where(['id' => $id]);
+    return empty($instances) ? null : $instances[0];
+  }
+
+  /**
+   * Find a record by a specific attribute.
+   * @param string $attr_name The name of the attribute.
+   * @param mixed $value The value of the attribute.
+   */
+  public static function find_by_attribute($attr_name, $value) {
+    $instances = self::where([$attr_name => $value]);
+    return empty($instances) ? null : $instances[0];
   }
 
   /**
@@ -88,8 +154,8 @@ class Model {
 
   /**
    * Create a new instance of the calling model and save it to the db.
-   * @param array $attribtutes An array of 'name' => 'value attributes
-   * @return mixed The record just inserted in the db
+   * @param array $attribtutes An array of 'name' => 'value' attributes.
+   * @return mixed The record just inserted in the db.
    */
   public static function create($attributes) {
     $attrs_names = self::to_attribute_names(array_keys($attributes));
@@ -101,12 +167,7 @@ class Model {
     self::$db->query($q);
 
     // Return the newly inserted record.
-    if (static::$key_column == 'id') {
-      $last_insert_id = static::$db->last_insert_id();
-      return self::find($last_insert_id);
-    } else {
-      return self::find($attributes[static::$key_column]);
-    }
+    return self::find(static::$db->last_insert_id());
   }
 
   /**
@@ -119,44 +180,6 @@ class Model {
   public static function new_instances_from_query($query) {
     $results = static::$db->get_rows($query);
     return array_map('self::instantiate', $results);
-  }
-
-  /**
-   * Update a record with a new set of attributes.
-   * @param array $attributes A new set of attributes.
-   */
-  public function update($attributes) {
-    // Return the untouched record if there are no attributes.
-    if (empty($attributes)) return $this;
-
-    $t = static::$table_name;
-    $key_col = static::$key_column;
-
-    // Build the query.
-    $q = "UPDATE `$t` SET";
-
-    $i = 0;
-    foreach ($attributes as $attr => $val) {
-      $q .= " `$t`.`$attr` = '$val'";
-
-      // If it's not the last iteration, append a comma.
-      if ($i < count($attributes) - 1) $q .= ', ';
-
-      $i++;
-    }
-
-    $q .= " WHERE `$t`.`$key_col` = '{$this->key_value()}'";
-
-    static::$db->query($q);
-  }
-
-  /**
-   * Return the value of the key attribute for this instance.
-   * @return mixed The value of the key attribute.
-   */
-  private function key_value() {
-    $key_col = static::$key_column;
-    return $this->$key_col;
   }
 
   /**
@@ -199,7 +222,7 @@ class Model {
    * @return string A list of comma-separated and quoted attribute names
    */
   private static function to_attribute_names($attrs) {
-    return implode(', ', array_map(self::quote_with('`'), $attrs));
+    return implode(', ', array_map(surround_with('`'), $attrs));
   }
 
   /**
@@ -208,19 +231,7 @@ class Model {
    * @return string A list of comma-separated and quoted attribute values
    */
   private static function to_attributes_values($values) {
-    return implode(', ', array_map(self::quote_with("'"), $values));
-  }
-
-  /**
-   * Return a function that quotes a string with the given char.
-   * @param string $ch A string (like ' or `), usually a char
-   * @return function A function that surrounds a string with the char passed to
-   *         this function.
-   */
-  private static function quote_with($ch) {
-    return function ($str) use ($ch) {
-      return $ch . $str . $ch;
-    };
+    return implode(', ', array_map(surround_with("'"), $values));
   }
 }
 ?>

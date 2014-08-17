@@ -67,7 +67,7 @@ class UsersController extends Controller {
       'email' => $this->params['email']
     ]);
 
-    $this->update_current_user($this->current_user->reload($this->params['email']));
+    $this->reload_current_user();
     redirect('/users/settings', ['notice' => 'Updated successfully']);
   }
 
@@ -106,7 +106,7 @@ class UsersController extends Controller {
    * in form with errors displayed.
    */
   private function sign_in_post() {
-    $user = User::find($this->params['email']);
+    $user = User::find_by_attribute('email', $this->params['email']);
 
     // No user with the given email: render the sign-in form with an error.
     if (!$user) {
@@ -136,24 +136,22 @@ class UsersController extends Controller {
    * Sign up a user and redirect to the welcome page.
    */
   private function sign_up_post() {
-    User::create(array(
+    User::create([
       'email' => $this->params['email'],
       'password' => $this->params['password'],
       'first_name' => $this->params['first_name'],
       'last_name' => $this->params['last_name']
-    ));
+    ]);
 
     $this->render('users/signed_up');
   }
 
   /**
-   * Update the `current_user` and update the session too.
-   * This is useful for reloading the current user too.
-   * @param User $new_user The new user to save in the session.
+   * Reload the current_user and update the session.
    */
-  private function update_current_user($new_user) {
-    $this->current_user = $new_user;
-    Session::store_user($new_user);
+  private function reload_current_user() {
+    $this->current_user->reload();
+    Session::store_user($this->current_user);
   }
 }
 ?>

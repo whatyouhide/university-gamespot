@@ -51,7 +51,6 @@ class AdsController extends Controller {
   public function create() {
     Ad::create([
       'user_email' => $this->current_user['email'],
-      'created_at' => mysql_timestamp(),
       'price' => $this->params['price'],
       'description' => $this->params['description'],
       'city' => $this->params['city'],

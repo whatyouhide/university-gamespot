@@ -19,16 +19,26 @@ class UserTest extends \Codeception\TestCase\Test {
     $email = "unique@unique.unique";
     $pass = 'test';
 
-    User::create(array(
+    $user = User::create([
       'email' => $email,
       'password' => $pass,
       'first_name' => 'A',
       'last_name' => 'B'
-    ));
+    ]);
 
-    $this->codeGuy->seeInDatabase('users', array('email' => $email));
-
-    $user = User::find($email);
+    $this->codeGuy->seeInDatabase('users', ['email' => $email]);
     $this->assertEquals($user->hashed_password, md5($pass));
+  }
+
+  public function testUpdatePassword() {
+    $user = User::create([
+      'email' => 'a@b.com',
+      'password' => '3145yh4qtegr'
+    ]);
+
+    $old_hash = $user->hashed_password;
+    $user->update_password('dqrfqr');
+
+    $this->assertFalse($old_hash == $user->hashed_password);
   }
 }
