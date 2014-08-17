@@ -25,9 +25,9 @@ register_shutdown_function('error_handler');
 include 'setup/defines.php';
 include 'setup/includes.php';
 
-// Make $_SESSION available.
+// Make $_SESSION available and initialize it.
 session_start();
-
+Session::init();
 
 // Retrieve the controller and the action (default to index) from $_GET, which
 // is itself set by .htaccess.

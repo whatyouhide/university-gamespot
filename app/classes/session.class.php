@@ -1,11 +1,18 @@
 <?php
 class Session {
   /**
+   * Setup the session, create some useful variables like the flash.
+   */
+  public static function init() {
+    self::empty_flash();
+  }
+
+  /**
    * Return the currently logged in user or null if there's no user logged in.
    * @return null|User The currently logged in user or null if there's none
    */
   public static function user() {
-    return $_SESSION['user'];
+    return isset($_SESSION['user']) ? $_SESSION['user'] : null;
   }
 
   /**
