@@ -95,14 +95,25 @@ class UsersController extends Controller {
   }
 
   /**
-   * POST /users/profile_picture -> #add_profile_picture
+   * POST /users/upload_profile_picture
+   * Add a profile picture to the current user.
    */
-  public function profile_picture() {
-    if ($this->request->is_post()) {
-      $this->add_profile_picture();
-    } else {
-      $this->method_not_allowed();
-    }
+  public function upload_profile_picture() {
+    $upload = Upload::create_from_uploaded_file($_FILES['profile_picture']);
+    $this->current_user->update_profile_picture($upload);
+
+    redirect('/users/settings', [
+      'notice' => 'Profile picture changed successfully.'
+    ]);
+  }
+
+  /**
+   * GET /users/delete_profile_picture
+   * Remove the profile picture for the currently logged in user.
+   */
+  public function delete_profile_picture() {
+    $this->current_user->delete_profile_picture();
+    $this->render('users/settings', ['notice' => 'Deleted successfully']);
   }
 
   /**
@@ -163,19 +174,6 @@ class UsersController extends Controller {
   private function reload_current_user() {
     $this->current_user->reload();
     Session::store_user($this->current_user);
-  }
-
-  /**
-   * Add a profile picture to the current user.
-   */
-  private function add_profile_picture() {
-    $upload = Upload::create_from_uploaded_file($_FILES['profile_picture']);
-
-    $this->current_user->update_profile_picture($upload);
-
-    redirect('/users/settings', [
-      'notice' => 'Profile picture changed successfully.'
-    ]);
   }
 }
 ?>

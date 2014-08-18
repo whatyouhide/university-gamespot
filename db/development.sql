@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-18 11:33:18 +0000
+# Generation Time: 2014-08-18 14:28:14 +0000
 # ************************************************************
 
 
@@ -395,7 +395,8 @@ LOCK TABLES `uploads` WRITE;
 
 INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`)
 VALUES
-	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL);
+	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL),
+	(9,'1382288476.jpg',239843,'image/jpeg','2014-08-18 16:26:51',4,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;

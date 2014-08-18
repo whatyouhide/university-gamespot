@@ -21,6 +21,15 @@ class Upload extends Model {
 
     return $success ? $new_upload : null;
   }
+
+  /**
+   * {@inheritdoc}
+   * Also destroy the actual uploaded file.
+   */
+  public function destroy() {
+    unlink(UPLOADS_DIR . '/' . $this->url);
+    parent::destroy();
+  }
 }
 
 Upload::$db = new DB;

@@ -24,8 +24,21 @@ class User extends Model {
    * @param Upload $upload The Upload profile picture.
    */
   public function update_profile_picture($upload) {
+    if ($this->profile_picture) {
+      $this->profile_picture->destroy();
+    }
+
     $upload->update(['user_profile_picture_id' => $this->id]);
     $this->profile_picture = $upload;
+  }
+
+  /**
+   * Remove the profile picture of this user (and delete the actual file).
+   */
+  public function delete_profile_picture() {
+    if (!$this->profile_picture) { return; }
+    $this->profile_picture->destroy();
+    $this->profile_picture = null;
   }
 
   /**

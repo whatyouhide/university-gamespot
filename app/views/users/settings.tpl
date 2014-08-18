@@ -6,10 +6,15 @@
 
 <!-- Profile picture -->
 {image_path image=$current_user->profile_picture default="profile_picture.jpg"}
+
+{if $current_user->profile_picture}
+  <a href="{$site_root}/users/delete_profile_picture">Remove</a>
+{/if}
+
 <form
   data-dropzone="single"
   enctype="multipart/form-data"
-  action="{$site_root}/users/profile_picture"
+  action="{$site_root}/users/upload_profile_picture"
   method="POST">
 
   <input type="hidden" name="MAX_FILE_SIZE" value="300000000">
