@@ -3,11 +3,29 @@ class User extends Model {
   public static $table_name = 'users';
 
   /**
+   * {@inheritdoc}
+   * Also fetch the profile picture of this user.
+   */
+  public function __construct($attributes) {
+    parent::__construct($attributes);
+    $this->profile_picture = $this->associated_profile_picture();
+  }
+
+  /**
    * Update the user's password.
    * @param string $new_pass The new password (still non hashed)
    */
   public function update_password($new_pass) {
     $this->update(['hashed_password' => self::hash_password($new_pass)]);
+  }
+
+  /**
+   * Set the profile picture of this user to the passed Upload.
+   * @param Upload $upload The Upload profile picture.
+   */
+  public function update_profile_picture($upload) {
+    $upload->update(['user_profile_picture_id' => $this->id]);
+    $this->profile_picture = $upload;
   }
 
   /**
@@ -26,6 +44,14 @@ class User extends Model {
    */
   public static function hash_password($password) {
     return md5($password);
+  }
+
+  /**
+   * Fetch the profile picture associated with this user.
+   * @return Upload The profile picture associated with this user.
+   */
+  private function associated_profile_picture() {
+    return Upload::find_by_attribute('user_profile_picture_id', $this->id);
   }
 
   /**

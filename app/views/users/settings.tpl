@@ -3,6 +3,20 @@
 {block name=container}
 
 <h1>Profile settings</h1>
+
+<!-- Profile picture -->
+{image_path image=$current_user->profile_picture default="profile_picture.jpg"}
+<form
+  data-dropzone="single"
+  enctype="multipart/form-data"
+  action="{$site_root}/users/profile_picture"
+  method="POST">
+
+  <input type="hidden" name="MAX_FILE_SIZE" value="300000000">
+  <input type="file" name="profile_picture">
+  <input type="submit" value="Add a profile picture">
+</form>
+
 <form action="{$site_root}/users/save_settings" type="POST">
   <input name="first_name" type="text" value="{$current_user->first_name}">
   <input name="last_name" type="text" value="{$current_user->last_name}">

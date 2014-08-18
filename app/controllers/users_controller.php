@@ -95,10 +95,21 @@ class UsersController extends Controller {
   }
 
   /**
+   * POST /users/profile_picture -> #add_profile_picture
+   */
+  public function profile_picture() {
+    if ($this->request->is_post()) {
+      $this->add_profile_picture();
+    } else {
+      $this->method_not_allowed();
+    }
+  }
+
+  /**
    * Display the sign in form.
    */
   private function sign_in_get() {
-    $this->render('users/sign_in', array('sign_in_error' => false));
+    $this->render('users/sign_in', ['sign_in_error' => false]);
   }
 
   /**
@@ -152,6 +163,19 @@ class UsersController extends Controller {
   private function reload_current_user() {
     $this->current_user->reload();
     Session::store_user($this->current_user);
+  }
+
+  /**
+   * Add a profile picture to the current user.
+   */
+  private function add_profile_picture() {
+    $upload = Upload::create_from_uploaded_file($_FILES['profile_picture']);
+
+    $this->current_user->update_profile_picture($upload);
+
+    redirect('/users/settings', [
+      'notice' => 'Profile picture changed successfully.'
+    ]);
   }
 }
 ?>
