@@ -7,7 +7,7 @@
   {include file='partials/javascripts.tpl'}
 </head>
 
-<body>
+<body class="{$controller_name} {$controller_action}">
   <div id="container">
     {include file='partials/flashes.tpl'}
     {block name=container}Default container.{/block}

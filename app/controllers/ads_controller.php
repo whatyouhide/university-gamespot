@@ -5,26 +5,20 @@ class AdsController extends Controller {
    * List all the ads.
    */
   public function index() {
-    $game_ads = Ad::where(['type' => 'game']);
-    $accessory_ads = Ad::where(['type' => 'accessory']);
-
     $this->render('ads/index', [
-      'game_ads' => $game_ads,
-      'accessory_ads' => $accessory_ads
+      'game_ads' => Ad::where(['type' => 'game']),
+      'accessory_ads' => Ad::where(['type' => 'accessory'])
     ]);
   }
 
   /**
-   * GET /ads/show
-   *
-   * Parameters:
-   * - id: the id of the ad
+   * GET /ads/show?id=1
    */
   public function show() {
     $ad = Ad::find($this->params['id']);
 
     if ($ad) {
-      $this->render('ads/show', array('ad' => $ad));
+      $this->render('ads/show', ['ad' => $ad]);
     } else {
       $this->render_error(404);
     }
@@ -32,7 +26,7 @@ class AdsController extends Controller {
 
   /**
    * GET /ads/nuevo
-   * Display the form which creates a new ad.
+   * Create a new ad and redirect to the newly created ad's edit page.
    */
   public function nuevo() {
     $ad = Ad::create([
@@ -49,6 +43,7 @@ class AdsController extends Controller {
    */
   public function edit() {
     $ad = Ad::find($this->params['id']);
+
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
     $accessories = $this->all_records_for_select('Accessory');
@@ -62,13 +57,14 @@ class AdsController extends Controller {
   }
 
   /**
-   * POST /ads/create
+   * POST /ads/update?id=1
    * Create a new ad and then redirect to the current user's profile.
    */
   public function update() {
-    $type = $this->params['ad_type'];
+    $ad = Ad::find($this->params['id']);
+    $type = $ad->type;
 
-    Ad::create([
+    $ad->update([
       'city' => $this->params['city'],
       'description' => $this->params['description'],
       'price' => $this->params['price'],
@@ -78,7 +74,7 @@ class AdsController extends Controller {
       "{$type}_id" => $this->params[$type . '_id']
     ]);
 
-    redirect('/users/profile', $flash);
+    redirect("/ads/edit?id={$ad->id}", ['notice' => 'Ad updated successfully']);
   }
 
   /**

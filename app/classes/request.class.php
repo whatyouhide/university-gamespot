@@ -5,14 +5,7 @@ class Request {
    * the request method.
    */
   public function __construct() {
-    switch($this->method()) {
-    case 'GET':
-      $this->params = $_GET;
-      break;
-    case 'POST':
-      $this->params = $_POST;
-      break;
-    }
+    $this->params = array_merge($_GET, $_POST);
   }
 
   /**

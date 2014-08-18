@@ -9,7 +9,18 @@ class Controller {
     'internal_server_error' => 500
   );
 
-  function __construct() {
+  /**
+   * @var string The action to cal on the newly created controller.
+   */
+  private $action_to_call;
+
+  /**
+   * Create a new controller object and call `$action` on it.
+   * @param string $action The action to call on the newly created controller.
+   */
+  function __construct($action) {
+    $this->action_to_call = $action;
+
     // Setup some instance variables.
     $this->smarty = new GamespotSmarty;
     $this->db = new DB;
@@ -21,6 +32,13 @@ class Controller {
 
     // Setup the current user.
     $this->setup_current_user();
+
+    $this->smarty->assign('controller_name', $this->controller_name());
+    $this->smarty->assign('controller_action', $this->action_to_call);
+
+    // Call the action.
+    $action = $this->action_to_call;
+    $this->$action();
   }
 
   /**
@@ -90,6 +108,16 @@ class Controller {
 
     $this->current_user = Session::user();
     $this->smarty->assign('current_user', $this->current_user);
+  }
+
+  /**
+   * The name of this controller.
+   * @return string The name of this controller, lowercase and without the
+   *         `Controller` part.
+   */
+  private function controller_name() {
+    $name = strtolower(get_class($this));
+    return str_replace('controller', '', $name);
   }
 }
 ?>

@@ -51,6 +51,5 @@ $controllerClass = $controllerClass . 'Controller';
 
 
 // Create the controller and call the provided action on it.
-$controller = new $controllerClass;
-$controller->$action();
+new $controllerClass($action);
 ?>

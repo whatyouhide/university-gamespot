@@ -22,27 +22,70 @@ class Ad extends Model {
    * Also insert a row in the `games_ads` or `accessories_ads` tables.
    */
   public static function create($attributes) {
-    $new_ad = parent::create($attributes);
     $type = $attributes['type'];
-    $foreign_id_name = $type . '_id';
 
-    if (!isset($attributes[$foreign_id_name])) { return $new_ad; }
+    // The name of the foreign key column, like `game_id`.
+    $foreign_key_column = $type . '_id';
 
-    $foreign_id = $attributes[$foreign_id_name];
-    unset($attributes[$foreign_id_name]);
+    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
+    // $attributes "as is" to the `create` function.
+    if (isset($attributes[$foreign_key_column])) {
+      $foreign_id = $attributes[$foreign_key_column];
+      unset($attributes[$foreign_key_column]);
+    }
 
-    if ($type == 'game') {
+    // Create the new ad.
+    $new_ad = parent::create($attributes);
+
+    // Update the join table if there's a foreign_key.
+    if ($foreign_id) { $new_ad->update_join_table($foreign_id); }
+
+    return $new_ad;
+  }
+
+  /**
+   * {@inheritdoc}
+   * Also update the join table if necessary.
+   */
+  public function update($attributes) {
+    // The name of the foreign key column, like `game_id`.
+    $foreign_key_column = $this->type . '_id';
+
+    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
+    // $attributes "as is" to the `create` function.
+    if (isset($attributes[$foreign_key_column])) {
+      $foreign_id = $attributes[$foreign_key_column];
+      unset($attributes[$foreign_key_column]);
+    }
+
+    // Create the new ad.
+    parent::update($attributes);
+
+    // Update the join table if there's a foreign_key.
+    if ($foreign_id) { $this->update_join_table($foreign_id); }
+
+    return $this;
+  }
+
+  /**
+   * Update the join table for the association with Game or Accessory.
+   * @param int|string $foreign_id The id of the game/accessory associated with
+   *        this ad.
+   */
+  public function update_join_table($foreign_id) {
+    if ($this->type == 'game') {
       $join_table = 'games_ads';
-    } else if ($type == 'accessory') {
+    } else if ($this->type == 'accessory') {
       $join_table = 'accessories_ads';
     }
 
-    $q = "INSERT "
-      . "INTO `$join_table`(`ad_id`, `$foreign_id_name`)"
-      . "VALUES ('{$new_ad->id}', '$foreign_id')";
+    $foreign_key_column = $this->type . '_id';
+
+    $query = "INSERT"
+      . " INTO `$join_table`(`ad_id`, `$foreign_key_column`)"
+      . " VALUES ('{$this->id}', '$foreign_id')";
 
     Db::query($q);
-    return $new_ad;
   }
 
   /**
