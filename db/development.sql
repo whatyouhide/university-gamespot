@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 127.0.0.1 (MySQL 5.5.34)
+# Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-17 16:44:30 +0000
+# Generation Time: 2014-08-18 08:10:32 +0000
 # ************************************************************
 
 
@@ -49,14 +49,18 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table accessory_ads
+# Dump of table accessories_ads
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `accessory_ads`;
+DROP TABLE IF EXISTS `accessories_ads`;
 
-CREATE TABLE `accessory_ads` (
+CREATE TABLE `accessories_ads` (
   `ad_id` int(11) unsigned NOT NULL,
-  `accessory_id` int(11) unsigned NOT NULL
+  `accessory_id` int(11) unsigned NOT NULL,
+  KEY `accessories_ads_references_ad` (`ad_id`),
+  KEY `accessories_ads_references_accessory` (`accessory_id`),
+  CONSTRAINT `accessories_ads_references_accessory` FOREIGN KEY (`accessory_id`) REFERENCES `accessories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `accessories_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -74,6 +78,7 @@ CREATE TABLE `ads` (
   `city` varchar(50) NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   `console_id` int(11) unsigned NOT NULL,
+  `type` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `ad_belongs_to_user` (`author_id`),
   KEY `ad_belongs_to_console` (`console_id`),
@@ -84,13 +89,17 @@ CREATE TABLE `ads` (
 LOCK TABLES `ads` WRITE;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
 
-INSERT INTO `ads` (`id`, `created_at`, `price`, `description`, `city`, `author_id`, `console_id`)
+INSERT INTO `ads` (`id`, `created_at`, `price`, `description`, `city`, `author_id`, `console_id`, `type`)
 VALUES
-	(3,'2014-08-17 12:56:18',69.99,'Sed cursus rhoncus erat et porta. Cras in sem porttitor, pretium sapien vel, dignissim dolor. Quisque feugiat est eu lectus lobortis scelerisque. Donec mollis eros ut nibh rhoncus, quis facilisis nunc eleifend. Donec imperdiet gravida mattis. Maecenas hendrerit placerat velit nec pulvinar. Mauris accumsan eros non neque ultricies, id gravida purus sollicitudin. Donec lacinia dapibus lectus ultrices placerat.','Roma',1,1),
-	(5,'2014-08-17 12:56:19',66,'Donec lectus orci, vehicula quis mi at, eleifend euismod dolor. Suspendisse euismod tempus diam non vehicula. Duis lacinia porta nibh, id porta nisi posuere nec. Morbi consectetur velit et elit ornare aliquam. Cras pellentesque purus ut dignissim euismod. Nunc varius lobortis massa non pretium. Nam convallis sed dui non euismod. Maecenas consequat metus non magna ultrices vestibulum. Vestibulum egestas volutpat est ac condimentum. Maecenas neque lacus, venenatis auctor placerat vel, consectetur id magna. Donec vel consequat turpis, non gravida diam.','Roma',1,2),
-	(6,'2014-08-17 12:56:19',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni',1,3),
-	(7,'2014-08-17 12:56:20',55,'Aliquam vulputate hendrerit tortor quis venenatis. Phasellus id nulla nec justo interdum feugiat in quis augue. Maecenas at turpis et nunc condimentum fermentum. Nulla vitae tortor eget justo aliquet tincidunt ut at velit. Maecenas tempor, quam vitae pellentesque cursus, tellus orci hendrerit mauris, vitae porttitor leo quam id nibh. Integer suscipit purus vel scelerisque scelerisque. Morbi posuere ante sagittis placerat varius.','Roma',1,4),
-	(8,'2014-08-17 12:56:23',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara',1,4);
+	(3,'2014-08-17 19:24:30',69.99,'Sed cursus rhoncus erat et porta. Cras in sem porttitor, pretium sapien vel, dignissim dolor. Quisque feugiat est eu lectus lobortis scelerisque. Donec mollis eros ut nibh rhoncus, quis facilisis nunc eleifend. Donec imperdiet gravida mattis. Maecenas hendrerit placerat velit nec pulvinar. Mauris accumsan eros non neque ultricies, id gravida purus sollicitudin. Donec lacinia dapibus lectus ultrices placerat.','Roma',1,1,'game'),
+	(5,'2014-08-17 19:24:33',66,'Donec lectus orci, vehicula quis mi at, eleifend euismod dolor. Suspendisse euismod tempus diam non vehicula. Duis lacinia porta nibh, id porta nisi posuere nec. Morbi consectetur velit et elit ornare aliquam. Cras pellentesque purus ut dignissim euismod. Nunc varius lobortis massa non pretium. Nam convallis sed dui non euismod. Maecenas consequat metus non magna ultrices vestibulum. Vestibulum egestas volutpat est ac condimentum. Maecenas neque lacus, venenatis auctor placerat vel, consectetur id magna. Donec vel consequat turpis, non gravida diam.','Roma',1,2,'game'),
+	(6,'2014-08-17 19:24:35',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni',1,3,'game'),
+	(7,'2014-08-17 19:24:36',55,'Aliquam vulputate hendrerit tortor quis venenatis. Phasellus id nulla nec justo interdum feugiat in quis augue. Maecenas at turpis et nunc condimentum fermentum. Nulla vitae tortor eget justo aliquet tincidunt ut at velit. Maecenas tempor, quam vitae pellentesque cursus, tellus orci hendrerit mauris, vitae porttitor leo quam id nibh. Integer suscipit purus vel scelerisque scelerisque. Morbi posuere ante sagittis placerat varius.','Roma',1,4,'game'),
+	(8,'2014-08-17 19:24:37',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara',1,4,'game'),
+	(9,'2014-08-17 19:24:39',2,'dwqedqwedwq','fqrfq',4,1,'game'),
+	(10,'2014-08-17 19:37:58',2,'dqwwqfqw','333ieieie',4,1,'game'),
+	(11,'2014-08-17 19:38:38',33233,'dwedqwewqfqw','dqedqe',4,1,'game'),
+	(12,'2014-08-17 19:41:31',2413,'deqfr','098765432',4,1,'game');
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -204,8 +213,8 @@ CREATE TABLE `games_ads` (
   `game_id` int(11) unsigned NOT NULL,
   KEY `games_ads_references_game` (`game_id`),
   KEY `game_ads_references_ad` (`ad_id`),
-  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON UPDATE NO ACTION,
-  CONSTRAINT `games_ads_references_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON UPDATE NO ACTION
+  CONSTRAINT `games_ads_references_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON UPDATE NO ACTION,
+  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `games_ads` WRITE;
@@ -217,7 +226,8 @@ VALUES
 	(5,2),
 	(6,3),
 	(7,4),
-	(8,5);
+	(8,5),
+	(12,1);
 
 /*!40000 ALTER TABLE `games_ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -371,8 +381,8 @@ CREATE TABLE `uploads` (
   PRIMARY KEY (`id`),
   KEY `upload_belongs_to_game` (`game_cover_id`),
   KEY `upload_belongs_to_user_as_profile_picture` (`user_profile_picture_id`),
-  CONSTRAINT `upload_belongs_to_user_as_profile_picture` FOREIGN KEY (`user_profile_picture_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `upload_belongs_to_user_as_profile_picture` FOREIGN KEY (`user_profile_picture_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `uploads` WRITE;

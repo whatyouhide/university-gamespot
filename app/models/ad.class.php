@@ -8,8 +8,13 @@ class Ad extends Model {
    */
   public function __construct($attributes) {
     parent::__construct($attributes);
-    $this->game = $this->associated_game();
     $this->author = $this->associated_author();
+
+    if ($this->type == 'game') {
+      $this->game = $this->associated_game();
+    } else if ($this->type == 'accessory') {
+      $this->accessory = $this->associated_accessory();
+    }
   }
 
   /**
@@ -45,10 +50,24 @@ class Ad extends Model {
     $q = "SELECT `games`.* "
       . "FROM `games` "
       . "INNER JOIN `games_ads` "
-      . "ON `games`.`id` = `games_ads`.`game_id`"
+      . "ON `games`.`id` = `games_ads`.`game_id` "
       . "WHERE `games_ads`.`ad_id` = '{$this->id}'";
 
     return self::instantiate_model_from_query('Game', $q);
+  }
+
+  /**
+   * Find the accessory associated with this ad.
+   * @return Accessory The accessory associated with this ad.
+   */
+  private function associated_accessory() {
+    $q = "SELECT `accessories`.* "
+      . "FROM `accessories` "
+      . "INNER JOIN `accessories_ads` "
+      . "ON `accessories`.`id` = `accessories_ads`.`accessory_id` "
+      . "WHERE `accessories_ads`.`ad_id` = '{$this->id}'";
+
+    return self::instantiate_model_from_query('Accessory', $q);
   }
 
   /**

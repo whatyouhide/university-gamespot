@@ -5,8 +5,13 @@ class AdsController extends Controller {
    * List all the ads.
    */
   public function index() {
-    $ads = Ad::all();
-    $this->render('ads/index', array('ads' => $ads));
+    $game_ads = Ad::where(['type' => 'game']);
+    $accessory_ads = Ad::where(['type' => 'accessory']);
+
+    $this->render('ads/index', [
+      'game_ads' => $game_ads,
+      'accessory_ads' => $accessory_ads
+    ]);
   }
 
   /**
