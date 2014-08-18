@@ -32,9 +32,7 @@ class AdsController extends Controller {
   public function nuevo() {
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
-
-    // TODO we're still missing an Accessory model
-    $accessories = array();
+    $accessories = $this->all_records_for_select('Accessory');
 
     $this->render('ads/nuevo', array(
       'ad_type' => $this->params['type'],
