@@ -61,6 +61,4 @@ class Game extends Model {
     return Upload::find_by_attribute('game_cover_id', $this->id);
   }
 }
-
-Game::$db = new DB();
 ?>

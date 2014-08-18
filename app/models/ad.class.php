@@ -22,6 +22,11 @@ class Ad extends Model {
    * Also insert a row in the `games_ads` or `accessories_ads` tables.
    */
   public static function create($attributes) {
+    $new_ad = parent::create($attributes);
+    var_dump($new_ad);
+
+    if (!isset($attributes[$foreign_id_name])) { return $new_ad; }
+
     $type = $attributes['type'];
     $foreign_id_name = $type . '_id';
 
@@ -34,12 +39,13 @@ class Ad extends Model {
       $join_table = 'accessories_ads';
     }
 
-    $new_ad = parent::create($attributes);
     $q = "INSERT "
       . "INTO `$join_table`(`ad_id`, `$foreign_id_name`)"
       . "VALUES ('{$new_ad->id}', '$foreign_id')";
 
-    static::$db->query($q);
+
+    Db::query($q);
+    return $new_ad;
   }
 
   /**
@@ -82,6 +88,4 @@ class Ad extends Model {
     return self::instantiate_model_from_query('User', $q);
   }
 }
-
-Ad::$db = new DB();
 ?>

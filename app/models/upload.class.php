@@ -31,6 +31,4 @@ class Upload extends Model {
     parent::destroy();
   }
 }
-
-Upload::$db = new DB;
 ?>

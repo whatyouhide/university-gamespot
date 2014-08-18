@@ -35,23 +35,33 @@ class AdsController extends Controller {
    * Display the form which creates a new ad.
    */
   public function nuevo() {
+    $ad = Ad::create(['type' => $this->params['type']]);
+    redirect("/ads/edit", array(), ['id' => $ad->id]);
+  }
+
+  /**
+   * GET /ads/edit?id=1
+   * Display the form which edits an ad.
+   */
+  public function edit() {
+    $ad = Ad::find($this->params['id']);
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
     $accessories = $this->all_records_for_select('Accessory');
 
-    $this->render('ads/nuevo', array(
-      'ad_type' => $this->params['type'],
+    $this->render('ads/edit', [
+      'ad' => $ad,
       'console_names' => $consoles,
       'game_names' => $games,
       'accessory_names' => $accessories
-    ));
+    ]);
   }
 
   /**
    * POST /ads/create
    * Create a new ad and then redirect to the current user's profile.
    */
-  public function create() {
+  public function update() {
     $type = $this->params['ad_type'];
 
     Ad::create([

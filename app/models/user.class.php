@@ -80,6 +80,4 @@ class User extends Model {
     return $attrs;
   }
 }
-
-User::$db = new DB();
 ?>

@@ -6,11 +6,6 @@ class Model {
   private $attrs;
 
   /**
-   * @var DB A reference to the db for this model.
-   */
-  public static $db;
-
-  /**
    * @var string The table name of the current model.
    * @abstract
    */
@@ -80,8 +75,9 @@ class Model {
    */
   public function destroy() {
     $t = static::$table_name;
-    $q = "DELETE FROM `$t` WHERE `id` = '{$this->id}'";
-    static::$db->query($q);
+    Db::query("DELETE FROM `$t` WHERE `id` = '{$this->id}'");
+
+    // Unset the attributes of this PHP object.
     foreach ($this->attrs as $attr => $val) {
       unset($this->attrs[$attr]);
     }
@@ -104,16 +100,14 @@ class Model {
     $i = 0;
     foreach ($attributes as $attr => $val) {
       $q .= " `$t`.`$attr` = '$val'";
-
       // If it's not the last iteration, append a comma.
       if ($i < count($attributes) - 1) $q .= ', ';
-
       $i++;
     }
 
     $q .= " WHERE `$t`.`id` = '{$this->id}'";
 
-    static::$db->query($q);
+    Db::query($q);
 
     return $this->reload();
   }
@@ -130,7 +124,7 @@ class Model {
   /**
    * Find a record by its id.
    * @param integer|string $id The id of the record to be found.
-   * @return mixed The found record if present, otherwise null.
+   * @return null|mixed The found record if present, otherwise null.
    */
   public static function find($id) {
     $instances = self::where(['id' => $id]);
@@ -141,6 +135,7 @@ class Model {
    * Find a record by a specific attribute.
    * @param string $attr_name The name of the attribute.
    * @param mixed $value The value of the attribute.
+   * @return null|mixed The found record or null.
    */
   public static function find_by_attribute($attr_name, $value) {
     $instances = self::where([$attr_name => $value]);
@@ -155,7 +150,7 @@ class Model {
    */
   public static function where($attributes) {
     // Return now if there are no attributes to search on.
-    if (count($attributes) == 0) { return self::all(); }
+    if (empty($attributes)) { return self::all(); }
 
     // Build the query.
     $t = static::$table_name;
@@ -176,10 +171,12 @@ class Model {
 
     // Build the query and issue it against the db.
     $q = "INSERT INTO `$t`($attrs_names) VALUES ($attrs_values)";
-    self::$db->query($q);
+    Db::query($q);
+
+    echo Db::last_insert_id();
 
     // Return the newly inserted record.
-    return self::find(static::$db->last_insert_id());
+    return self::find(Db::last_insert_id());
   }
 
   /**
@@ -190,7 +187,7 @@ class Model {
    * @return array An array of instances of the calling class
    */
   protected static function new_instances_from_query($query) {
-    $results = static::$db->get_rows($query);
+    $results = Db::get_rows($query);
     return array_map('self::instantiate', $results);
   }
 
@@ -212,10 +209,8 @@ class Model {
    * @return mixed A new instance of `$model`.
    */
   protected static function instantiate_model_from_query($model, $query) {
-    $records = static::$db->get_rows($query);
-    if (empty($records)) return null;
-
-    return new $model($records[0]);
+    $records = Db::get_rows($query);
+    return empty($records) ? null : (new $model($records[0]));
   }
 
   /**

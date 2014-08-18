@@ -1,7 +1,7 @@
 {extends 'frontend.tpl'}
 
 {block name=content}
-<form action="{$site_root}/ads/create" method="POST">
+<form action="{$site_root}/ads/update" method="POST">
   <div class="field">
     <label for="city">City</label>
     <input name="city" type="text">

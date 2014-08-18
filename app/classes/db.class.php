@@ -1,29 +1,67 @@
 <?php
+class Db {
+  /**
+   * @var object A mysqli connection object.
+   */
+  public static $connection = NULL;
 
-// Wrapper around the underlying db. This class abstracts all the db implementation
-// (in this case `mysqli` behavior needed in the application.
-class DB {
+  /**
+   * @var array Options to connect to the MySQL db.
+   */
+  public static $options = [
+    'host' => 'localhost',
+    'user' => 'root',
+    'password' => 'root',
+    'db' => 'gamespot',
+    'port' => 3306
+  ];
 
-  // A `connection` property which will be instanciated to a `mysqli` instance
-  public $connection = NULL;
+  /**
+   * Initialize the db connection and raise an exception if something goes
+   * wrong.
+   */
+  public static function init() {
+    self::$connection = new mysqli(
+      self::$options['host'],
+      self::$options['user'],
+      self::$options['password'],
+      self::$options['db'],
+      self::$options['port']
+    );
 
-  // Create a new object and set its `connection` property by creating a new
-  // mysqli instance which is connected to te MySQL db.
-  function __construct() {
-    $this->connection = new mysqli( 'localhost', 'root', 'root', 'gamespot', 3306 );
-    $error = $this->connection->error;
-    if ( $error ) {
-      throw new Exception("Unable to connect to the db ({$db->connection->errno}): {$error}");
-    }
+    self::throw_connection_error_if_present();
   }
 
-  // Execute a query on the underlying db
-  public function query($q) {
-    return $this->connection->query($q);
+  /**
+   * Issue a query to the db.
+   * @param string $q The query to issue.
+   */
+  public static function query($q) {
+    return self::$connection->query($q);
   }
 
-  // Transform the result of a previously executed query into an array of rows.
-  public function query_to_rows($query_result) {
+  /**
+   * Extract rows as an array from a query.
+   * @param string $q The query to retrieve the rows.
+   */
+  public static function get_rows($q) {
+    return self::query_to_rows(self::query($q));
+  }
+
+  /**
+   * Return the id of the last inserted record.
+   * @return int The id of the last inserted record.
+   */
+  public static function last_insert_id() {
+    return self::$connection->insert_id;
+  }
+
+  /**
+   * Convert the result of a query to an array (rows).
+   * @param mixed $query_result The result of a mysqli query.
+   * @return array An array of rows.
+   */
+  private static function query_to_rows($query_result) {
     $rows = array();
 
     if (!$query_result) return $rows;
@@ -37,31 +75,16 @@ class DB {
     return $rows;
   }
 
-  // Get the rows associated with the query `$q`
-  public function get_rows($q) {
-    $res = $this->query($q);
-    return $this->query_to_rows($res);
-  }
-
-  // Retrieve the error number of the underlying db
-  public function get_error_no() {
-    return $this->connection->errno;
-  }
-
-  // Retrieve the error of the underlying fb
-  public function get_error() {
-    return $this->connection->error;
-  }
-
-  // Returns true if the result of a previously executed query is empty.
-  public function is_empty_query( $res ) {
-    return $res->num_rows == 0;
-  }
-
-  // Returns the `id` of the last inserted element (via an INSERT INTO).
-  public function last_insert_id() {
-    return $this->connection->insert_id;
+  /**
+   * Throw an an exception if there has been a connection error.
+   */
+  private static function throw_connection_error_if_present() {
+    $error = self::$connection->error;
+    if ($error) {
+      $number = self::$connection->errno;
+      $msg = "Unable to connect to the db ($number): $error";
+      throw new Exception($msg);
+    }
   }
 }
-
 ?>

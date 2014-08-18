@@ -19,6 +19,4 @@ class Accessory extends Model {
     return Upload::find_by_attribute('accessory_image_id', $this->id);
   }
 }
-
-Accessory::$db = new DB;
 ?>

@@ -14,10 +14,9 @@ class ModelTest extends \Codeception\TestCase\Test {
 
   public function testAll() {
     // Clean the 'users' table.
-    $db = new DB;
-    $db->query('SET FOREIGN_KEY_CHECKS=0');
-    $db->query('TRUNCATE `users`');
-    $db->query('SET FOREIGN_KEY_CHECKS=1');
+    Db::query('SET FOREIGN_KEY_CHECKS=0');
+    Db::query('TRUNCATE `users`');
+    Db::query('SET FOREIGN_KEY_CHECKS=1');
 
     $this->assertEquals(intval(count(User::all())), 0);
 

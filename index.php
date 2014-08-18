@@ -29,6 +29,9 @@ include 'setup/includes.php';
 session_start();
 Session::init();
 
+// Connect to the database.
+Db::init();
+
 // Retrieve the controller and the action (default to index) from $_GET, which
 // is itself set by .htaccess.
 // The controller name and the action have the form:
