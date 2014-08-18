@@ -35,7 +35,7 @@ class Request {
    * Extract the request method from the CGI $_SERVER array.
    * @return string The request method
    */
-  private function method() {
+  public function method() {
     return $_SERVER['REQUEST_METHOD'];
   }
 }

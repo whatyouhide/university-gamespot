@@ -1,5 +1,14 @@
 <?php
 class Controller {
+  /**
+   * @var array An associative array that maps named HTTP error to codes.
+   */
+  private static $message_to_code = array(
+    'not_found' => 404,
+    'method_not_allowed' => 405,
+    'internal_server_error' => 500
+  );
+
   function __construct() {
     // Setup some instance variables.
     $this->smarty = new GamespotSmarty;
@@ -31,13 +40,37 @@ class Controller {
     die();
   }
 
-  /** Render an error page and set the HTTP response code.
+  /**
+   * Render an error page and set the HTTP response code.
    * @param int|string $error_no An error number which will render the
-   *        corresponding template in 'errors/', like 'errors/404.tpl'.
+   *        corresponding template in 'errors/' like 'errors/404_not_found.tpl',
+   *        or an error name (like 'not_found') which will be translated to an
+   *        error code.
+   * @param array $additional_data This data will be passed as is to the
+   *        rendered template.
    */
-  public function render_error($error_no) {
+  public function render_error($error, $additional_data = array()) {
+    if (is_int($error)) {
+      $error_no = $error;
+      $message = array_search($error_no, self::$message_to_code);
+      $template_name = "{$error_no}_{$message}";
+    } else {
+      $error_no = self::$message_to_code[$error];
+      $template_name = "{$error_no}_{$error}";
+    }
+
     http_response_code($error_no);
-    $this->render('errors/' . $error_no);
+    $this->render('errors/' . $template_name, $additional_data);
+  }
+
+  /**
+   * Render the proper error for when a request method is not allowed on an
+   * action.
+   */
+  public function method_not_allowed() {
+    $this->render_error('method_not_allowed', [
+      'method' => $this->request->method()
+    ]);
   }
 
   /**
