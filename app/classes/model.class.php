@@ -173,8 +173,6 @@ class Model {
     $q = "INSERT INTO `$t`($attrs_names) VALUES ($attrs_values)";
     Db::query($q);
 
-    echo Db::last_insert_id();
-
     // Return the newly inserted record.
     return self::find(Db::last_insert_id());
   }

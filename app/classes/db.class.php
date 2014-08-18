@@ -29,7 +29,7 @@ class Db {
       self::$options['port']
     );
 
-    self::throw_connection_error_if_present();
+    self::throw_exception_if_error();
   }
 
   /**
@@ -37,7 +37,9 @@ class Db {
    * @param string $q The query to issue.
    */
   public static function query($q) {
-    return self::$connection->query($q);
+    $result = self::$connection->query($q);
+    self::throw_exception_if_error();
+    return $result;
   }
 
   /**
@@ -78,12 +80,11 @@ class Db {
   /**
    * Throw an an exception if there has been a connection error.
    */
-  private static function throw_connection_error_if_present() {
+  private static function throw_exception_if_error() {
     $error = self::$connection->error;
+
     if ($error) {
-      $number = self::$connection->errno;
-      $msg = "Unable to connect to the db ($number): $error";
-      throw new Exception($msg);
+      throw new Exception("Error with the database: $error");
     }
   }
 }

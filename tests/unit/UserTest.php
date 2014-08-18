@@ -32,7 +32,7 @@ class UserTest extends \Codeception\TestCase\Test {
 
   public function testUpdatePassword() {
     $user = User::create([
-      'email' => 'a@b.com',
+      'email' => 'testinupdatepassword@b.com',
       'password' => '3145yh4qtegr'
     ]);
 

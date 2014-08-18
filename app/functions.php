@@ -23,7 +23,7 @@ function mysql_timestamp() {
 // Print an object surrounded by a <pre> tag.
 function echo_debug($obj) {
   echo '<pre>';
-  print_r($obj);
+  var_dump($obj);
   echo '</pre>';
 }
 

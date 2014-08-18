@@ -23,12 +23,10 @@ class Ad extends Model {
    */
   public static function create($attributes) {
     $new_ad = parent::create($attributes);
-    var_dump($new_ad);
-
-    if (!isset($attributes[$foreign_id_name])) { return $new_ad; }
-
     $type = $attributes['type'];
     $foreign_id_name = $type . '_id';
+
+    if (!isset($attributes[$foreign_id_name])) { return $new_ad; }
 
     $foreign_id = $attributes[$foreign_id_name];
     unset($attributes[$foreign_id_name]);
@@ -42,7 +40,6 @@ class Ad extends Model {
     $q = "INSERT "
       . "INTO `$join_table`(`ad_id`, `$foreign_id_name`)"
       . "VALUES ('{$new_ad->id}', '$foreign_id')";
-
 
     Db::query($q);
     return $new_ad;

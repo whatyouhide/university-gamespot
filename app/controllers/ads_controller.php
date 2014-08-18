@@ -35,7 +35,11 @@ class AdsController extends Controller {
    * Display the form which creates a new ad.
    */
   public function nuevo() {
-    $ad = Ad::create(['type' => $this->params['type']]);
+    $ad = Ad::create([
+      'type' => $this->params['type'],
+      'author_id' => $this->current_user->id
+    ]);
+
     redirect("/ads/edit", array(), ['id' => $ad->id]);
   }
 
