@@ -18,6 +18,15 @@ class Ad extends Model {
   }
 
   /**
+   * All the published ads.
+   * @return array All the published ads.
+   */
+  public static function published() {
+    $query = "SELECT * FROM `ads` WHERE `published` = '1'";
+    return self::new_instances_from_query($query);
+  }
+
+  /**
    * {@inheritdoc}
    * Also insert a row in the `games_ads` or `accessories_ads` tables.
    */
@@ -62,7 +71,7 @@ class Ad extends Model {
     parent::update($attributes);
 
     // Update the join table if there's a foreign_key.
-    if ($foreign_id) { $this->update_join_table($foreign_id); }
+    if (isset($foreign_id)) { $this->update_join_table($foreign_id); }
 
     return $this;
   }
@@ -73,19 +82,26 @@ class Ad extends Model {
    *        this ad.
    */
   public function update_join_table($foreign_id) {
-    if ($this->type == 'game') {
+    $type = $this->type;
+
+    if ($type == 'game') {
       $join_table = 'games_ads';
-    } else if ($this->type == 'accessory') {
+      $foreign_key_column = 'game_id';
+      $model = 'Game';
+    } else if ($type == 'accessory') {
       $join_table = 'accessories_ads';
+      $foreign_key_column = 'accessory_id';
+      $model = 'Accessory';
     }
 
-    $foreign_key_column = $this->type . '_id';
+    $query = "INSERT INTO `$join_table`(`ad_id`, `$foreign_key_column`)"
+      . " VALUES ('{$this->id}', '$foreign_id')"
+      . " ON DUPLICATE KEY"
+      . " UPDATE `ad_id`=VALUES(ad_id), `$foreign_key_column`=VALUES($foreign_key_column)";
 
-    $query = "INSERT"
-      . " INTO `$join_table`(`ad_id`, `$foreign_key_column`)"
-      . " VALUES ('{$this->id}', '$foreign_id')";
+    Db::query($query);
 
-    Db::query($q);
+    $this->$type = $model::find($foreign_id);
   }
 
   /**

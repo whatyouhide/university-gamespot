@@ -5,9 +5,22 @@ class AdsController extends Controller {
    * List all the ads.
    */
   public function index() {
+    $all = Ad::published();
+
+    $game_ads = array();
+    $accessory_ads = array();
+
+    foreach ($all as $ad) {
+      if ($ad->type == 'game') {
+        array_push($game_ads, $ad);
+      } else if ($ad->type == 'accessory') {
+        array_push($accessory_ads, $ad);
+      }
+    }
+
     $this->render('ads/index', [
-      'game_ads' => Ad::where(['type' => 'game']),
-      'accessory_ads' => Ad::where(['type' => 'accessory'])
+      'game_ads' => $game_ads,
+      'accessory_ads' => $accessory_ads
     ]);
   }
 
@@ -71,7 +84,8 @@ class AdsController extends Controller {
       'type' => $type,
       'author_id' => $this->current_user->id,
       'console_id' => $this->params['console_id'],
-      "{$type}_id" => $this->params[$type . '_id']
+      "{$type}_id" => $this->params[$type . '_id'],
+      'published' => $this->params['published']
     ]);
 
     redirect("/ads/edit?id={$ad->id}", ['notice' => 'Ad updated successfully']);
