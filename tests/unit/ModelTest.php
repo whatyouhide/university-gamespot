@@ -75,6 +75,15 @@ class ModelTest extends \Codeception\TestCase\Test {
     $this->assertEquals($user->email, $new_email);
   }
 
+  public function testDestroy() {
+    $email = 'test@destroying.com';
+    $user = $this->create_user_with_email($email);
+
+    $user->destroy();
+    $this->codeGuy->dontSeeInDatabase('users', ['email' => $email]);
+    $this->assertFalse(isset($user->attributes()['email']));
+  }
+
   public function testGet() {
     $email = 'my@email.com';
     $user = $this->create_user_with_email($email);

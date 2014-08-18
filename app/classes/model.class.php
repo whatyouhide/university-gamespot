@@ -76,6 +76,18 @@ class Model {
   }
 
   /**
+   * Remove the current record from the database.
+   */
+  public function destroy() {
+    $t = static::$table_name;
+    $q = "DELETE FROM `$t` WHERE `id` = '{$this->id}'";
+    static::$db->query($q);
+    foreach ($this->attrs as $attr => $val) {
+      unset($this->attrs[$attr]);
+    }
+  }
+
+  /**
    * Update a record with a new set of attributes.
    * @param array $attributes A new set of attributes.
    * @return mixed The updated record.
