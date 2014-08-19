@@ -43,7 +43,7 @@ class Game extends Model {
     $q = "SELECT
       `ads`.`id` AS `ad_id`, `$t`.*,
       COUNT(*) `number_of_ads`
-      FROM `game_ads`
+      FROM `games_ads`
       JOIN `$t` ON `games_ads`.`game_id` = `games`.`id`
       JOIN `ads` ON `games_ads`.`ad_id` = `ads`.`id`
       GROUP BY `$t`.`name`

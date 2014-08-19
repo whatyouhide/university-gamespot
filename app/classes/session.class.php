@@ -44,6 +44,15 @@ class Session {
   }
 
   /**
+   * Append a bunch of flash messages to the current session.
+   * @param array $messages
+   */
+  public static function append_flash_messages($messages) {
+    if (!isset($_SESSION['flash'])) self::empty_flash();
+    $_SESSION['flash'] = array_merge($_SESSION['flash'], $messages);
+  }
+
+  /**
    * Return the flash array contained in the session.
    * @return array The flash array
    */
