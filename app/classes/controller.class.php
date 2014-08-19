@@ -16,6 +16,21 @@ class Controller {
   );
 
   /**
+   * @var Smarty A Smarty instance.
+   */
+  protected $smarty;
+
+  /**
+   * @var Request A request instance for the current request.
+   */
+  protected $request;
+
+  /**
+   * @var Mailer A mailer instance.
+   */
+  protected $mailer;
+
+  /**
    * @var string The action to cal on the newly created controller.
    */
   private $action_to_call;
@@ -27,25 +42,15 @@ class Controller {
   function __construct($action) {
     $this->action_to_call = $action;
 
-    // Setup some instance variables.
-    $this->smarty = new GamespotSmarty;
-    $this->db = new DB;
-    $this->request = new Request;
-    $this->mailer = new Mailer;
+    $this->setup_external_instance_variables();
+    $this->setup_current_user();
+    $this->assign_smarty_default_variables();
 
     // Just a proxy to access the current request params.
     $this->params = $this->request->params;
 
-    // Setup the current user.
-    $this->setup_current_user();
-
-    // Assign the controller name and the controller action to Smarty variables.
-    $this->smarty->assign('controller_name', $this->controller_name());
-    $this->smarty->assign('controller_action', $this->action_to_call);
-
     // Call the action.
-    $action = $this->action_to_call;
-    $this->$action();
+    $this->dispatch_action();
   }
 
   /**
@@ -99,11 +104,42 @@ class Controller {
   }
 
   /**
+   * Setup some instance variables.
+   */
+  private function setup_external_instance_variables() {
+    $this->smarty = new GamespotSmarty;
+    $this->request = new Request;
+    $this->mailer = new Mailer;
+  }
+
+  /**
+   * Call the `action_to_call` action or render a 404 not found if there's no
+   * such action.
+   */
+  private function dispatch_action() {
+    $action = $this->action_to_call;
+
+    if (method_exists($this, $action)) {
+      $this->$action();
+    } else {
+      $this->render_error(404);
+    }
+  }
+
+  /**
    * Assign the 'flash' Smarty variable and clean the flash from the session.
    */
   private function setup_and_clean_flash() {
     $this->smarty->assign('flash', Session::current_flash());
     Session::empty_flash();
+  }
+
+  /**
+   * Assign some common Smarty variables like the controller name and action.
+   */
+  private function assign_smarty_default_variables() {
+    $this->smarty->assign('controller_name', $this->controller_name());
+    $this->smarty->assign('controller_action', $this->action_to_call);
   }
 
   /**
