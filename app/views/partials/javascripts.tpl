@@ -4,4 +4,7 @@
 
 <script src="{$javascripts}/dropzone.js"></script>
 <script src="{$javascripts}/data-confirm.js"></script>
-<script src="{$javascripts}/pages/{$controller_name}.js"></script>
+
+{if file_exists('{$root}/app/assets/javascripts/pages/{$controller_name}.js')}
+  <script src="{$javascripts}/pages/{$controller_name}.js"></script>
+{/if}
