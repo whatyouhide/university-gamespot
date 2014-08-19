@@ -57,6 +57,10 @@ class AdsController extends Controller {
   public function edit() {
     $ad = Ad::find($this->params['id']);
 
+    if ($ad->author_id != $this->current_user->id) {
+      $this->render_error('forbidden');
+    }
+
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
     $accessories = $this->all_records_for_select('Accessory');

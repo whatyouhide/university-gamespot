@@ -4,6 +4,7 @@ class Controller {
    * @var array An associative array that maps named HTTP error to codes.
    */
   private static $message_to_code = array(
+    'forbidden' => 403,
     'not_found' => 404,
     'method_not_allowed' => 405,
     'internal_server_error' => 500
