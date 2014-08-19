@@ -39,6 +39,7 @@ class Controller {
     // Setup the current user.
     $this->setup_current_user();
 
+    // Assign the controller name and the controller action to Smarty variables.
     $this->smarty->assign('controller_name', $this->controller_name());
     $this->smarty->assign('controller_action', $this->action_to_call);
 
