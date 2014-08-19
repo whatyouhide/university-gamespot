@@ -18,7 +18,7 @@ class Game extends Model {
    */
   public static function recently_added($limit = 5) {
     $t = static::$table_name;
-    $q = "SELECT * FROM `$t` ORDER BY `added_at` DESC LIMIT $limit";
+    $q = "SELECT * FROM `$t` ORDER BY `created_at` DESC LIMIT $limit";
     return self::new_instances_from_query($q);
   }
 
