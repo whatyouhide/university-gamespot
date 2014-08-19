@@ -11,6 +11,10 @@ include 'lib/smarty/libs/Smarty.class.php';
  * A wrapper class around the `Smarty` class.
  */
 class GamespotSmarty extends Smarty {
+  /**
+   * Call the parent `__construct` function and setup some Gamespot related
+   * stuff.
+   */
   function __construct() {
     parent::__construct();
     $this->set_configs();
