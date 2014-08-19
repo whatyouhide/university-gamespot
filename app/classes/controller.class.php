@@ -66,9 +66,9 @@ class Controller {
    * container in `$hidden_instance_variable` to the Smarty instance (à là
    * Rails).
    * @param string $template A template path. If this doesn't end with '.tpl',
-   *        it will be taken care of automagically.
+   * it will be taken care of automagically.
    * @param array $assigns An array of 'name' => 'value' which is passed to
-   *        Smarty in order to assign variables.
+   * Smarty in order to assign variables.
    */
   public function render($template, $assigns = array()) {
     $this->setup_and_clean_flash();
@@ -82,12 +82,12 @@ class Controller {
 
   /**
    * Render an error page and set the HTTP response code.
-   * @param int|string $error_no An error number which will render the
-   *        corresponding template in 'errors/' like 'errors/404_not_found.tpl',
-   *        or an error name (like 'not_found') which will be translated to an
-   *        error code.
+   * @param int|string $error An error number which will render the
+   * corresponding template in 'errors/' like 'errors/404_not_found.tpl',
+   * or an error name (like 'not_found') which will be translated to an
+   * error code.
    * @param array $additional_data This data will be passed as is to the
-   *        rendered template.
+   * rendered template.
    */
   public function render_error($error, $additional_data = array()) {
     if (is_int($error)) {
@@ -137,6 +137,9 @@ class Controller {
   }
 
   /**
+   * Assign all the instance variables of this controller to the Smarty instance
+   * attached to this controller, except for the instance variables listed in
+   * the `$hidden_instance_variables` array.
    */
   private function assign_non_hidden_variables_to_smarty() {
     $all_variables = get_object_vars($this);
@@ -188,6 +191,8 @@ class Controller {
    * Assign a value to an instance variable and add the instance variable to the
    * list of hidden instance variables (the ones that won't be passed to the
    * rendered template automatically).
+   * @param string $name The name of the instance variable to set.
+   * @param mixed $value The value of the instance variable.
    */
   private function set_hidden_instance_variable($name, $value) {
     // Start with an array with only the `hidden_instance_variables` variable in
