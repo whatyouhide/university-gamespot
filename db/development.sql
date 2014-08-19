@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-18 16:28:23 +0000
+# Generation Time: 2014-08-19 10:32:06 +0000
 # ************************************************************
 
 
@@ -63,6 +63,15 @@ CREATE TABLE `accessories_ads` (
   CONSTRAINT `accessories_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `accessories_ads` WRITE;
+/*!40000 ALTER TABLE `accessories_ads` DISABLE KEYS */;
+
+INSERT INTO `accessories_ads` (`ad_id`, `accessory_id`)
+VALUES
+	(18,2);
+
+/*!40000 ALTER TABLE `accessories_ads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table ads
@@ -97,10 +106,8 @@ VALUES
 	(6,'2014-08-17 19:24:35',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni','game',1,1,3),
 	(7,'2014-08-17 19:24:36',55,'Aliquam vulputate hendrerit tortor quis venenatis. Phasellus id nulla nec justo interdum feugiat in quis augue. Maecenas at turpis et nunc condimentum fermentum. Nulla vitae tortor eget justo aliquet tincidunt ut at velit. Maecenas tempor, quam vitae pellentesque cursus, tellus orci hendrerit mauris, vitae porttitor leo quam id nibh. Integer suscipit purus vel scelerisque scelerisque. Morbi posuere ante sagittis placerat varius.','Roma','game',1,1,4),
 	(8,'2014-08-17 19:24:37',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara','game',1,1,4),
-	(9,'2014-08-17 19:24:39',2,'dwqedqwedwq','fqrfq','game',1,4,1),
-	(10,'2014-08-17 19:37:58',2,'dqwwqfqw','333ieieie','game',1,4,1),
-	(11,'2014-08-17 19:38:38',33233,'dwedqwewqfqw','dqedqe','game',1,4,1),
-	(12,'2014-08-17 19:41:31',2413,'deqfr','098765432','game',1,4,1);
+	(18,'2014-08-19 12:20:11',30,'In ut elementum ipsum. Morbi justo erat, blandit eget eleifend quis, lacinia id sapien. Vivamus in enim vitae tellus rhoncus gravida. Sed aliquet mi dolor. Integer gravida ante lectus, a ultrices urna sodales et. Pellentesque dictum magna ac tempor molestie. Donec et risus at orci lacinia elementum quis id purus. Aenean varius est id velit commodo, eget malesuada neque laoreet. Nunc vel nisi eget mi tempus elementum.','NYC','accessory',0,4,2),
+	(20,'2014-08-19 12:30:31',25,'Fifa 14 is a good game.','Los Angeles','game',0,4,1);
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -212,10 +219,11 @@ DROP TABLE IF EXISTS `games_ads`;
 CREATE TABLE `games_ads` (
   `ad_id` int(11) unsigned NOT NULL,
   `game_id` int(11) unsigned NOT NULL,
+  UNIQUE KEY `ad_id` (`ad_id`),
   KEY `games_ads_references_game` (`game_id`),
   KEY `game_ads_references_ad` (`ad_id`),
-  CONSTRAINT `games_ads_references_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON UPDATE NO ACTION,
-  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON UPDATE NO ACTION
+  CONSTRAINT `game_ads_references_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `games_ads` WRITE;
@@ -228,7 +236,7 @@ VALUES
 	(6,3),
 	(7,4),
 	(8,5),
-	(12,1);
+	(20,5);
 
 /*!40000 ALTER TABLE `games_ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -382,10 +390,13 @@ CREATE TABLE `uploads` (
   `user_profile_picture_id` int(11) unsigned DEFAULT NULL,
   `game_cover_id` int(11) unsigned DEFAULT NULL,
   `accessory_image_id` int(11) unsigned DEFAULT NULL,
+  `ad_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `upload_belongs_to_game` (`game_cover_id`),
   KEY `upload_belongs_to_user_as_profile_picture` (`user_profile_picture_id`),
   KEY `upload_belongs_to_accessory` (`accessory_image_id`),
+  KEY `upload_belongs_to_ad` (`ad_id`),
+  CONSTRAINT `upload_belongs_to_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_accessory` FOREIGN KEY (`accessory_image_id`) REFERENCES `accessories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_user_as_profile_picture` FOREIGN KEY (`user_profile_picture_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -394,9 +405,9 @@ CREATE TABLE `uploads` (
 LOCK TABLES `uploads` WRITE;
 /*!40000 ALTER TABLE `uploads` DISABLE KEYS */;
 
-INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`)
+INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`, `ad_id`)
 VALUES
-	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL);
+	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -427,7 +438,8 @@ VALUES
 	(2,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-02-23 12:20:13','Andrea','Leopardi'),
 	(3,'blogger@gamespot.com','9c1252fa60c847783a5281273c8a5d0c','2014-03-03 00:49:02','Blogga','Tore'),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff'),
-	(5,'a@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 13:21:20',NULL,NULL);
+	(5,'a@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 13:21:20',NULL,NULL),
+	(6,'testinupdatepassword@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 18:36:46',NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
