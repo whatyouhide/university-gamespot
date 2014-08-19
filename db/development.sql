@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-19 13:44:55 +0000
+# Generation Time: 2014-08-19 22:56:48 +0000
 # ************************************************************
 
 
@@ -69,7 +69,10 @@ LOCK TABLES `accessories_ads` WRITE;
 INSERT INTO `accessories_ads` (`ad_id`, `accessory_id`)
 VALUES
 	(22,1),
-	(22,1);
+	(22,1),
+	(22,1),
+	(22,1),
+	(22,2);
 
 /*!40000 ALTER TABLE `accessories_ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -107,7 +110,8 @@ VALUES
 	(6,'2014-08-17 19:24:35',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni','game',1,1,3),
 	(7,'2014-08-17 19:24:36',55,'Aliquam vulputate hendrerit tortor quis venenatis. Phasellus id nulla nec justo interdum feugiat in quis augue. Maecenas at turpis et nunc condimentum fermentum. Nulla vitae tortor eget justo aliquet tincidunt ut at velit. Maecenas tempor, quam vitae pellentesque cursus, tellus orci hendrerit mauris, vitae porttitor leo quam id nibh. Integer suscipit purus vel scelerisque scelerisque. Morbi posuere ante sagittis placerat varius.','Roma','game',1,1,4),
 	(8,'2014-08-17 19:24:37',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara','game',1,1,4),
-	(22,'2014-08-19 15:44:22',33,'r2r23r21','r2r','accessory',1,4,1);
+	(22,'2014-08-19 15:44:22',33,'r2r23r21','r2r','accessory',1,4,1),
+	(23,'2014-08-19 17:41:25',33,'Hello description','Rome','game',1,4,1);
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -235,6 +239,7 @@ VALUES
 	(5,2),
 	(6,3),
 	(7,4),
+	(23,4),
 	(8,5);
 
 /*!40000 ALTER TABLE `games_ads` ENABLE KEYS */;
@@ -406,7 +411,11 @@ LOCK TABLES `uploads` WRITE;
 
 INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`, `ad_id`)
 VALUES
-	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL,NULL);
+	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL,NULL),
+	(18,'18/1373496404.jpg',331732,'image/jpeg','2014-08-19 18:02:02',NULL,NULL,NULL,23),
+	(19,'19/1373299467.jpg',230637,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
+	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
+	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
