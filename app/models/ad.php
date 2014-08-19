@@ -157,6 +157,26 @@ class Ad extends Model {
   }
 
   /**
+   * Return the cover image for this ad.
+   * @return Upload
+   */
+  public function main_image() {
+    return isset($this->images[0]) ? $this->images[0] : null;
+  }
+
+  /**
+   * Return all the images except the main one.
+   * @return array An array of `Upload` objects.
+   */
+  public function remaining_images() {
+    if ($this->images && count($this->images) > 1) {
+      return array_slice($this->images, 1);
+    } else {
+      return array();
+    }
+  }
+
+  /**
    * The images associated with this ad.
    */
   private function associated_images() {
