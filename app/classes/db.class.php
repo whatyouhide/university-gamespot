@@ -1,4 +1,9 @@
 <?php
+/**
+ * This class is an interface to the underlying db.
+ * @package Gamespot
+ * @subpackage Common
+ */
 class Db {
   /**
    * @var object A mysqli connection object.
@@ -19,6 +24,7 @@ class Db {
   /**
    * Initialize the db connection and raise an exception if something goes
    * wrong.
+   * @throws Exception If something goes wrong with the db.
    */
   public static function init() {
     self::$connection = new mysqli(
@@ -34,20 +40,20 @@ class Db {
 
   /**
    * Issue a query to the db.
-   * @param string $q The query to issue.
+   * @param string $query
    */
-  public static function query($q) {
-    $result = self::$connection->query($q);
+  public static function query($query) {
+    $result = self::$connection->query($query);
     self::throw_exception_if_error();
     return $result;
   }
 
   /**
    * Extract rows as an array from a query.
-   * @param string $q The query to retrieve the rows.
+   * @param string $query
    */
-  public static function get_rows($q) {
-    return self::query_to_rows(self::query($q));
+  public static function get_rows($query) {
+    return self::query_to_rows(self::query($query));
   }
 
   /**
@@ -79,6 +85,7 @@ class Db {
 
   /**
    * Throw an an exception if there has been a connection error.
+   * @throws Exception
    */
   private static function throw_exception_if_error() {
     $error = self::$connection->error;

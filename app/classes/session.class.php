@@ -1,4 +1,9 @@
 <?php
+/**
+ * An abstraction over the `$_SESSION` object, build in a singleton-style way.
+ * @package Gamespot
+ * @subpackage Common
+ */
 class Session {
   /**
    * Setup the session, create some useful variables like the flash.

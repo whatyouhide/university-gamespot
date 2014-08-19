@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class GamesController extends Controller {
   /**
    * GET /games

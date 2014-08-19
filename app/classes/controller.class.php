@@ -1,4 +1,9 @@
 <?php
+/**
+ * The base controller class (every controller inherits from this class).
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class Controller {
   /**
    * @var array An associative array that maps named HTTP error to codes.

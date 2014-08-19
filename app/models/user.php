@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Gamespot
+ * @subpackage Models
+ */
 class User extends Model {
   public static $table_name = 'users';
 

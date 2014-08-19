@@ -1,4 +1,9 @@
 <?php
+/**
+ * The base model class which all models inherit from.
+ * @package Gamespot
+ * @subpackage Models
+ */
 class Model {
   /**
    * @var array An array of attributes for the current instance.
@@ -114,7 +119,7 @@ class Model {
 
   /**
    * Return all the records for the current model.
-   * @return array An array of records.
+   * @return array
    */
   public static function all() {
     $t = static::$table_name;
@@ -214,7 +219,7 @@ class Model {
   /**
    * Return a WHERE clause in the form 'WHERE a1 = v1 AND a2 = v2' from a given
    * set of attributes.
-   * @param array $attributes An arrau of 'attr' => 'val' attributes
+   * @param array $attributes An array of 'attr' => 'val' attributes
    * @return string A MySQL WHERE clause
    */
   private static function build_where_clauses_from($attributes) {

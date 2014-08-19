@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Gamespot
+ * @subpackage Models
+ */
 class Upload extends Model {
   public static $table_name = 'uploads';
 

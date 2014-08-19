@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class AdsController extends Controller {
   /**
    * GET /ads

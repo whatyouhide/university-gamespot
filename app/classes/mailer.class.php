@@ -1,6 +1,14 @@
 <?php
+/**
+ * This file contains a wrapper class around the `PHPMailer` class.
+ * @package Gamespot
+ * @subpackage Common
+ */
 require 'lib/phpmailer/PHPMailerAutoload.php';
 
+/**
+ * A wrapper class around the `PHPMailer` class.
+ */
 class Mailer {
   private $mail;
   private $sent_successfully;

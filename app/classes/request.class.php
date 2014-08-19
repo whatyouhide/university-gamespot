@@ -1,4 +1,9 @@
 <?php
+/**
+ * An abstraction over an HTTP request.
+ * @package Gamespot
+ * @subpackage Common
+ */
 class Request {
   /**
    * Create a new Request object and set the `params` instance variable based on
@@ -25,8 +30,8 @@ class Request {
   }
 
   /**
-   * Extract the request method from the CGI $_SERVER array.
-   * @return string The request method
+   * Extract and return the request method from the CGI `$_SERVER` array.
+   * @return string
    */
   public function method() {
     return $_SERVER['REQUEST_METHOD'];

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class UsersController extends Controller {
   /**
    * GET /users/sign_in

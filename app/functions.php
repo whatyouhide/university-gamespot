@@ -1,5 +1,12 @@
 <?php
 /**
+ * This file contains common functions used throughout the application.
+ * @package Gamespot
+ * @subpackage Common
+ * @author Andrea Leopardi <an.leopardi@gmail.com>
+ */
+
+/**
  * Redirect to a page in the site, relative to `SITE_ROOT`.
  * Example:
  * <code>

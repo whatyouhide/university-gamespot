@@ -1,6 +1,7 @@
 <?php
-// Handle internal server errors first, so that every PHP error is presented as
-// a 500 error.
+/**
+ * Handle errors with a 500 Internal Server Error.
+ */
 function error_handler() {
   // An array of errors which need to be handled with a 500 Internal Server
   // Error.
