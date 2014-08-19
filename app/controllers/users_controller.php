@@ -51,10 +51,10 @@ class UsersController extends Controller {
     $ads = Ad::where(['author_id' => $this->current_user->id]);
     $ads = Ad::separate_game_and_accessory($ads);
 
-    $this->render('users/profile', [
-      'game_ads' => $ads['game_ads'],
-      'accessory_ads' => $ads['accessory_ads']
-    ]);
+    $this->game_ads = $ads['game_ads'];
+    $this->accessory_ads = $ads['accessory_ads'];
+
+    $this->render('users/profile');
   }
 
   /**
@@ -112,9 +112,10 @@ class UsersController extends Controller {
     $upload = Upload::create_from_uploaded_file($_FILES['profile_picture']);
     $this->current_user->update_profile_picture($upload);
 
-    redirect('/users/settings', [
-      'notice' => 'Profile picture changed successfully.'
-    ]);
+    redirect(
+      '/users/settings',
+      ['notice' => 'Profile picture changed successfully.']
+    );
   }
 
   /**

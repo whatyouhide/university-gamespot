@@ -9,23 +9,22 @@ class AdsController extends Controller {
    * List all the ads.
    */
   public function index() {
-    $all = Ad::published();
-    $separated = Ad::separate_game_and_accessory($all);
+    $separated = Ad::separate_game_and_accessory(Ad::published());
 
-    $this->render('ads/index', [
-      'game_ads' => $separated['game_ads'],
-      'accessory_ads' => $separated['accessory_ads']
-    ]);
+    $this->game_ads = $separated['game_ads'];
+    $this->accessory_ads = $separated['accessory_ads'];
+
+    $this->render('ads/index');
   }
 
   /**
    * GET /ads/show?id=1
    */
   public function show() {
-    $ad = Ad::find($this->params['id']);
+    $this->ad = Ad::find($this->params['id']);
 
-    if ($ad) {
-      $this->render('ads/show', ['ad' => $ad]);
+    if ($this->ad) {
+      $this->render('ads/show');
     } else {
       $this->render_error(404);
     }
@@ -49,18 +48,13 @@ class AdsController extends Controller {
    * Display the form which edits an ad.
    */
   public function edit() {
-    $ad = $this->ad_protected_for_current_user($this->params['id']);
+    $this->ad = $this->ad_protected_for_current_user($this->params['id']);
 
-    $consoles = $this->all_records_for_select('Console');
-    $games = $this->all_records_for_select('Game');
-    $accessories = $this->all_records_for_select('Accessory');
+    $this->console_names = $this->all_records_for_select('Console');
+    $this->game_names = $this->all_records_for_select('Game');
+    $this->accessorie_names = $this->all_records_for_select('Accessory');
 
-    $this->render('ads/edit', [
-      'ad' => $ad,
-      'console_names' => $consoles,
-      'game_names' => $games,
-      'accessory_names' => $accessories
-    ]);
+    $this->render('ads/edit');
   }
 
   /**
@@ -82,7 +76,11 @@ class AdsController extends Controller {
       'published' => $this->params['published']
     ]);
 
-    redirect("/ads/edit?id={$ad->id}", ['notice' => 'Ad updated successfully']);
+    redirect(
+      '/ads/edit',
+      ['notice' => 'Ad updated successfully'],
+      ['id' => $ad->id]
+    );
   }
 
   /**

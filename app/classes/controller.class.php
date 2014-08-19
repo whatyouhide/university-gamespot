@@ -16,6 +16,12 @@ class Controller {
   );
 
   /**
+   * @var array Instance variables that won't be passed to the rendered template
+   *            automatically.
+   */
+  protected $hidden_instance_variables;
+
+  /**
    * @var Smarty A Smarty instance.
    */
   protected $smarty;
@@ -40,14 +46,14 @@ class Controller {
    * @param string $action The action to call on the newly created controller.
    */
   function __construct($action) {
-    $this->action_to_call = $action;
+    $this->set_hidden_instance_variable('action_to_call', $action);
 
     $this->setup_external_instance_variables();
     $this->setup_current_user();
     $this->assign_smarty_default_variables();
 
     // Just a proxy to access the current request params.
-    $this->params = $this->request->params;
+    $this->set_hidden_instance_variable('params', $this->request->params);
 
     // Call the action.
     $this->dispatch_action();
@@ -56,6 +62,9 @@ class Controller {
   /**
    * Render the Smarty template at `$template` (which is conventionally located
    * inside a directory with the same name of the current controller).
+   * Also assign every instance variable of the controller which is not
+   * container in `$hidden_instance_variable` to the Smarty instance (à là
+   * Rails).
    * @param string $template A template path. If this doesn't end with '.tpl',
    *        it will be taken care of automagically.
    * @param array $assigns An array of 'name' => 'value' which is passed to
@@ -63,6 +72,7 @@ class Controller {
    */
   public function render($template, $assigns = array()) {
     $this->setup_and_clean_flash();
+    $this->assign_non_hidden_variables_to_smarty();
     $this->smarty->mass_assign($assigns);
     $this->smarty->render($template);
 
@@ -107,9 +117,9 @@ class Controller {
    * Setup some instance variables.
    */
   private function setup_external_instance_variables() {
-    $this->smarty = new GamespotSmarty;
-    $this->request = new Request;
-    $this->mailer = new Mailer;
+    $this->set_hidden_instance_variable('smarty', new GamespotSmarty);
+    $this->set_hidden_instance_variable('request', new Request);
+    $this->set_hidden_instance_variable('mailer', new Mailer);
   }
 
   /**
@@ -123,6 +133,18 @@ class Controller {
       $this->$action();
     } else {
       $this->render_error(404);
+    }
+  }
+
+  /**
+   */
+  private function assign_non_hidden_variables_to_smarty() {
+    $all_variables = get_object_vars($this);
+
+    foreach ($all_variables as $var => $value) {
+      if (!in_array($var, $this->hidden_instance_variables)) {
+        $this->smarty->assign($var, $value);
+      }
     }
   }
 
@@ -147,10 +169,9 @@ class Controller {
    * assign that same variable to Smarty.
    */
   private function setup_current_user() {
-    if (!Session::user()) return;
-
-    $this->current_user = Session::user();
-    $this->smarty->assign('current_user', $this->current_user);
+    if (Session::user()) {
+      $this->current_user = Session::user();
+    }
   }
 
   /**
@@ -161,6 +182,25 @@ class Controller {
   private function controller_name() {
     $name = strtolower(get_class($this));
     return str_replace('controller', '', $name);
+  }
+
+  /**
+   * Assign a value to an instance variable and add the instance variable to the
+   * list of hidden instance variables (the ones that won't be passed to the
+   * rendered template automatically).
+   */
+  private function set_hidden_instance_variable($name, $value) {
+    // Start with an array with only the `hidden_instance_variables` variable in
+    // it.
+    if (!isset($this->hidden_instance_variables)) {
+      $this->hidden_instance_variables = ['hidden_instance_variables'];
+    }
+
+    // Add the instance variable to the array of hidden instance variables.
+    array_push($this->hidden_instance_variables, $name);
+
+    // Set the instance variables.
+    $this->$name = $value;
   }
 }
 ?>
