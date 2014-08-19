@@ -149,6 +149,14 @@ class Ad extends Model {
   }
 
   /**
+   * Tells whether an ad is a draft or has been published.
+   * @return bool
+   */
+  public function is_draft() {
+    return $this->published == '0';
+  }
+
+  /**
    * The images associated with this ad.
    */
   private function associated_images() {

@@ -45,8 +45,12 @@
   {/if}
 
   <div class="field">
-    <input type="submit" value="Save">
-    <button data-hijack data-confirm="Are you sure?">Pubblica</button>
+    {if $ad->published eq "0"}
+      <input type="submit" value="Save">
+      <button data-hijack data-confirm="Are you sure?">Pubblica</button>
+    {else}
+      <input type="submit" value="Update">
+    {/if}
   </div>
 </form>
 
