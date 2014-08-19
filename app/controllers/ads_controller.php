@@ -6,21 +6,11 @@ class AdsController extends Controller {
    */
   public function index() {
     $all = Ad::published();
-
-    $game_ads = array();
-    $accessory_ads = array();
-
-    foreach ($all as $ad) {
-      if ($ad->type == 'game') {
-        array_push($game_ads, $ad);
-      } else if ($ad->type == 'accessory') {
-        array_push($accessory_ads, $ad);
-      }
-    }
+    $separated = Ad::separate_game_and_accessory($all);
 
     $this->render('ads/index', [
-      'game_ads' => $game_ads,
-      'accessory_ads' => $accessory_ads
+      'game_ads' => $separated['game_ads'],
+      'accessory_ads' => $separated['accessory_ads']
     ]);
   }
 
@@ -56,10 +46,7 @@ class AdsController extends Controller {
    */
   public function edit() {
     $ad = Ad::find($this->params['id']);
-
-    if ($ad->author_id != $this->current_user->id) {
-      $this->render_error('forbidden');
-    }
+    $this->ensure_ad_belongs_to_current_user($ad);
 
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
@@ -93,6 +80,17 @@ class AdsController extends Controller {
     ]);
 
     redirect("/ads/edit?id={$ad->id}", ['notice' => 'Ad updated successfully']);
+  }
+
+  /**
+   * GET /ads/destroy?id=1
+   */
+  public function destroy() {
+    $ad = Ad::find($this->params['id']);
+    $this->ensure_ad_belongs_to_current_user($ad);
+
+    $ad->destroy();
+    redirect('/users/profile', ['notice' => 'Destroyed successfully.']);
   }
 
   /**
@@ -157,5 +155,17 @@ class AdsController extends Controller {
 
     return array_combine($ids, $names);
   }
+
+  /**
+   * Render a 403 forbidden error if the argument ad doesn't belong to the
+   * current user.
+   * @param Ad $ad The ad that needs to belong to the current user.
+   */
+  private function ensure_ad_belongs_to_current_user($ad) {
+    if ($ad->author_id != $this->current_user->id) {
+      $this->render_error('forbidden');
+    }
+  }
+
 }
 ?>

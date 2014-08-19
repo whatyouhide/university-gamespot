@@ -40,11 +40,17 @@ class UsersController extends Controller {
    * Display a user's profile if she's logged in, or redirect to the home page.
    */
   public function profile() {
-    if (Session::user()) {
-      $this->render('users/profile');
-    } else {
+    if (!Session::user()) {
       redirect('/', ['error' => 'You need to be logged in.']);
     }
+
+    $ads = Ad::where(['author_id' => $this->current_user->id]);
+    $ads = Ad::separate_game_and_accessory($ads);
+
+    $this->render('users/profile', [
+      'game_ads' => $ads['game_ads'],
+      'accessory_ads' => $ads['accessory_ads']
+    ]);
   }
 
   /**

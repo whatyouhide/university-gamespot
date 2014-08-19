@@ -9,6 +9,7 @@ class Ad extends Model {
   public function __construct($attributes) {
     parent::__construct($attributes);
     $this->author = $this->associated_author();
+    $this->console = $this->associated_console();
 
     if ($this->type == 'game') {
       $this->game = $this->associated_game();
@@ -24,6 +25,26 @@ class Ad extends Model {
   public static function published() {
     $query = "SELECT * FROM `ads` WHERE `published` = '1'";
     return self::new_instances_from_query($query);
+  }
+
+  /**
+   * Separate the given array of ads in a two-elements array with game ads and
+   * accessory ads.
+   * @param array $ads An array of ads.
+   * @return array A two-element array with keys 'game_ads' and 'accessory_ads'.
+   */
+  public static function separate_game_and_accessory($ads) {
+    $result = ['game_ads' => array(), 'accessory_ads' => array()];
+
+    foreach ($ads as $ad) {
+      if ($ad->type == 'game') {
+        array_push($result['game_ads'], $ad);
+      } else if ($ad->type == 'accessory') {
+        array_push($result['accessory_ads'], $ad);
+      }
+    }
+
+    return $result;
   }
 
   /**
@@ -102,6 +123,18 @@ class Ad extends Model {
     Db::query($query);
 
     $this->$type = $model::find($foreign_id);
+  }
+
+  /**
+   * Find the console associated with this ad.
+   * @return Console The console associated with this ad.
+   */
+  private function associated_console() {
+    $q = "SELECT *"
+      . " FROM `consoles`"
+      . " WHERE `id` = '{$this->console_id}'";
+
+    return self::instantiate_model_from_query('Console', $q);
   }
 
   /**
