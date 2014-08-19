@@ -38,19 +38,19 @@ Db::init();
 // The controller name and the action have the form:
 //   some_controller/some_action      # the action is 'some_action'
 //   some_controller/                 # defaults to the 'index' action
-$controllerName = empty($_GET['controller']) ? 'application' : $_GET['controller'];
+$controller_name = empty($_GET['controller']) ? 'application' : $_GET['controller'];
 $action = empty($_GET['action']) ? 'index' : $_GET['action'];
 
 
-// Convert the `$controllerName` into an actual class name. Practically,
+// Convert the `$controller_name` into an actual class name. Practically,
 // remove underscores and make it CamelCase, then add the 'Controller' word at
 // the end.
-$controllerClass = str_replace('_', ' ', $controllerName);
-$controllerClass = ucwords($controllerClass);
-$controllerClass = str_replace(' ', '', $controllerClass);
-$controllerClass = $controllerClass . 'Controller';
+$controller_class = str_replace('_', ' ', $controller_name);
+$controller_class = ucwords($controller_class);
+$controller_class = str_replace(' ', '', $controller_class);
+$controller_class = $controller_class . 'Controller';
 
 
 // Create the controller and call the provided action on it.
-new $controllerClass($action);
+new $controller_class($action);
 ?>
