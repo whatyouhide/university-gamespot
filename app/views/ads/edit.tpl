@@ -7,6 +7,16 @@
   <h2>Draft</h2>
 {/if}
 
+<form
+  class="dropzone"
+  action="{$site_root}/ads/upload_image?id={$ad->id}"
+  method="POST"
+>
+  <div class="fallback"><input name="file" type="file"></div>
+</form>
+
+{include file='ads/_list_of_images.tpl' images=$ad->images}
+
 <form action="{$site_root}/ads/update?id={$ad->id}" method="POST">
   <input type="hidden" name="published" value="{$ad->published}">
 

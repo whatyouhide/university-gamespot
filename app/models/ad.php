@@ -10,6 +10,7 @@ class Ad extends Model {
     parent::__construct($attributes);
     $this->author = $this->associated_author();
     $this->console = $this->associated_console();
+    $this->images = $this->associated_images();
 
     if ($this->type == 'game') {
       $this->game = $this->associated_game();
@@ -23,8 +24,7 @@ class Ad extends Model {
    * @return array All the published ads.
    */
   public static function published() {
-    $query = "SELECT * FROM `ads` WHERE `published` = '1'";
-    return self::new_instances_from_query($query);
+    return self::where(['published' => '1']);
   }
 
   /**
@@ -126,15 +126,38 @@ class Ad extends Model {
   }
 
   /**
+   * Add an image to this ad.
+   * @param Upload $image_upload The image to add to this ad.
+   */
+  public function add_image($image_upload) {
+    $image_upload->update(['ad_id' => $this->id]);
+    array_push($this->images, $image_upload);
+  }
+
+  /**
+   * Remove an image from this ad.
+   * @param int|string $image_id The id of the image to remove.
+   */
+  public function remove_image($image_id) {
+    $upload = Upload::find($image_id);
+    $upload->destroy();
+    $this->images = $this->associated_images();
+  }
+
+  /**
+   * The images associated with this ad.
+   */
+  private function associated_images() {
+    return Upload::where(['ad_id' => $this->id]);
+  }
+
+
+  /**
    * Find the console associated with this ad.
    * @return Console The console associated with this ad.
    */
   private function associated_console() {
-    $q = "SELECT *"
-      . " FROM `consoles`"
-      . " WHERE `id` = '{$this->console_id}'";
-
-    return self::instantiate_model_from_query('Console', $q);
+    return Console::find($this->console_id);
   }
 
   /**
@@ -170,11 +193,7 @@ class Ad extends Model {
    * @return User The user who created this ad.
    */
   private function associated_author() {
-    $q = "SELECT * "
-      . "FROM `users` "
-      . "WHERE `users`.`id` = '{$this->author_id}'";
-
-    return self::instantiate_model_from_query('User', $q);
+    return User::find($this->author_id);
   }
 }
 ?>

@@ -45,8 +45,7 @@ class AdsController extends Controller {
    * Display the form which edits an ad.
    */
   public function edit() {
-    $ad = Ad::find($this->params['id']);
-    $this->ensure_ad_belongs_to_current_user($ad);
+    $ad = $this->ad_protected_for_current_user($this->params['id']);
 
     $consoles = $this->all_records_for_select('Console');
     $games = $this->all_records_for_select('Game');
@@ -65,7 +64,7 @@ class AdsController extends Controller {
    * Create a new ad and then redirect to the current user's profile.
    */
   public function update() {
-    $ad = Ad::find($this->params['id']);
+    $ad = $this->ad_protected_for_current_user($this->params['id']);
     $type = $ad->type;
 
     $ad->update([
@@ -84,13 +83,34 @@ class AdsController extends Controller {
 
   /**
    * GET /ads/destroy?id=1
+   * Destroy an ad.
    */
   public function destroy() {
     $ad = Ad::find($this->params['id']);
-    $this->ensure_ad_belongs_to_current_user($ad);
 
     $ad->destroy();
     redirect('/users/profile', ['notice' => 'Destroyed successfully.']);
+  }
+
+  /**
+   * POST /ads/upload_image?id=1
+   * Upload an image for an ad.
+   * @internal Ajax
+   */
+  public function upload_image() {
+    $ad = $this->ad_protected_for_current_user($this->params['id']);
+    $upload = Upload::create_from_uploaded_file($_FILES['file']);
+    $ad->add_image($upload);
+  }
+
+  /**
+   * GET /ads/remove_image?id=1&image_id=1
+   * Remove an image from an ad.
+   */
+  public function remove_image() {
+    $ad = $this->ad_protected_for_current_user($this->params['id']);
+    $ad->remove_image($this->params['image_id']);
+    redirect('/ads/edit', ['notice' => 'Image successfully removed.'], ['id' => $ad->id]);
   }
 
   /**
@@ -157,15 +177,19 @@ class AdsController extends Controller {
   }
 
   /**
-   * Render a 403 forbidden error if the argument ad doesn't belong to the
-   * current user.
-   * @param Ad $ad The ad that needs to belong to the current user.
+   * Find the ad identified by `$id`, but render a 403 Forbidden error if that
+   * ad doesn't belong to the current user.
+   * @param int|string $id The id that identifies the ad.
+   * @return Ad The ad identified by `$id`.
    */
-  private function ensure_ad_belongs_to_current_user($ad) {
+  private function ad_protected_for_current_user($id) {
+    $ad = Ad::find($id);
+
     if ($ad->author_id != $this->current_user->id) {
       $this->render_error('forbidden');
+    } else {
+      return $ad;
     }
   }
-
 }
 ?>

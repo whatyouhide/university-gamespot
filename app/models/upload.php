@@ -5,30 +5,75 @@ class Upload extends Model {
   /**
    * Create an Upload record from a PHP-style uploaded files (generally taken
    * from `$_FILES`).
+   * @param mixed $file A file taken from `$_FILES`.
    * @return null|Upload A new upload record or null if the upload went bad.
    */
   public static function create_from_uploaded_file($file) {
-    $filename = $file['name'];
+    // Create a new upload without an `url` attribute (we need an `id`).
+    $new_upload = self::create_without_url($file);
 
-    $new_upload = Upload::create([
-      'url' => $filename,
-      'mime_type' => $file['type'],
-      'size' => $file['size']
-    ]);
+    // Create a directory named as the `id` of the newly created upload.
+    mkdir($new_upload->absolute_destination_dir());
 
-    $destination = UPLOADS_DIR . '/' . basename($filename);
-    $success = move_uploaded_file($file['tmp_name'], $destination);
+    // Move the uploaded file to the right directory and throw an exception if
+    // the upload failed.
+    if ($new_upload->move_uploaded($file)) {
+      $url = $new_upload->id . '/' . basename($file['name']);
+      return $new_upload->update(['url' => $url]);
+    } else {
+      throw new Exception("Upload failed");
+    }
+  }
 
-    return $success ? $new_upload : null;
+  /**
+   * Move an uploaded file to the destination directory for this  upload.
+   * @param mixed $file An uploaded file.
+   */
+  public function move_uploaded($file) {
+    return move_uploaded_file(
+      $file['tmp_name'],
+      $this->absolute_destination_dir() . '/' . basename($file['name'])
+    );
+  }
+
+  /**
+   * Return the destination directory of this upload.
+   * @return string The destination directory (absolute path) for this upload.
+   */
+  public function absolute_destination_dir() {
+    return (UPLOADS_DIR . '/' . $this->id);
   }
 
   /**
    * {@inheritdoc}
-   * Also destroy the actual uploaded file.
+   * Also destroy the actual uploaded file with its containing directory.
    */
   public function destroy() {
-    unlink(UPLOADS_DIR . '/' . $this->url);
+    unlink($this->absolute_path());
+    rmdir($this->absolute_destination_dir());
     parent::destroy();
   }
+
+  /**
+   * Create a new upload with no `url` attribute, with just a `mime_type` and a
+   * `size`.
+   * @param mixed $file An uploaded file.
+   * @return Upload An upload instance.
+   */
+  private static function create_without_url($file) {
+    return self::create([
+      'mime_type' => $file['type'],
+      'size' => $file['size']
+    ]);
+  }
+
+  /**
+   * Return the absolute path of this file on the server.
+   * @return string The absolute path of this file.
+   */
+  private function absolute_path() {
+    return (UPLOADS_DIR . '/' . $this->url);
+  }
+
 }
 ?>
