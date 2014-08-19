@@ -46,7 +46,7 @@
 
   <div class="field">
     <input type="submit" value="Save">
-    <button data-hijack>Pubblica</button>
+    <button data-hijack data-confirm="Are you sure?">Pubblica</button>
   </div>
 </form>
 

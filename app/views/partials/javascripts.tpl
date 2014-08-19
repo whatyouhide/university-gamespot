@@ -3,4 +3,5 @@
 <script src="{$lib}/javascripts/dropzone.js"></script>
 
 <script src="{$javascripts}/dropzone.js"></script>
+<script src="{$javascripts}/data-confirm.js"></script>
 <script src="{$javascripts}/pages/{$controller_name}.js"></script>
