@@ -7,7 +7,7 @@
     <article>
       <h1>
         Game ad:
-        <a href="{$site_root}/ads/show?id={$ad->id}">{$ad->game->name}</a>
+        <a href="{url to='/ads/show' id=$ad->id}">{$ad->game->name}</a>
       </h1>
 
       {include file='ads/_main_image_or_entity_image.tpl' entity_image=$ad->game->cover_image}
@@ -21,7 +21,7 @@
     <article>
       <h1>
         Accessory ad:
-        <a href="{$site_root}/ads/show?id={$ad->id}">{$ad->accessory->name}</a>
+        <a href="{url to='/ads/show' id=$ad->id}">{$ad->accessory->name}</a>
       </h1>
 
       {include file='ads/_main_image_or_entity_image.tpl' entity_image=$ad->accessory->image}
