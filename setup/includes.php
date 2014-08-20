@@ -9,6 +9,7 @@ include 'app/classes/model.class.php';
 include 'app/classes/controller.class.php';
 include 'app/classes/session.class.php';
 include 'app/classes/request.class.php';
+include 'app/classes/router.class.php';
 include 'app/classes/mailer.class.php';
 
 // Include some utility functions.
