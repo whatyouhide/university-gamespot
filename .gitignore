@@ -2,3 +2,4 @@ templates_c
 public/uploads
 tests/_log
 docs
+app/assets/stylesheets/application.css

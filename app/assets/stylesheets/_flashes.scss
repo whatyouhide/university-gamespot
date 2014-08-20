@@ -1,0 +1,6 @@
+.flashes {
+  .notice {
+    @include alert();
+    .close { @include alert-close(); }
+  }
+}
