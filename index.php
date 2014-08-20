@@ -6,7 +6,6 @@ include 'setup/includes.php';
 
 // Make $_SESSION available and initialize it.
 session_start();
-Session::init();
 
 // Connect to the database.
 Db::init();

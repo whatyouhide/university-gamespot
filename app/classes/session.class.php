@@ -6,12 +6,6 @@
  */
 class Session {
   /**
-   * Setup the session, create some useful variables like the flash.
-   */
-  public static function init() {
-  }
-
-  /**
    * Return the currently logged in user or null if there's no user logged in.
    * @return null|User The currently logged in user or null if there's none
    */
@@ -70,6 +64,60 @@ class Session {
    */
   public static function empty_flash() {
     $_SESSION['flash'] = array();
+  }
+
+  /**
+   * Get the 'referer' session attribute.
+   * If it wasn't set, set it to null first.
+   * @return string
+   */
+  public static function referer() {
+    if (!isset($_SESSION['referer'])) {
+      self::reset_referer();
+    }
+
+    return $_SESSION['referer'];
+  }
+
+  /**
+   * Set the referer to a given string. The referer will be used to redirect
+   * requests after logging a user in.
+   * @param string $referer The new value for the referer.
+   */
+  public static function set_referer_to($referer) {
+    $_SESSION['referer'] = $referer;
+  }
+
+  /**
+   * Reset referer to the default value (`null`).
+   */
+  public static function reset_referer() {
+    $_SESSION['referer'] = null;
+  }
+
+  /**
+   * Return the referer URL if present, otherwise the `$alternate_url`.
+   * After that, reset the referer attribute of the session.
+   *
+   * Example: in a 'sign in' action, I could have:
+   *
+   * <code>
+   * redirect(Session::referer_and_reset_or_url('/')
+   * </code>
+   *
+   * in order to redirect to the referer if there is one, otherwise to `/`.
+   *
+   * @param string $alternate_url
+   * @return string
+   */
+  public static function referer_and_reset_or_url($alternate_url) {
+    if (self::referer()) {
+      $referer = self::referer();
+      self::reset_referer();
+      return $referer;
+    } else {
+      return $alternate_url;
+    }
   }
 }
 ?>

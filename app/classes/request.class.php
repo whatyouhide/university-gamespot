@@ -36,5 +36,20 @@ class Request {
   public function method() {
     return $_SERVER['REQUEST_METHOD'];
   }
+
+  /**
+   * Return the path of the current request (the REQUEST_URI) stripped of the
+   * initial SITE_NAME.
+   * Example:
+   * <code>
+   * '/gamespot/test_path' => '/test_path'
+   * </code>
+   *
+   * @return string
+   */
+  public static function path() {
+    $pattern = '/\/' . SITE_NAME . '/';
+    return preg_replace($pattern, '', $_SERVER['REQUEST_URI'], 1);
+  }
 }
 ?>

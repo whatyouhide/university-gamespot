@@ -6,8 +6,20 @@
  */
 class Router {
   /**
-   * Dispatch an action to a controller based on the parameters that the .htaccess
-   * set in the `$_GET` array.
+   * @var array The routes that need authentication.
+   */
+  private static $autheticated_routes = array(
+    '\/users\/profile' => 'regular',
+    '\/users\/settings' => 'regular',
+    '\/users\/save_settings' => 'regular',
+    '\/users\/change_password' => 'regular',
+    '\/users\/upload_profile_picture' => 'regular',
+    '\/users\/delete_profile_picture' => 'regular'
+  );
+
+  /**
+   * Dispatch an action to a controller based on the parameters that .htaccess
+   * set in the $_GET array.
    * Default to 'application' for the controller, and 'index' for the action.
    * <code>
    * some_controller/some_action      # the action is 'some_action'
@@ -21,6 +33,8 @@ class Router {
    * @param string $backend '1' if the action is in the backend, '0' otherwise.
    */
   public static function dispatch_action_to_controller($c, $a, $backend) {
+    self::authenticate_route(Request::path());
+
     $backend = ($backend == '1');
     $controller = empty($c) ? 'application' : $c;
     $action = empty($a) ? 'index' : $a;
@@ -51,6 +65,42 @@ class Router {
     }
 
     return $controller_class;
+  }
+
+  /**
+   * Protect a given route with authentication.
+   * If the route doesn't require authentication, simply return nothing.
+   * @param string $url The route to protect.
+   */
+  private static function authenticate_route($url) {
+    $user_type = self::find_route_in_authenticated($url);
+
+    // If no urls matched, go ahead with the normal course.
+    if (!$user_type) return;
+
+    $current_user = Session::user();
+
+    if (!$current_user) {
+      Session::set_referer_to($url);
+      redirect('/users/sign_in', ['notice' => 'You need to be authenticated.']);
+    }
+  }
+
+  /**
+   * Find if the given `$url` matches on of the urls defined in the
+   * `$authenticated_routes` array. If it matches, return the value of the url
+   * in the routes array, otherwise return null.
+   * @param string $url
+   * @return mixed
+   */
+  private static function find_route_in_authenticated($url) {
+    foreach (self::$autheticated_routes as $route_regex => $user_type) {
+      if (preg_match('/' . $route_regex . '/', $url)) {
+        return $user_type;
+      }
+    }
+
+    return null;
   }
 }
 ?>

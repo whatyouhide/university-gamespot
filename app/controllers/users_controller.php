@@ -41,13 +41,10 @@ class UsersController extends Controller {
 
   /**
    * GET /users/profile
-   * Display a user's profile if she's logged in, or redirect to the home page.
+   * Display a user's profile. Ensuring that a user is logged in is take care of
+   * by the Router.
    */
   public function profile() {
-    if (!Session::user()) {
-      redirect('/', ['error' => 'You need to be logged in.']);
-    }
-
     $ads = Ad::where(['author_id' => $this->current_user->id]);
     $ads = Ad::separate_game_and_accessory($ads);
 
@@ -150,12 +147,14 @@ class UsersController extends Controller {
     // Session and redirect to the homepage; if it isn't, re-render this
     // template with error infos.
     $hashed_password = User::hash_password($this->params['password']);
-    if ($hashed_password == $user->hashed_password) {
-      Session::store_user($user);
-      redirect('/', ['notice' => 'Successfully logged in.']);
-    } else {
+    if ($hashed_password != $user->hashed_password) {
       $this->render('users/sign_in', ['sign_in_error' => true]);
     }
+
+    Session::store_user($user);
+
+    $new_url = Session::referer_and_reset_or_url('/');
+    redirect($new_url, ['notice' => 'Successfully logged in.']);
   }
 
   /**
