@@ -1,0 +1,38 @@
+.users.sign_in, .users.sign_up {
+  #container {
+    @extend %page-wide;
+    padding-top: 180px;
+  }
+
+  .form-container {
+    @include center;
+    width: 400px;
+    border: 1px solid $light-gray;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .sign-in-error {
+    color: $white;
+    background-color: transparentize($coral, 0.15);
+    padding: 10px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .form-container {
+    padding: 30px 30px 0 30px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  input[type=submit] {
+    @include button();
+    margin-top: 25px;
+  }
+}

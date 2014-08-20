@@ -2,11 +2,9 @@
 
 {block name=container}
 
-<div>
+  <div class="form-container">
+    <h1 id="form-title">Sign up</h1>
 
-  <h1 id="form-title">Sign up</h1>
-
-  <div id="form-container">
     <form action="{$site_root}/users/sign_up" method="POST">
       <div class="field-set">
         <div class="sub-field-set">
@@ -35,7 +33,4 @@
       </div>
     </form>
   </div>
-
-</div>
-
 {/block}

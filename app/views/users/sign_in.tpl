@@ -2,33 +2,26 @@
 
 {block name=container}
 
-<div class="signin">
+<div class="form-container">
+  <h1>Sign in</h1>
 
-  <h1 id="form-title">Sign in</h1>
+  {if $sign_in_error}
+    <div class="sign-in-error">Wrong email or password.</div>
+  {/if}
 
-  <div id="form-container">
-
-    {if $sign_in_error}
-      <div class="sign-in-error error">Wrong email or password.</div>
-    {/if}
-
-    <form action="{$site_root}/users/sign_in" method="POST">
-      <div class="field-set">
-        <label for="email">Email</label>
-        <input name="email" type="email" placeholder="john.doe@example.com">
-      </div>
-
-      <div class="field-set">
-        <label for="password">Password</label>
-        <input name="password" type="password" placeholder="At least 6 characters long">
-      </div>
-
-      <div class="field-set">
-        <input type="submit">
-      </div>
-    </form>
+  <form action="{$site_root}/users/sign_in" method="POST">
+    <div class="field-set">
+      <input name="email" type="email" placeholder="Email">
     </div>
 
+    <div class="field-set">
+      <input name="password" type="password" placeholder="Password">
+    </div>
+
+    <div class="field-set">
+      <input type="submit" value="Sign in">
+    </div>
+  </form>
 </div>
 
 {/block}

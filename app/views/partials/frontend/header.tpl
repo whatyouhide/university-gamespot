@@ -13,7 +13,7 @@
             <a href="{$site_root}/users/sign_in">Sign in</a>
           </li>
           <li class="sign-in">
-            <a href="{$site_root}/users/sign_up">sign up</a>
+            <a href="{$site_root}/users/sign_up">Sign up</a>
           </li>
         </ul>
       {/if}
