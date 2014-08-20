@@ -175,7 +175,7 @@ class UsersController extends Controller {
       'last_name' => $this->params['last_name']
     ]);
 
-    $this->render('users/signed_up');
+    redirect('/', ['notice' => 'Successfully signed up']);
   }
 
   /**

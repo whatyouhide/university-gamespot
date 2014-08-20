@@ -11,3 +11,7 @@ ul {
 li {
   list-style: none;
 }
+
+#content {
+  @extend %page-wide;
+}
