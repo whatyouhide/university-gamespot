@@ -22,5 +22,7 @@ $files_to_include = array_merge(
   glob(ROOT . '/app/controllers/*')
 );
 
-foreach ($files_to_include as $filename) include $filename;
+foreach ($files_to_include as $filename) {
+  include $filename;
+}
 ?>
