@@ -21,7 +21,7 @@ function smarty_function_image_path($params, $smarty) {
     $src = $asset_images_path . 'default.jpg';
   }
 
-  $output = "<img src=\"$src\"/>";
+  $output = "<img src=\"$src\" class=\"{$params['class']}\"/>";
   return $output;
 }
 ?>

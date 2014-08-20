@@ -14,4 +14,10 @@ li {
 
 #content {
   @extend %page-wide;
+  margin-top: 35px;
+}
+
+input[type="submit"] {
+  @include button;
+  &[disabled] { @include button($disabled: true); }
 }

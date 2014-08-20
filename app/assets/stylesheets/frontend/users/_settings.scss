@@ -1,0 +1,39 @@
+.users.settings #content {
+  $profile-picture-side: 280px;
+
+  h1 {
+    @include row;
+    margin-bottom: 25px;
+  }
+
+  .row {
+    @include row;
+
+    form.infos, section.profile-picture {
+      @include column(50%);
+    }
+  }
+
+  section.profile-picture {
+    @extend %clear-after;
+    @include row;
+
+    .image-container, .change-and-remove {
+      @include column(50%);
+    }
+
+    img {
+      @include sides(163px);
+      float: right;
+    }
+
+    input, a { width: 100%; }
+
+    .remove-profile-picture {
+      @include button($bg: $alert-color);
+    }
+  }
+
+  // Password form.
+  form.password { width: 45%; }
+}

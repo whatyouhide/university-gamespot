@@ -12,6 +12,6 @@
 <script>$(document).foundation();</script>
 
 <!-- Page-specific JS -->
-{if file_exists('{$root}/app/assets/javascripts/pages/{$controller_name}.js')}
+{if file_exists("{$root}/app/assets/javascripts/pages/{$controller_name}.js")}
   <script src="{$javascripts}/pages/{$controller_name}.js"></script>
 {/if}

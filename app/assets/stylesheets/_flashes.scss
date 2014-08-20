@@ -1,6 +1,6 @@
 .flashes {
-  .notice {
-    @include alert();
-    .close { @include alert-close(); }
-  }
+  div .close { @include alert-close; }
+
+  .notice { @include alert($bg: $success-color); }
+  .error { @include alert($bg: $alert-color); }
 }

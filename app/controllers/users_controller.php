@@ -121,7 +121,7 @@ class UsersController extends Controller {
    */
   public function delete_profile_picture() {
     $this->current_user->delete_profile_picture();
-    $this->render('users/settings', ['notice' => 'Deleted successfully']);
+    redirect('users/settings', ['notice' => 'Deleted successfully']);
   }
 
   /**
