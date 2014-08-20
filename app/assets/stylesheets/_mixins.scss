@@ -1,0 +1,24 @@
+@mixin sides($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin circle-image($radius) {
+  @include sides($radius);
+  border-radius: $radius;
+}
+
+@mixin padding-horizontal($value) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin padding-vertical($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
+
+@mixin center() {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,4 +1,4 @@
-<nav id="main-nav">
+<nav id="site-menu">
   <ul>
     <li><a href="{$site_root}/ads">Ads</a></li>
     <li><a href="{$site_root}/games">Games</a></li>

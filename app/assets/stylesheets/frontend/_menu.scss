@@ -1,0 +1,71 @@
+#site-header {
+  // Variables.
+  $header-height: 50px;
+  $profile-picture-radius: 36px;
+  $icon-side: 27px;
+
+  border-bottom: 1px solid $light-gray;
+
+  .header-content {
+    @extend %page-wide;
+    @include sides(100%);
+  }
+
+  // Clear after all the elements that contain floated elements.
+  &, #site-menu, .user-menu {
+    @extend %clear-after;
+  }
+
+  &, #site-menu, #site-menu, .user-menu {
+    height: $header-height;
+  }
+
+  h1 { font-size: 24px; }
+
+  h1, #site-menu, #site-menu li {
+    float: left;
+  }
+
+  // Properties that all <li> elements in the header share.
+  li {
+    border-bottom: 1px solid $light-gray;
+    float: left;
+    height: 100%;
+
+    a {
+      @include sides(100%);
+      color: $black;
+      display: block;
+    }
+
+    &:hover { background: $very-light-gray; }
+  }
+
+  // Site menu on the left.
+  #site-menu {
+    ul { height: 100%; }
+    li a { padding: 10px; }
+  }
+
+  // User menu on the right.
+  .user-links ul {
+    float: right;
+    height: $header-height;
+
+    li a { @include padding-horizontal(11px); }
+
+    li.sign-in, li.sign-up { @include padding-vertical(10px); }
+
+    li.profile {
+      a { @include padding-vertical(($header-height - $profile-picture-radius) / 2); }
+
+      .name { margin-left: 6px; }
+      img { @include circle-image($profile-picture-radius); }
+    }
+
+    li.settings, li.sign-out {
+      @include padding-vertical(($header-height - $icon-side) / 2);
+      img { @include sides(27px); }
+    }
+  }
+}

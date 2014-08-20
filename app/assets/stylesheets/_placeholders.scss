@@ -1,0 +1,15 @@
+%clear-after {
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+%page-wide {
+  @include center;
+  max-width: $max-width;
+}
