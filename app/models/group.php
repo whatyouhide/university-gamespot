@@ -12,6 +12,10 @@ class Group extends Model {
     $this->convert_to_boolean_attributes();
   }
 
+  public static function with_permission($permission) {
+    return self::where(["can_$permission" => '1']);
+  }
+
   /**
    * Convert all the attributes that start with 'can_' or 'is_' to boolean
    * values; these attributes are returned as strings ('1' or '0') by MySQL
