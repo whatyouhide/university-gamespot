@@ -51,5 +51,15 @@ class Request {
     $pattern = '/\/' . SITE_NAME . '/';
     return preg_replace($pattern, '', $_SERVER['REQUEST_URI'], 1);
   }
+
+  /**
+   * Return the value of an HTTP request header.
+   * @param string $header_name The name of the header.
+   * @return string
+   */
+  public static function headers($header_name) {
+    $cgi_header = "HTTP_" . strtoupper($header_name);
+    return $_SERVER[$cgi_header];
+  }
 }
 ?>
