@@ -52,4 +52,18 @@ function surround_with($surrounder) {
     return $surrounder . $str . $surrounder;
   };
 }
+
+/**
+ * Render a 404 Not Found error.
+ */
+function not_found() {
+  (new Controller)->render_error(404);
+}
+
+/**
+ * Render a 500 Internal Server Error.
+ */
+function internal_server_error() {
+  (new Controller)->render_error(500);
+}
 ?>

@@ -42,9 +42,7 @@ class Router {
 
     // Infer the controller's class.
     $controller_class = self::infer_controller_class($controller, $backend);
-
-    // Create the controller and call the provided action on it.
-    new $controller_class($action);
+    self::dispatch_or_not_found($controller_class, $action);
   }
 
   /**
@@ -93,6 +91,19 @@ class Router {
     };
 
     return count(array_filter(self::$autheticated_routes, $filter)) > 0;
+  }
+
+  /**
+   * Check if the controller exists and if it does dispatch the action.
+   * If it doesn't, render a 404 error.
+   */
+  private static function dispatch_or_not_found($controller_class, $action) {
+    if (class_exists($controller_class)) {
+      $controller = new $controller_class($action);
+      $controller->dispatch();
+    } else {
+      not_found();
+    }
   }
 }
 ?>

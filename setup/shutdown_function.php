@@ -14,7 +14,7 @@ function error_handler() {
   $error = error_get_last();
 
   if ($error && in_array($error['type'], $fatal_errors)) {
-    (new Controller)->render_error(500);
+    internal_server_error();
   }
 }
 
