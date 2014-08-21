@@ -1,7 +1,9 @@
 .users.sign_in, .users.sign_up {
   $width: 400px;
 
-  .flashes { width: $width; }
+  .flashes {
+    width: $width;
+  }
 
   #container {
     @extend %page-wide;
@@ -17,14 +19,6 @@
   h1 {
     text-align: center;
     margin-bottom: 30px;
-  }
-
-  .sign-in-error {
-    color: $white;
-    background-color: transparentize($coral, 0.15);
-    padding: 10px;
-    margin-bottom: 25px;
-    text-align: center;
   }
 
   .form-container {

@@ -1,7 +1,7 @@
 <?php
-class BackendApplicationController extends Controller {
+class BackendApplicationController extends AdminController {
   public function index() {
-    echo 'backend';
+    $this->render('backend/index');
   }
 }
 ?>

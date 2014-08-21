@@ -128,7 +128,7 @@ class UsersController extends Controller {
    * Display the sign in form.
    */
   private function sign_in_get() {
-    $this->render('users/sign_in', ['sign_in_error' => false]);
+    $this->render('users/sign_in');
   }
 
   /**
@@ -138,22 +138,17 @@ class UsersController extends Controller {
   private function sign_in_post() {
     $user = User::find_by_attribute('email', $this->params['email']);
 
-    // No user with the given email: render the sign-in form with an error.
-    if (!$user) {
-      $this->render('users/sign_in', ['sign_in_error' => true]);
-    }
-
-    // Check if the password is correct: if it is, store the user's infos in the
-    // Session and redirect to the homepage; if it isn't, re-render this
-    // template with error infos.
-    $hashed_password = User::hash_password($this->params['password']);
-    if ($hashed_password != $user->hashed_password) {
-      $this->render('users/sign_in', ['sign_in_error' => true]);
-    }
+    // No user with the given email or wrong password: render the sign-in form
+    // with an error.
+    $this->detect_sign_in_errors($user);
 
     Session::store_user($user);
 
-    $new_url = Session::referer_and_reset_or_url('/');
+    // Take care of when an user is redirected here because she tried to access
+    // an authenticated url (see the Router).
+    $default_url = $user->can_access_backend() ? '/backend' : '/';
+    $new_url = Session::referer_and_reset_or_url($default_url);
+
     redirect($new_url, ['notice' => 'Successfully logged in.']);
   }
 
@@ -184,6 +179,19 @@ class UsersController extends Controller {
   private function reload_current_user() {
     $this->current_user->reload();
     Session::store_user($this->current_user);
+  }
+
+  /**
+   * If there's no users with the given email or the password is wrong, render
+   * the sign in form with errors.
+   * @param User $user The user found by email.
+   */
+  private function detect_sign_in_errors($user) {
+    $hashed_password = User::hash_password($this->params['password']);
+    if (!$user || $hashed_password != $user->hashed_password) {
+      Session::flash('error', 'Wrong email or password.');
+      $this->render('users/sign_in');
+    }
   }
 }
 ?>

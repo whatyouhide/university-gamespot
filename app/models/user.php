@@ -8,7 +8,7 @@ class User extends Model {
 
   /**
    * {@inheritdoc}
-   * Also fetch the profile picture of this user.
+   * Also fetch the profile picture and group of this user.
    */
   public function __construct($attributes) {
     parent::__construct($attributes);
@@ -79,7 +79,7 @@ class User extends Model {
    * @return bool
    */
   public function can_access_backend() {
-    return ($this->group == null);
+    return ($this->group != null);
   }
 
   /**

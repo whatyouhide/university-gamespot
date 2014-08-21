@@ -54,9 +54,6 @@ class Controller {
 
     // Just a proxy to access the current request params.
     $this->set_hidden_instance_variable('params', $this->request->params);
-
-    // Call the action.
-    $this->dispatch_action();
   }
 
   /**
@@ -114,19 +111,10 @@ class Controller {
   }
 
   /**
-   * Setup some instance variables.
-   */
-  private function setup_external_instance_variables() {
-    $this->set_hidden_instance_variable('smarty', new GamespotSmarty);
-    $this->set_hidden_instance_variable('request', new Request);
-    $this->set_hidden_instance_variable('mailer', new Mailer);
-  }
-
-  /**
    * Call the `action_to_call` action or render a 404 not found if there's no
    * such action.
    */
-  private function dispatch_action() {
+  public function dispatch() {
     $action = $this->action_to_call;
 
     if (method_exists($this, $action)) {
@@ -134,6 +122,15 @@ class Controller {
     } else {
       $this->render_error(404);
     }
+  }
+
+  /**
+   * Setup some instance variables.
+   */
+  private function setup_external_instance_variables() {
+    $this->set_hidden_instance_variable('smarty', new GamespotSmarty);
+    $this->set_hidden_instance_variable('request', new Request);
+    $this->set_hidden_instance_variable('mailer', new Mailer);
   }
 
   /**

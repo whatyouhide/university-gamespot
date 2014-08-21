@@ -1,5 +1,11 @@
+{if $backend}
+  {assign html_class "backend"}
+{else}
+  {assign html_class "frontend"}
+{/if}
+
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js {$html_class}" lang="en">
 
 <head>
   <meta charset="utf-8">

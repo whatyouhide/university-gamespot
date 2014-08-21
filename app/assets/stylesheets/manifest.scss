@@ -8,6 +8,11 @@
 @import "base";
 @import "flashes";
 
-@import "frontend/menu";
-@import "frontend/sign-in-and-up";
-@import "frontend/users/settings";
+.frontend {
+  @import "frontend/menu";
+  @import "frontend/sign-in-and-up";
+  @import "frontend/users/settings";
+}
+
+.backend {
+}
