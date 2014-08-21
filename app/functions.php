@@ -66,4 +66,16 @@ function not_found() {
 function internal_server_error() {
   (new Controller)->render_error(500);
 }
+
+/**
+ * Build an array which contains the return values of the call to $property on
+ * each object of the original array.
+ * @param array $array The original array.
+ * @param string $property The property to extract from each object.
+ * @return array
+ */
+function array_pluck($array, $property) {
+  $f = function ($el) use ($property) { return $el->$property; };
+  return array_map($f, $array);
+}
 ?>
