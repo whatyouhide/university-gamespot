@@ -13,6 +13,7 @@ class User extends Model {
   public function __construct($attributes) {
     parent::__construct($attributes);
     $this->profile_picture = $this->associated_profile_picture();
+    $this->group = $this->associated_group();
   }
 
   /**
@@ -46,6 +47,50 @@ class User extends Model {
   }
 
   /**
+   * Return true if a user belongs to a group which has a given $permission,
+   * false otherwise. Return false also when the user doesn't belong to any
+   * group.
+   * Example usage:
+   * <code>
+   * $user->can('manage_blog')
+   * </code>
+   * @param string $permission The permission to search for.
+   * @return bool
+   */
+  public function can($permission) {
+    if (!$this->group) { return false; }
+
+    $attr = "can_$permission";
+    return $this->group->$attr;
+  }
+
+  /**
+   * Return true if the user is an admin of the website, false otherwise.
+   * @return bool
+   */
+  public function is_admin() {
+    if (!$this->group) { return false; }
+    return $this->group->is_admin;
+  }
+
+  /**
+   * Return true if the user can see the backend of the website, false
+   * otherwise.
+   * @return bool
+   */
+  public function can_access_backend() {
+    return ($this->group == null);
+  }
+
+  /**
+   * Return true if this is a regular user of the website (non admin-like).
+   * @return bool
+   */
+  public function is_regular() {
+    return !$this->can_access_backend();
+  }
+
+  /**
    * {@inheritdoc}
    * This function also hashes the 'password' attribute before passing it to the
    * 'create' parent's mathod.
@@ -69,6 +114,14 @@ class User extends Model {
    */
   private function associated_profile_picture() {
     return Upload::find_by_attribute('user_profile_picture_id', $this->id);
+  }
+
+  /**
+   * Fetch the group this user is a member of.
+   * @return Group
+   */
+  private function associated_group() {
+    return $this->group_id ? Group::find($this->group_id) : null;
   }
 
   /**

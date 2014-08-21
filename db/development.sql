@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-19 22:56:48 +0000
+# Generation Time: 2014-08-21 11:26:13 +0000
 # ************************************************************
 
 
@@ -253,14 +253,12 @@ DROP TABLE IF EXISTS `groups`;
 
 CREATE TABLE `groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `can_see_backend` tinyint(1) NOT NULL DEFAULT '0',
+  `name` varchar(200) NOT NULL DEFAULT '',
   `can_blog` tinyint(1) NOT NULL DEFAULT '0',
-  `can_manage_blog` tinyint(1) NOT NULL DEFAULT '0',
+  `can_moderate_blog` tinyint(1) NOT NULL DEFAULT '0',
   `can_manage_products` tinyint(1) NOT NULL DEFAULT '0',
   `can_manage_ads` tinyint(1) NOT NULL DEFAULT '0',
-  `is_support` tinyint(1) NOT NULL DEFAULT '0',
+  `can_manage_support` tinyint(1) NOT NULL DEFAULT '0',
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -268,39 +266,15 @@ CREATE TABLE `groups` (
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
 
-INSERT INTO `groups` (`id`, `name`, `description`, `can_see_backend`, `can_blog`, `can_manage_blog`, `can_manage_products`, `can_manage_ads`, `is_support`, `is_admin`)
+INSERT INTO `groups` (`id`, `name`, `can_blog`, `can_moderate_blog`, `can_manage_products`, `can_manage_ads`, `can_manage_support`, `is_admin`)
 VALUES
-	(1,'admins','The admins of the website.',1,1,1,1,1,0,1),
-	(2,'bloggers','People who can blog.',1,1,0,0,0,0,0),
-	(3,'content_editors','People who can manage ads and games.',0,0,0,1,1,0,0),
-	(4,'staff','Staff of the website.',1,1,0,1,1,1,0),
-	(5,'support','Contact for support.',1,0,0,0,0,1,0);
+	(1,'admins',1,1,1,1,1,1),
+	(2,'bloggers',1,0,0,0,0,0),
+	(3,'staff',0,0,1,1,1,0),
+	(4,'moderators',0,1,0,1,0,0),
+	(5,'support',0,0,0,0,1,0);
 
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table groups_users
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `groups_users`;
-
-CREATE TABLE `groups_users` (
-  `user_id` int(11) unsigned NOT NULL,
-  `group_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `groups_users` WRITE;
-/*!40000 ALTER TABLE `groups_users` DISABLE KEYS */;
-
-INSERT INTO `groups_users` (`user_id`, `group_id`)
-VALUES
-	(0,0),
-	(0,0),
-	(0,0),
-	(0,0);
-
-/*!40000 ALTER TABLE `groups_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -415,7 +389,9 @@ VALUES
 	(18,'18/1373496404.jpg',331732,'image/jpeg','2014-08-19 18:02:02',NULL,NULL,NULL,23),
 	(19,'19/1373299467.jpg',230637,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
 	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
-	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23);
+	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
+	(25,'',0,'','2014-08-20 21:13:55',NULL,NULL,NULL,NULL),
+	(36,'36/ypUQDz7.jpg',86203,'image/jpeg','2014-08-20 21:54:45',4,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -433,21 +409,27 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
+  `group_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_email` (`email`)
+  UNIQUE KEY `index_email` (`email`),
+  KEY `user_belongs_to_group` (`group_id`),
+  CONSTRAINT `user_belongs_to_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`)
+INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore'),
-	(2,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-02-23 12:20:13','Andrea','Leopardi'),
-	(3,'blogger@gamespot.com','9c1252fa60c847783a5281273c8a5d0c','2014-03-03 00:49:02','Blogga','Tore'),
-	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff'),
-	(5,'a@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 13:21:20',NULL,NULL),
-	(6,'testinupdatepassword@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 18:36:46',NULL,NULL);
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',NULL),
+	(2,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-02-23 12:20:13','Andrea','Leopardi',NULL),
+	(3,'blogger@gamespot.com','9c1252fa60c847783a5281273c8a5d0c','2014-03-03 00:49:02','Blogga','Tore',NULL),
+	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',3),
+	(5,'a@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 13:21:20',NULL,NULL,NULL),
+	(6,'testinupdatepassword@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 18:36:46',NULL,NULL,NULL),
+	(7,'testinupdatepassword@b.com1408489146','958d96012c4581643aaee649c39d58a3','2014-08-20 00:59:06',NULL,NULL,NULL),
+	(8,'stagqergqegqegeqrff@gamespot.com','c7f2883cf03ffd3ef6689cb89b8356e2','2014-08-20 16:14:06','frqw','grqegqe',NULL),
+	(9,'ifjwew@fqwf.com','4ac97d052ed0dd73fbd837a448655eae','2014-08-20 18:21:02','iowrfqwf','ffwefew',NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
