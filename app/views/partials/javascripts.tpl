@@ -8,6 +8,7 @@
 <!-- Custom scripts -->
 <script src="{$javascripts}/dropzone.js"></script>
 <script src="{$javascripts}/data-confirm.js"></script>
+<script src="{$javascripts}/flashes.js"></script>
 
 <script>$(document).foundation();</script>
 

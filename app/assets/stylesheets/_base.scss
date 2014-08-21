@@ -17,6 +17,11 @@ li {
   margin-top: 35px;
 }
 
+.flashes {
+  @extend %page-wide;
+  margin-top: 15px;
+}
+
 input[type="submit"] {
   @include button;
   &[disabled] { @include button($disabled: true); }

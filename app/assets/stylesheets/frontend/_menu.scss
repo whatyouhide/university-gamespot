@@ -1,14 +1,25 @@
 #site-header {
   // Variables.
-  $header-height: 50px;
+  $header-height: 58px;
+  $lateral-space: 20px;
   $profile-picture-radius: 36px;
   $icon-side: 27px;
 
+  @mixin hoverable-element() {
+    border-bottom: 1px solid $light-gray;
+    &:hover { background: $very-light-gray; }
+  }
+
   border-bottom: 1px solid $light-gray;
 
+  a {
+    display: block;
+  }
+
   .header-content {
-    @extend %page-wide;
+    @include center;
     @include sides(100%);
+    max-width: $max-width + $lateral-space;
   }
 
   // Clear after all the elements that contain floated elements.
@@ -16,11 +27,23 @@
     @extend %clear-after;
   }
 
-  &, #site-menu, #site-menu, .user-menu {
+  &, h1, #site-menu, #site-menu, .user-menu, .user-links ul {
     height: $header-height;
   }
 
-  h1 { font-size: 24px; }
+  h1 {
+    @include hoverable-element;
+
+    font-size: 24px;
+    margin: 0;
+
+    a {
+      @include padding-horizontal($lateral-space / 2);
+      padding-top: 11px;
+      padding-bottom: 15px;
+      height: 100%;
+    }
+  }
 
   h1, #site-menu, #site-menu li {
     float: left;
@@ -28,36 +51,40 @@
 
   // Properties that all <li> elements in the header share.
   li {
-    border-bottom: 1px solid $light-gray;
+    @include hoverable-element;
+
     float: left;
     height: 100%;
 
     a {
       @include sides(100%);
       color: $black;
-      display: block;
     }
-
-    &:hover { background: $very-light-gray; }
   }
 
   // Site menu on the left.
   #site-menu {
     ul { height: 100%; }
-    li a { padding: 10px; }
+    li a { padding: 16px; }
   }
 
   // User menu on the right.
   .user-links ul {
     float: right;
-    height: $header-height;
+    padding-right: $lateral-space / 2;
 
-    li a { @include padding-horizontal(11px); }
+    a { height: 100%; }
 
-    li.sign-in, li.sign-up { @include padding-vertical(10px); }
+
+    li.sign-in a, li.sign-up a {
+      padding: 15px;
+    }
 
     li.profile {
-      a { @include padding-vertical(($header-height - $profile-picture-radius) / 2); }
+      a {
+        @include padding-horizontal(11px);
+        @include padding-vertical(($header-height - $profile-picture-radius) / 2);
+      }
 
       .name { margin-left: 6px; }
       img { @include circle-image($profile-picture-radius); }
@@ -65,6 +92,7 @@
 
     li.settings, li.sign-out {
       @include padding-vertical(($header-height - $icon-side) / 2);
+      @include padding-horizontal(16px);
       img { @include sides(27px); }
     }
   }
