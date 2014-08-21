@@ -23,10 +23,11 @@
   margin-right: auto;
 }
 
-@mixin row($width: 100%) {
+@mixin row($max-width: 100%) {
   @extend %clear-after;
   display: block;
-  width: $width;
+  width: 100%;
+  max-width: $max-width;
 }
 
 @mixin column($width) {

@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-21 11:26:13 +0000
+# Generation Time: 2014-08-21 18:09:40 +0000
 # ************************************************************
 
 
@@ -162,7 +162,7 @@ LOCK TABLES `consoles` WRITE;
 
 INSERT INTO `consoles` (`id`, `name`, `release_year`, `producer`)
 VALUES
-	(1,'PlayStation 3',2005,'Sony'),
+	(1,'PlayStation 3.4',2005,'Sony'),
 	(2,'PlayStation 4',2013,'Sony'),
 	(3,'Xbox 360',2005,'Microsoft'),
 	(4,'Xbox One',2013,'Microsoft');
@@ -368,14 +368,17 @@ CREATE TABLE `uploads` (
   `user_profile_picture_id` int(11) unsigned DEFAULT NULL,
   `game_cover_id` int(11) unsigned DEFAULT NULL,
   `accessory_image_id` int(11) unsigned DEFAULT NULL,
+  `console_image_id` int(11) unsigned DEFAULT NULL,
   `ad_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `upload_belongs_to_game` (`game_cover_id`),
   KEY `upload_belongs_to_user_as_profile_picture` (`user_profile_picture_id`),
   KEY `upload_belongs_to_accessory` (`accessory_image_id`),
   KEY `upload_belongs_to_ad` (`ad_id`),
-  CONSTRAINT `upload_belongs_to_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  KEY `upload_belongs_to_console` (`console_image_id`),
+  CONSTRAINT `upload_belongs_to_console` FOREIGN KEY (`console_image_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_accessory` FOREIGN KEY (`accessory_image_id`) REFERENCES `accessories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `upload_belongs_to_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_user_as_profile_picture` FOREIGN KEY (`user_profile_picture_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -383,15 +386,16 @@ CREATE TABLE `uploads` (
 LOCK TABLES `uploads` WRITE;
 /*!40000 ALTER TABLE `uploads` DISABLE KEYS */;
 
-INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`, `ad_id`)
+INSERT INTO `uploads` (`id`, `url`, `size`, `mime_type`, `uploaded_at`, `user_profile_picture_id`, `game_cover_id`, `accessory_image_id`, `console_image_id`, `ad_id`)
 VALUES
-	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL,NULL),
-	(18,'18/1373496404.jpg',331732,'image/jpeg','2014-08-19 18:02:02',NULL,NULL,NULL,23),
-	(19,'19/1373299467.jpg',230637,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
-	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
-	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,23),
-	(25,'',0,'','2014-08-20 21:13:55',NULL,NULL,NULL,NULL),
-	(36,'36/ypUQDz7.jpg',86203,'image/jpeg','2014-08-20 21:54:45',4,NULL,NULL,NULL);
+	(1,'codg.jpg',NULL,NULL,'2014-08-17 18:20:31',NULL,4,NULL,NULL,NULL),
+	(18,'18/1373496404.jpg',331732,'image/jpeg','2014-08-19 18:02:02',NULL,NULL,NULL,NULL,23),
+	(19,'19/1373299467.jpg',230637,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23),
+	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23),
+	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23),
+	(25,'',0,'','2014-08-20 21:13:55',NULL,NULL,NULL,NULL,NULL),
+	(36,'36/ypUQDz7.jpg',86203,'image/jpeg','2014-08-20 21:54:45',4,NULL,NULL,NULL,NULL),
+	(37,'37/5aq5Xhl.png',115647,'image/png','2014-08-21 17:05:32',10,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -421,15 +425,10 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',NULL),
-	(2,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-02-23 12:20:13','Andrea','Leopardi',NULL),
-	(3,'blogger@gamespot.com','9c1252fa60c847783a5281273c8a5d0c','2014-03-03 00:49:02','Blogga','Tore',NULL),
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',3),
-	(5,'a@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 13:21:20',NULL,NULL,NULL),
-	(6,'testinupdatepassword@b.com','958d96012c4581643aaee649c39d58a3','2014-08-18 18:36:46',NULL,NULL,NULL),
-	(7,'testinupdatepassword@b.com1408489146','958d96012c4581643aaee649c39d58a3','2014-08-20 00:59:06',NULL,NULL,NULL),
-	(8,'stagqergqegqegeqrff@gamespot.com','c7f2883cf03ffd3ef6689cb89b8356e2','2014-08-20 16:14:06','frqw','grqegqe',NULL),
-	(9,'ifjwew@fqwf.com','4ac97d052ed0dd73fbd837a448655eae','2014-08-20 18:21:02','iowrfqwf','ffwefew',NULL);
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',NULL),
+	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',5);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

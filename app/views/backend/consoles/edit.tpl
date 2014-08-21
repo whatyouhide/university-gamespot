@@ -4,7 +4,19 @@
 
 <h1>Edit console</h1>
 
-<form action="{url to='/backend/consoles/update' id=$console->id}" method="POST">
+<form
+  action="{url to='/backend/consoles/update' id=$console->id}"
+  enctype="multipart/form-data"
+  method="POST">
+
+  {image_path image=$console->image}
+  <input type="hidden" name="MAX_FILE_SIZE" value="300000000">
+  <input name="console_image" type="file">
+
+  {if $console->image}
+    <button data-hijack>Remove</button>
+  {/if}
+
   <label for="name">Name</label>
   <input name="name" type="text" value="{$console->name}">
 

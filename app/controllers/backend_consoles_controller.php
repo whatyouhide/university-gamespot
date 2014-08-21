@@ -41,6 +41,8 @@ class BackendConsolesController extends AdminController {
     $this->restrict_to_permission('manage_products');
 
     $new_console = Console::create($this->console_params());
+    $this->update_console_image($new_console);
+
     redirect('/backend/consoles', ['notice' => 'Successfully created.']);
   }
 
@@ -53,6 +55,7 @@ class BackendConsolesController extends AdminController {
 
     $console = Console::find($this->params['id']);
     $console->update($this->console_params());
+    $this->update_console_image($console);
 
     redirect('/backend/consoles', ['notice' => 'Successfully updated.']);
   }
@@ -78,6 +81,22 @@ class BackendConsolesController extends AdminController {
       'producer' => $this->params['producer'],
       'release_year' => $this->params['release_year']
     ];
+  }
+
+  /**
+   * Update the image of a given console.
+   * @param Console $console
+   */
+  private function update_console_image($console) {
+    $img = isset($_FILES['console_image']) ? $_FILES['console_image'] : null;
+    $empty_img = !$img || empty($img['name']);
+
+    if (!$empty_img) {
+      $upload = Upload::create_from_uploaded_file($img);
+      $console->update_image($upload);
+    } else if ($empty_img && $console->image) {
+      $console->delete_image();
+    }
   }
 }
 ?>

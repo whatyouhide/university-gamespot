@@ -7,7 +7,7 @@
   }
 
   .row {
-    @include row;
+    @include row($max-width);
 
     form.infos, section.profile-picture {
       @include column(50%);

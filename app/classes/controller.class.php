@@ -125,6 +125,16 @@ class Controller {
   }
 
   /**
+   * The name of this controller.
+   * @return string The name of this controller, lowercase and without the
+   *         `Controller` part.
+   */
+  protected function controller_name() {
+    $name = strtolower(get_class($this));
+    return str_replace('controller', '', $name);
+  }
+
+  /**
    * Setup some instance variables.
    */
   private function setup_external_instance_variables() {
@@ -172,16 +182,6 @@ class Controller {
     if (Session::user()) {
       $this->current_user = Session::user();
     }
-  }
-
-  /**
-   * The name of this controller.
-   * @return string The name of this controller, lowercase and without the
-   *         `Controller` part.
-   */
-  private function controller_name() {
-    $name = strtolower(get_class($this));
-    return str_replace('controller', '', $name);
   }
 
   /**

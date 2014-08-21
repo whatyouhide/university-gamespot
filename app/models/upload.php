@@ -25,7 +25,7 @@ class Upload extends Model {
       $url = $new_upload->id . '/' . basename($file['name']);
       return $new_upload->update(['url' => $url]);
     } else {
-      throw new Exception("Upload failed");
+      throw new Exception("Upload failed for file {$file['name']}");
     }
   }
 
