@@ -1,5 +1,8 @@
 .flashes {
-  div .close { @include alert-close; }
+  @extend %page-wide;
+  margin-top: 25px;
+
+  .close { @include alert-close; }
 
   .notice { @include alert($bg: $success-color); }
   .error { @include alert($bg: $alert-color); }

@@ -1,4 +1,8 @@
 .users.sign_in, .users.sign_up {
+  $width: 400px;
+
+  .flashes { width: $width; }
+
   #container {
     @extend %page-wide;
     padding-top: 180px;
@@ -6,7 +10,7 @@
 
   .form-container {
     @include center;
-    width: 400px;
+    width: $width;
     border: 1px solid $light-gray;
   }
 

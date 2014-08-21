@@ -2,6 +2,8 @@
 
 {block name=container}
 
+{include file='partials/flashes.tpl'}
+
 <div class="form-container">
   <h1>Sign in</h1>
 

@@ -9,12 +9,13 @@ class Router {
    * @var array The routes that need authentication.
    */
   private static $autheticated_routes = array(
-    '\/users\/profile' => 'regular',
-    '\/users\/settings' => 'regular',
-    '\/users\/save_settings' => 'regular',
-    '\/users\/change_password' => 'regular',
-    '\/users\/upload_profile_picture' => 'regular',
-    '\/users\/delete_profile_picture' => 'regular'
+    '\/users\/profile',
+    '\/users\/settings',
+    '\/users\/save_settings',
+    '\/users\/change_password',
+    '\/users\/upload_profile_picture',
+    '\/users\/delete_profile_picture',
+    '^\/backend'
   );
 
   /**
@@ -69,38 +70,29 @@ class Router {
 
   /**
    * Protect a given route with authentication.
-   * If the route doesn't require authentication, simply return nothing.
+   * If the route doesn't require authentication, do nothing.
    * @param string $url The route to protect.
    */
   private static function authenticate_route($url) {
-    $user_type = self::find_route_in_authenticated($url);
-
-    // If no urls matched, go ahead with the normal course.
-    if (!$user_type) return;
-
-    $current_user = Session::user();
-
-    if (!$current_user) {
+    // If the url needs authentication and there's no authenticated user,
+    // redirect to the login page.
+    if (self::needs_authentication($url) && !Session::user()) {
       Session::set_referer_to($url);
       redirect('/users/sign_in', ['notice' => 'You need to be authenticated.']);
     }
   }
 
   /**
-   * Find if the given `$url` matches on of the urls defined in the
-   * `$authenticated_routes` array. If it matches, return the value of the url
-   * in the routes array, otherwise return null.
+   * Return true if the given url needs authentication.
    * @param string $url
    * @return mixed
    */
-  private static function find_route_in_authenticated($url) {
-    foreach (self::$autheticated_routes as $route_regex => $user_type) {
-      if (preg_match('/' . $route_regex . '/', $url)) {
-        return $user_type;
-      }
-    }
+  private static function needs_authentication($url) {
+    $filter = function ($regex) use ($url) {
+      return preg_match('/' . $regex . '/', $url);
+    };
 
-    return null;
+    return count(array_filter(self::$autheticated_routes, $filter)) > 0;
   }
 }
 ?>

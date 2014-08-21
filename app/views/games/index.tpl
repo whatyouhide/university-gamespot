@@ -1,6 +1,6 @@
-{extends 'skeleton.tpl'}
+{extends 'frontend.tpl'}
 
-{block name=container}
+{block name=content}
 
 <section class="all-games">
 
