@@ -16,6 +16,22 @@ class Game extends Model {
   }
 
   /**
+   * Update the cover image of this game to the given Upload instance. If the
+   * $upload parameter is null or '', just remove the cover image of the game.
+   * The previous cover image will be deleted anyways.
+   * @param null|Upload $upload The new image for this record, or null to
+   * destroy the image.
+   */
+  public function update_cover_image($upload) {
+    $this->delete_cover_image();
+
+    if (!empty($upload)) {
+      $upload->update(['game_cover_id' => $this->id]);
+      $this->cover_image = $upload;
+    }
+  }
+
+  /**
    * Get the most recently added games.
    * @param int $limit How many games to retrieve.
    * @return array The most recently added games.
@@ -63,6 +79,16 @@ class Game extends Model {
    */
   private function associated_cover_image() {
     return Upload::find_by_attribute('game_cover_id', $this->id);
+  }
+
+  /**
+   * Delete the image associated with this record. If there weren't any, do
+   * nothing.
+   */
+  private function delete_cover_image() {
+    if (!$this->cover_image) { return; }
+    $this->cover_image->destroy();
+    $this->cover_image = null;
   }
 }
 ?>
