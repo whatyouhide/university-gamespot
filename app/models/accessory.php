@@ -13,14 +13,49 @@ class Accessory extends Model {
   public function __construct($attributes) {
     parent::__construct($attributes);
     $this->image = $this->associated_image();
+    $this->console = $this->associated_console();
+  }
+
+  /**
+   * Update the cover image of this game to the given Upload instance. If the
+   * $upload parameter is null or '', just remove the cover image of the game.
+   * The previous cover image will be deleted anyways.
+   * @param null|Upload $upload The new image for this record, or null to
+   * destroy the image.
+   */
+  public function update_image($upload) {
+    $this->delete_image();
+
+    if (!empty($upload)) {
+      $upload->update(['accessory_image_id' => $this->id]);
+      $this->image = $upload;
+    }
   }
 
   /**
    * Fetch the image associated with this accessory.
-   * @return Upload The image associated with this accessory.
+   * @return Upload
    */
-  public function associated_image() {
+  private function associated_image() {
     return Upload::find_by_attribute('accessory_image_id', $this->id);
+  }
+
+  /**
+   * Fetch the console assocciated with this accessory.
+   * @return Console
+   */
+  private function associated_console() {
+    return Console::find($this->console_id);
+  }
+
+  /**
+   * Delete the image associated with this record. If there weren't any, do
+   * nothing.
+   */
+  private function delete_image() {
+    if (!$this->image) { return; }
+    $this->image->destroy();
+    $this->image = null;
   }
 }
 ?>
