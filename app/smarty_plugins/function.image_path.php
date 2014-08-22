@@ -12,6 +12,8 @@ function smarty_function_image_path($params, $smarty) {
 
   $class = isset($params['class']) ? $params['class'] : '';
 
+  $hoverable = isset($params['hoverable']) ? 'data-hoverable' : '';
+
   // Return a regular image tag if there's a `src` attribute.
   if (isset($params['src'])) {
     $src = $asset_images_path . $params['src'];
@@ -23,7 +25,7 @@ function smarty_function_image_path($params, $smarty) {
     $src = $asset_images_path . 'default.jpg';
   }
 
-  $output = "<img src=\"$src\" class=\"$class\"/>";
+  $output = "<img src=\"$src\" class=\"$class\" $hoverable/>";
   return $output;
 }
 ?>

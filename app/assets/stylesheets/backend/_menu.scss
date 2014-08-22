@@ -1,0 +1,33 @@
+#menu {
+  $horizontal-padding: 27px;
+
+  @include absolute-at($top: 0, $left: 0);
+
+  width: $backend-menu-width;
+  height: 100%;
+  min-height: 100%;
+
+  h1 {
+    @include padding-horizontal($horizontal-padding);
+  }
+
+  ul { width: $backend-menu-width; }
+
+  &, & li a { border-right: 1px solid $light-gray; }
+
+  li a {
+    @include sides(100%);
+    @include padding-vertical(13px);
+    @include padding-horizontal($horizontal-padding);
+    display: block;
+
+    &:hover {
+      background: $very-light-gray;
+    }
+  }
+
+  .user-actions {
+    @include absolute-at($bottom: 0, $left: 0);
+    border-top: 1px solid $light-gray;
+  }
+}

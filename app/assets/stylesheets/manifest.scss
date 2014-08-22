@@ -9,6 +9,7 @@
 @import "flashes";
 
 .frontend {
+  @import "frontend/base";
   @import "frontend/menu";
   @import "frontend/footer";
   @import "frontend/sign-in-and-up";
@@ -16,4 +17,6 @@
 }
 
 .backend {
+  @import "backend/base";
+  @import "backend/menu";
 }

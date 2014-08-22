@@ -1,0 +1,10 @@
+#container {
+  @extend %clear-after;
+  width: 100%;
+  min-width: 100%;
+}
+
+#content {
+  width: 100%;
+  padding-left: $backend-menu-width;
+}

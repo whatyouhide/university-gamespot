@@ -12,18 +12,7 @@ li {
   list-style: none;
 }
 
-#container {
-  position: relative;
-  min-height: 100%;
-  padding-bottom: $footer-height;
-}
-
 input[type="submit"] {
   @include button;
   &[disabled] { @include button($disabled: true); }
-}
-
-.frontend #content {
-  @extend %page-wide;
-  margin-top: 35px;
 }

@@ -1,5 +1,9 @@
 <nav id="menu">
-  <ul>
+  <h1>
+    <a href="{url to='/backend'}">{image_path src='logo.png' hoverable=true}</a>
+  </h1>
+
+  <ul class="sections">
     <li>
       <a href="{url to='/backend/consoles'}">Consoles</a>
     </li>
@@ -29,7 +33,7 @@
     </li>
   </ul>
 
-  <ul>
+  <ul class="user-actions">
     <li>
       <a href="{url to="/users/sign_out"}">Sign out</a>
     </li>
