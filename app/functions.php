@@ -78,4 +78,22 @@ function array_pluck($array, $property) {
   $f = function ($el) use ($property) { return $el->$property; };
   return array_map($f, $array);
 }
+
+/**
+ * Return a new array with just the keys passed as arguments.
+ * @param array $subject The original array.
+ * @param array $keys The keys to include in the new array.
+ * @return array
+ */
+function array_restrict($subject, $keys) {
+  $result = array();
+
+  foreach($keys as $k) {
+    if (isset($subject[$k])) {
+      array_push($result, $subject[$k]);
+    }
+  }
+
+  return $result;
+}
 ?>
