@@ -7,3 +7,21 @@
   .notice { @include alert($bg: $success-color); }
   .error { @include alert($bg: $alert-color); }
 }
+
+.ajax-flash {
+  $width: 300px;
+
+  @include padding-vertical(7px);
+
+  border-radius: 15px;
+  bottom: 5%;
+  color: $white;
+  left: 50%;
+  margin-left: - ($width / 2);
+  position: fixed;
+  text-align: center;
+  width: $width;
+
+  &.notice { background: transparentize($success-color, 0.4); }
+  &.error { background: transparentize($alert-color, 0.4); }
+}

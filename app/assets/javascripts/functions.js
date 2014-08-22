@@ -5,10 +5,11 @@ window.functions.ajaxFlash = function (type, message) {
   // Build the DOM element.
   var $flash = $('<div>')
     .addClass('ajax-flash ' + type)
-    .text(message);
+    .text(message)
+    .hide();
 
   // Append the DOM element to the body.
-  $('body').append($flash);
+  $flash.appendTo('body').fadeIn(100);
 
   // Make the DOM element disappear after a while.
   $flash
