@@ -7,4 +7,6 @@
   <div id="content">
     {block name=content}Default content.{/block}
   </div>
+
+  {include file='partials/frontend/footer.tpl'}
 {/block}

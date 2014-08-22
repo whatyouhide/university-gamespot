@@ -93,7 +93,7 @@
       img { @include circle-image($profile-picture-radius); }
     }
 
-    li.settings, li.sign-out {
+    li.settings a , li.sign-out a {
       @include padding-vertical(($header-height - $icon-side) / 2);
       @include padding-horizontal(16px);
       img { @include sides(27px); }

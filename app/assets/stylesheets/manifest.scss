@@ -10,6 +10,7 @@
 
 .frontend {
   @import "frontend/menu";
+  @import "frontend/footer";
   @import "frontend/sign-in-and-up";
   @import "frontend/users/settings";
 }

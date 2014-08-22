@@ -1,0 +1,38 @@
+#site-footer {
+  @include absolute-at($bottom: 0, $left: 0);
+  border-top: 1px solid $light-gray;
+  padding-top: 27px;
+  width: 100%;
+  height: $footer-height;
+
+  .footer-content { @include row($max-width); }
+
+  a, p {
+    font-size: 80%;
+    margin: 0;
+  }
+
+  section {
+    @include column(percentage(1 / 3));
+
+    &.socials, &.useful-links { text-align: center; }
+
+    &.trademark { padding-left: 85px; }
+    &.socials { padding-left: 58px; }
+    &.useful-links { padding-left: 66px; }
+  }
+
+  section.trademark { margin-top: -7px; }
+
+  ul {
+    @extend %clear-after;
+  }
+
+  li {
+    @include padding-horizontal(10px);
+    float: left;
+    &:not(:last-child) {
+      border-right: 1px solid $light-gray;
+    }
+  }
+}
