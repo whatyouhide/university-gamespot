@@ -17,6 +17,7 @@ $(function () {
   // The click callback.
   var callback = function (event) {
     event.preventDefault();
+    event.stopImmediatePropagation();
     var $this = $(this);
 
     // Ask for confirmation.
@@ -24,14 +25,17 @@ $(function () {
 
     if (confirmed === true) {
       // Remove this callback and click the original DOM element (otherwise only
-      // jQuery click events will be called.
+      // jQuery click events will be called).
       $this.off('click', callback);
       $this[0].click();
-    } else {
-      event.stopImmediatePropagation();
     }
   }
 
   // Bind the event.
   $elements.on('click', callback);
+
+  // Make a global binding function available.
+  window.functions.newDataConfirmElement = function ($el) {
+    $el.click(callback);
+  };
 });
