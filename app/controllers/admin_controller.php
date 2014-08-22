@@ -32,15 +32,5 @@ class AdminController extends Controller {
 
     redirect('/backend', ['error' => $msg]);
   }
-
-  /**
-   * {@inheritdoc}
-   * Also change 'backend' => 'backend_' so that the final name will be
-   * 'backend_consoles'.
-   */
-  protected function controller_name() {
-    $lowered = parent::controller_name();
-    return str_replace('backend', 'backend_', $lowered);
-  }
 }
 ?>

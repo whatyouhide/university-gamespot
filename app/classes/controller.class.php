@@ -78,6 +78,14 @@ class Controller {
   }
 
   /**
+   * Render plain text.
+   * @param string $plain_text
+   */
+  public function render_plain($plain_text) {
+    echo $plain_text;
+  }
+
+  /**
    * Render an error page and set the HTTP response code.
    * @param int|string $error An error number which will render the
    * corresponding template in 'errors/' like 'errors/404_not_found.tpl',
@@ -130,8 +138,14 @@ class Controller {
    *         `Controller` part.
    */
   protected function controller_name() {
-    $name = strtolower(get_class($this));
-    return str_replace('controller', '', $name);
+    // Get the name of this controller without the 'Controller' at the end.
+    $name = str_replace('Controller', '', get_class($this));
+
+    // Split it into words (based on camel casing) and make it all lowercase.
+    $words = array_filter(preg_split('/(?=[A-Z])/', $name));
+    $words = array_map(function ($w) { return strtolower($w); }, $words);
+
+    return implode('_', $words);
   }
 
   /**

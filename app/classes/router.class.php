@@ -42,6 +42,7 @@ class Router {
 
     // Infer the controller's class.
     $controller_class = self::infer_controller_class($controller, $backend);
+
     self::dispatch_or_not_found($controller_class, $action);
   }
 

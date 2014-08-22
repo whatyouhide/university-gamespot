@@ -9,6 +9,10 @@
     </li>
 
     <li>
+      <a href="{url to='/backend/game_categories'}">Game categories</a>
+    </li>
+
+    <li>
       <a href="{url to='/backend/accessories'}">Accessories</a>
     </li>
 
