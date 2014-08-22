@@ -32,6 +32,9 @@
   <label for="console_id">Console</label>
   {html_options name=console_id options=$consoles_for_select selected=$game->console_id}
 
+  <label for="game_category_id">Category</label>
+  {html_options name=game_category_id options=$game_categories_for_select selected=$game->game_category_id}
+
   <input type="submit" value="Update game">
 </form>
 

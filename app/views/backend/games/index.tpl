@@ -6,6 +6,7 @@
   <thead>
     <th>Name</th>
     <th>Console</th>
+    <th>Category</th>
     <th>Release date</th>
     <th>Software house</th>
     <th>Description</th>

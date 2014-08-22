@@ -14,6 +14,7 @@ class Game extends Model {
     parent::__construct($attributes);
     $this->cover_image = $this->associated_cover_image();
     $this->console = $this->associated_console();
+    $this->game_category = $this->associated_game_category();
   }
 
   /**
@@ -88,6 +89,14 @@ class Game extends Model {
    */
   private function associated_console() {
     return Console::find($this->console_id);
+  }
+
+  /**
+   * Fetch all the categories associated with this game.
+   * @return array
+   */
+  private function associated_game_category() {
+    return GameCategory::find($this->game_category_id);
   }
 
   /**

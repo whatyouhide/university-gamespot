@@ -19,6 +19,7 @@ class BackendGamesController extends AdminController {
     $this->restrict_to_permission('manage_products');
 
     $this->consoles_for_select = $this->all_consoles_for_select();
+    $this->game_categories_for_select = $this->all_game_categories_for_select();
     $this->render('games/nuevo');
   }
 
@@ -31,6 +32,8 @@ class BackendGamesController extends AdminController {
 
     $this->game = Game::find($this->params['id']);
     $this->consoles_for_select = $this->all_consoles_for_select();
+    $this->game_categories_for_select = $this->all_game_categories_for_select();
+
     $this->render('games/edit');
   }
 
@@ -82,7 +85,8 @@ class BackendGamesController extends AdminController {
       'release_date' => date('Y-m-d', strtotime($this->params['release_date'])),
       'description' => $this->params['description'],
       'software_house' => $this->params['software_house'],
-      'console_id' => $this->params['console_id']
+      'console_id' => $this->params['console_id'],
+      'game_category_id' => $this->params['game_category_id']
     ];
   }
 
@@ -107,6 +111,18 @@ class BackendGamesController extends AdminController {
    */
   private function all_consoles_for_select() {
     $all = Console::all();
+    return array_combine(
+      array_pluck($all, 'id'),
+      array_pluck($all, 'name')
+    );
+  }
+
+  /**
+   * Return all the game categories in a <select>-friendly format.
+   * @return array
+   */
+  private function all_game_categories_for_select() {
+    $all = GameCategory::all();
     return array_combine(
       array_pluck($all, 'id'),
       array_pluck($all, 'name')
