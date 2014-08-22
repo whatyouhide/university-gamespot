@@ -13,6 +13,7 @@ class Game extends Model {
   public function __construct($attributes) {
     parent::__construct($attributes);
     $this->cover_image = $this->associated_cover_image();
+    $this->console = $this->associated_console();
   }
 
   /**
@@ -75,10 +76,18 @@ class Game extends Model {
 
   /**
    * Get the cover image associated with this game.
-   * @return Upload The cover image (an Upload instance) of this game.
+   * @return Upload
    */
   private function associated_cover_image() {
     return Upload::find_by_attribute('game_cover_id', $this->id);
+  }
+
+  /**
+   * Fetch the console associated with this game.
+   * @return Console
+   */
+  private function associated_console() {
+    return Console::find($this->console_id);
   }
 
   /**

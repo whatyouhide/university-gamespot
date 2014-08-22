@@ -5,6 +5,7 @@
 <table class="games">
   <thead>
     <th>Name</th>
+    <th>Console</th>
     <th>Release date</th>
     <th>Software house</th>
     <th>Description</th>

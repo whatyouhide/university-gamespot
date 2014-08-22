@@ -29,6 +29,9 @@
   <label for="description">Description</label>
   <textarea name="description" rows="5">{$game->description}</textarea>
 
+  <label for="console_id">Console</label>
+  {html_options name=console_id options=$consoles_for_select selected=$game->console_id}
+
   <input type="submit" value="Update game">
 </form>
 

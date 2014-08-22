@@ -25,6 +25,9 @@
   <label for="description">Description</label>
   <textarea name="description" cols="30" rows="10"></textarea>
 
+  <label for="console_id">Console</label>
+  {html_options name=console_id options=$consoles_for_select selected=$game->console_id}
+
   <input type="submit" value="Create game">
 </form>
 

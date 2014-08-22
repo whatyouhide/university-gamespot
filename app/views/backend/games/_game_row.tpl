@@ -1,5 +1,6 @@
 <tr>
   <td>{$game->name}</td>
+  <td>{$game->console->name}</td>
   <td>{$game->release_date}</td>
   <td>{$game->software_house}</td>
   <td>{$game->description|truncate}</td>

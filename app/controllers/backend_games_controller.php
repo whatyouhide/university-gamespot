@@ -18,7 +18,7 @@ class BackendGamesController extends AdminController {
   public function nuevo() {
     $this->restrict_to_permission('manage_products');
 
-    $this->console = Game::find($this->params['id']);
+    $this->consoles_for_select = $this->all_consoles_for_select();
     $this->render('games/nuevo');
   }
 
@@ -30,6 +30,7 @@ class BackendGamesController extends AdminController {
     $this->restrict_to_permission('manage_products');
 
     $this->game = Game::find($this->params['id']);
+    $this->consoles_for_select = $this->all_consoles_for_select();
     $this->render('games/edit');
   }
 
@@ -80,7 +81,8 @@ class BackendGamesController extends AdminController {
       'name' => $this->params['name'],
       'release_date' => date('Y-m-d', strtotime($this->params['release_date'])),
       'description' => $this->params['description'],
-      'software_house' => $this->params['software_house']
+      'software_house' => $this->params['software_house'],
+      'console_id' => $this->params['console_id']
     ];
   }
 
@@ -97,6 +99,18 @@ class BackendGamesController extends AdminController {
     } else {
       $game->update_cover_image(null);
     }
+  }
+
+  /**
+   * Return all the consoles in a <select>-friendly format.
+   * @return array
+   */
+  private function all_consoles_for_select() {
+    $all = Console::all();
+    return array_combine(
+      array_pluck($all, 'id'),
+      array_pluck($all, 'name')
+    );
   }
 }
 ?>
