@@ -35,8 +35,6 @@
   }
 
   h1 {
-    @include hoverable-element;
-
     font-size: 24px;
     margin: 0;
 
@@ -46,6 +44,8 @@
       padding-bottom: 15px;
       height: 100%;
     }
+
+    img { height: $header-height - 26px; }
   }
 
   h1, #site-menu, #site-menu li {

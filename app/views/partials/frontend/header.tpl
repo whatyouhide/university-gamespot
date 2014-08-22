@@ -1,6 +1,8 @@
 <header id="site-header">
   <div class="header-content">
-    <h1><a href="{$site_root}">Gamespot</a></h1>
+    <h1>
+      <a href="{$site_root}">{image_path src='logo.png' hoverable=true}</a>
+    </h1>
 
     {include file='partials/frontend/menu.tpl'}
 
