@@ -5,6 +5,7 @@
   {include file='partials/flashes.tpl'}
 
   <div class="form-container">
+    <h4><a href="{url to='/'}">Gamespot</a></h4>
     <h1 id="form-title">Sign up</h1>
 
     <form action="{$site_root}/users/sign_up" method="POST">
