@@ -18,14 +18,6 @@
   <td class="actions">
     <a href="{url to='/ads/show' id=$ad->id}">Show</a>
 
-    {if $current_user->can('block_users')}
-      <a
-        data-confirm
-        href="{url to='/backend/users/block' id=$author->id}">
-        Block author
-      </a>
-    {/if}
-
     <a data-confirm href="{url to='/backend/ads/destroy' id=$ad->id}">
       Delete
     </a>
