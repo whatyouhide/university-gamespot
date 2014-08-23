@@ -160,17 +160,23 @@ class UsersController extends Controller {
   }
 
   /**
-   * Sign up a user and redirect to the welcome page.
+   * Sign up a user.
    */
   private function sign_up_post() {
-    User::create([
+    $new_user = User::create([
       'email' => $this->params['email'],
       'password' => $this->params['password'],
       'first_name' => $this->params['first_name'],
       'last_name' => $this->params['last_name']
     ]);
 
-    redirect('/', ['notice' => 'Successfully signed up']);
+    if ($new_user->is_valid()) {
+      redirect('/', ['notice' => 'Successfully signed up']);
+    } else {
+      redirect('/users/sign_up', [
+        'error' => $new_user->errors_as_string()
+      ]);
+    }
   }
 
   /**

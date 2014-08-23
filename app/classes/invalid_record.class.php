@@ -38,5 +38,13 @@ class InvalidRecord {
   public function errors() {
     return $this->errors;
   }
+
+  /**
+   * Return all the errors as a single string.
+   * @return string
+   */
+  public function errors_as_string() {
+    return implode(', ', $this->errors());
+  }
 }
 ?>

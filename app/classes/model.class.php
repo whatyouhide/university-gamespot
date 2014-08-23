@@ -149,6 +149,14 @@ class Model {
   }
 
   /**
+   * Return all the errors as a single string.
+   * @return string
+   */
+  public function errors_as_string() {
+    return implode(', ', $this->errors());
+  }
+
+  /**
    * Return all the records for the current model.
    * @return array
    */

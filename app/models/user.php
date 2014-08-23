@@ -153,6 +153,8 @@ class User extends Model {
   protected static function validate($attrs) {
     $validator = new Validator($attrs);
 
+    $validator->must_not_be_empty('first_name', "First name can't be blank");
+    $validator->must_not_be_empty('last_name', "Last name can't be blank");
     $validator->must_not_be_empty('hashed_password', "Password can't be blank");
     $validator->must_be_valid_email('email');
     return $validator->error_messages();
