@@ -231,12 +231,28 @@ class Model {
     // Add the = clause and an AND if this is not the last iteration, for each
     // attribute.
     foreach ($attributes as $attr => $val) {
-      $clauses .= " `$table_name`.`$attr` = '$val'";
+      $clauses .= ' ' . self::build_single_where_clause($attr, $val);
       if ($i < $number_of_attributes - 1) { $clauses .= " AND"; }
       $i++;
     }
 
     return $clauses;
+  }
+
+  private static function build_single_where_clause($attr, $val) {
+    $t = static::$table_name;
+
+    // If $val is exactly `true` or `false`, convert it to '1' or '0'.
+    if ($val === true) {
+      $val = '1';
+    } else if ($val === false) {
+      $val = '0';
+    }
+
+    $clause = "`$t`.`$attr` ";
+    $clause .= is_null($val) ? "IS NULL" : "= '$val'";
+
+    return $clause;
   }
 
   /**
