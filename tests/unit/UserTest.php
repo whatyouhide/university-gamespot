@@ -41,4 +41,15 @@ class UserTest extends \Codeception\TestCase\Test {
 
     $this->assertFalse($old_hash == $user->hashed_password);
   }
+
+  public function testFullName() {
+    $user = User::create([
+      'first_name' => 'Sandro',
+      'last_name' => 'Marchionni',
+      'email' => 'testingfullname@test.test',
+      'password' => '1312321312'
+    ]);
+
+    $this->assertEquals($user->full_name(), 'Sandro Marchionni');
+  }
 }

@@ -91,6 +91,14 @@ class User extends Model {
   }
 
   /**
+   * Return the full name of a user (first name + last name).
+   * @return string
+   */
+  public function full_name() {
+    return ($this->first_name . ' ' . $this->last_name);
+  }
+
+  /**
    * {@inheritdoc}
    * This function also hashes the 'password' attribute before passing it to the
    * 'create' parent's mathod.

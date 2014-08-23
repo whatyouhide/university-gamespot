@@ -24,60 +24,6 @@ class Ad extends Model {
   }
 
   /**
-   * All the published ads.
-   * @return array All the published ads.
-   */
-  public static function published() {
-    return self::where(['published' => '1']);
-  }
-
-  /**
-   * Separate the given array of ads in a two-elements array with game ads and
-   * accessory ads.
-   * @param array $ads An array of ads.
-   * @return array A two-element array with keys 'game_ads' and 'accessory_ads'.
-   */
-  public static function separate_game_and_accessory($ads) {
-    $result = ['game_ads' => array(), 'accessory_ads' => array()];
-
-    foreach ($ads as $ad) {
-      if ($ad->type == 'game') {
-        array_push($result['game_ads'], $ad);
-      } else if ($ad->type == 'accessory') {
-        array_push($result['accessory_ads'], $ad);
-      }
-    }
-
-    return $result;
-  }
-
-  /**
-   * {@inheritdoc}
-   * Also insert a row in the `games_ads` or `accessories_ads` tables.
-   */
-  public static function create($attributes) {
-    $type = $attributes['type'];
-
-    // The name of the foreign key column, like `game_id`.
-    $foreign_key_column = $type . '_id';
-
-    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
-    // $attributes "as is" to the `create` function.
-    if (isset($attributes[$foreign_key_column])) {
-      $foreign_id = $attributes[$foreign_key_column];
-      unset($attributes[$foreign_key_column]);
-    }
-
-    // Create the new ad.
-    $new_ad = parent::create($attributes);
-
-    // Update the join table if there's a foreign_key.
-    if ($foreign_id) { $new_ad->update_join_table($foreign_id); }
-
-    return $new_ad;
-  }
-
-  /**
    * {@inheritdoc}
    * Also update the join table if necessary.
    */
@@ -177,12 +123,65 @@ class Ad extends Model {
   }
 
   /**
+   * All the published ads.
+   * @return array All the published ads.
+   */
+  public static function published() {
+    return self::where(['published' => '1']);
+  }
+
+  /**
+   * Separate the given array of ads in a two-elements array with game ads and
+   * accessory ads.
+   * @param array $ads An array of ads.
+   * @return array A two-element array with keys 'game_ads' and 'accessory_ads'.
+   */
+  public static function separate_game_and_accessory($ads) {
+    $result = ['game_ads' => array(), 'accessory_ads' => array()];
+
+    foreach ($ads as $ad) {
+      if ($ad->type == 'game') {
+        array_push($result['game_ads'], $ad);
+      } else if ($ad->type == 'accessory') {
+        array_push($result['accessory_ads'], $ad);
+      }
+    }
+
+    return $result;
+  }
+
+  /**
+   * {@inheritdoc}
+   * Also insert a row in the `games_ads` or `accessories_ads` tables.
+   */
+  public static function create($attributes) {
+    $type = $attributes['type'];
+
+    // The name of the foreign key column, like `game_id`.
+    $foreign_key_column = $type . '_id';
+
+    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
+    // $attributes "as is" to the `create` function.
+    if (isset($attributes[$foreign_key_column])) {
+      $foreign_id = $attributes[$foreign_key_column];
+      unset($attributes[$foreign_key_column]);
+    }
+
+    // Create the new ad.
+    $new_ad = parent::create($attributes);
+
+    // Update the join table if there's a foreign_key.
+    if ($foreign_id) { $new_ad->update_join_table($foreign_id); }
+
+    return $new_ad;
+  }
+
+  /**
    * The images associated with this ad.
    */
   private function associated_images() {
     return Upload::where(['ad_id' => $this->id]);
   }
-
 
   /**
    * Find the console associated with this ad.
