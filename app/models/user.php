@@ -91,6 +91,14 @@ class User extends Model {
   }
 
   /**
+   * Return true if the user is blocked.
+   * @return bool
+   */
+  public function is_blocked() {
+    return $this->blocked == '1';
+  }
+
+  /**
    * Return the full name of a user (first name + last name).
    * @return string
    */
@@ -114,6 +122,14 @@ class User extends Model {
    */
   public static function hash_password($password) {
     return md5($password);
+  }
+
+  /**
+   * Return all the regular users on the website.
+   * @return array
+   */
+  public static function regular() {
+    return self::where(['group_id' => null]);
   }
 
   /**
