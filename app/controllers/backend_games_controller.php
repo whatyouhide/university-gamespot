@@ -1,5 +1,5 @@
 <?php
-class BackendGamesController extends AdminController {
+class BackendGamesController extends BackendController {
   /**
    * GET /games
    * List all the games.

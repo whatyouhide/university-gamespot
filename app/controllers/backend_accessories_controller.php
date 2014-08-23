@@ -1,5 +1,5 @@
 <?php
-class BackendAccessoriesController extends AdminController {
+class BackendAccessoriesController extends BackendController {
   /**
    * GET /accessories
    * List all the accessories.

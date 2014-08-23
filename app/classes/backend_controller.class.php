@@ -1,5 +1,5 @@
 <?php
-class AdminController extends Controller {
+class BackendController extends Controller {
   /**
    * {@inheritdoc}
    * Also assign the 'backend' Smarty variable to true.

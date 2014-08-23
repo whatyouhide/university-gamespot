@@ -1,5 +1,5 @@
 <?php
-class BackendConsolesController extends AdminController {
+class BackendConsolesController extends BackendController {
   /**
    * GET /consoles
    * List all the consoles.

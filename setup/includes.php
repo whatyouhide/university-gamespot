@@ -7,6 +7,7 @@ include 'app/classes/gamespot-smarty.class.php';
 include 'app/classes/db.class.php';
 include 'app/classes/model.class.php';
 include 'app/classes/controller.class.php';
+include 'app/classes/backend_controller.class.php';
 include 'app/classes/session.class.php';
 include 'app/classes/request.class.php';
 include 'app/classes/router.class.php';
