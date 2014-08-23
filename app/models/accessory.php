@@ -33,6 +33,19 @@ class Accessory extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   * Also destroy all the ads associated with this accessory.
+   */
+  public function destroy() {
+    $ads = Ad::associated_with_accessory($this->id);
+    foreach ($ads as $ad) {
+      $ad->destroy();
+    }
+
+    parent::destroy();
+  }
+
+  /**
    * Fetch the image associated with this accessory.
    * @return Upload
    */

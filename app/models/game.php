@@ -34,6 +34,21 @@ class Game extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   * Also destroy all the ads associated with this game.
+   */
+  public function destroy() {
+    // Destroy all ads.
+    $ads = Ad::associated_with_game($this->id);
+    foreach ($ads as $ad) {
+      $ad->destroy();
+    }
+
+    // Destroy this game.
+    parent::destroy();
+  }
+
+  /**
    * Get the most recently added games.
    * @param int $limit How many games to retrieve.
    * @return array The most recently added games.

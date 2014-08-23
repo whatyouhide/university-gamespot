@@ -131,6 +131,38 @@ class Ad extends Model {
   }
 
   /**
+   * Return all the ads associated with a given game.
+   * @param int|string $game_id The id of the game.
+   * @return array
+   */
+  public static function associated_with_game($game_id) {
+    $t = static::$table_name;
+    $q = "SELECT `$t`.*"
+      . " FROM `$t`"
+      . " INNER JOIN `games_ads`"
+      . " ON `games_ads`.`ad_id` = `$t`.`id`"
+      . " WHERE `games_ads`.`game_id` = '$game_id'";
+
+    return self::new_instances_from_query($q);
+  }
+
+  /**
+   * Return all the ads associated with a given accessory.
+   * @param int|string $accessory_id The id of the accessory.
+   * @return array
+   */
+  public static function associated_with_accessory($accessory_id) {
+    $t = static::$table_name;
+    $q = "SELECT `$t`.*"
+      . " FROM `$t`"
+      . " INNER JOIN `accessories_ads`"
+      . " ON `accessories_ads`.`ad_id` = `$t`.`id`"
+      . " WHERE `accessories_ads`.`accessory_id` = '$accessory_id'";
+
+    return self::new_instances_from_query($q);
+  }
+
+  /**
    * Separate the given array of ads in a two-elements array with game ads and
    * accessory ads.
    * @param array $ads An array of ads.
