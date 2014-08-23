@@ -11,6 +11,11 @@ class Model {
   private $attrs;
 
   /**
+   * @var array An array of validation errors.
+   */
+  protected $errors;
+
+  /**
    * @var string The table name of the current model.
    * @abstract
    */
@@ -18,10 +23,12 @@ class Model {
 
   /**
    * Create an instance of the calling model based on a set of attributes.
+   * Also call the `validate` method on the newly created record.
    * @param array $attributes An array of attributes.
    */
   public function __construct($attributes) {
     $this->attrs = $attributes;
+    $this->errors = array();
   }
 
   /**
@@ -97,6 +104,14 @@ class Model {
     // Return the untouched record if there are no attributes.
     if (empty($attributes)) return $this;
 
+    // If there are validation errors, set them on the current record and return
+    // the unmodified record.
+    $errors = static::validate($attributes);
+    if (!empty($errors)) {
+      $this->errors = $errors;
+      return $this;
+    }
+
     $t = static::$table_name;
 
     // Build the query.
@@ -115,6 +130,22 @@ class Model {
     Db::query($q);
 
     return $this->reload();
+  }
+
+  /**
+   * Return true if the record is valid (no validation errors are present).
+   * @return bool
+   */
+  public function is_valid() {
+    return empty($this->errors);
+  }
+
+  /**
+   * Return a list of error messages for this record.
+   * @return array
+   */
+  public function errors() {
+    return $this->errors;
   }
 
   /**
@@ -174,12 +205,28 @@ class Model {
     $attrs_values = self::to_attributes_values(array_values($attributes));
     $t = static::$table_name;
 
+    $errors = static::validate($attributes);
+    if (!empty($errors)) {
+      return new InvalidRecord($errors);
+    }
+
     // Build the query and issue it against the db.
     $q = "INSERT INTO `$t`($attrs_names) VALUES ($attrs_values)";
     Db::query($q);
 
     // Return the newly inserted record.
     return self::find(Db::last_insert_id());
+  }
+
+  /**
+   * Perform validations on a set of attributes. Return an array of errors for
+   * those attributes (an empty array if no errors are found).
+   * @abstract
+   * @param array $attributes An associative array of 'attr' => 'val' couples.
+   * @return array
+   */
+  protected static function validate($attributes) {
+    return array();
   }
 
   /**

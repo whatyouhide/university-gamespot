@@ -63,12 +63,12 @@ class ModelTest extends \Codeception\TestCase\Test {
   }
 
   public function testUpdate() {
-    $email = 'update@test.test';
+    $email = 'update@test.com';
     $user = $this->create_user_with_email($email);
     $this->codeGuy->seeInDatabase('users', ['email' => $email]);
     $this->assertEquals($user->email, $email);
 
-    $new_email = 'new@email.updatetest';
+    $new_email = 'updatetest@email.com';
     $user->update(['email' => $new_email]);
     $this->codeGuy->seeInDatabase('users', ['email' => $new_email]);
     $this->assertEquals($user->email, $new_email);

@@ -1,5 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . '/../app/classes/model.class.php');
+require_once(dirname(__FILE__) . '/../app/classes/invalid_record.class.php');
+require_once(dirname(__FILE__) . '/../app/classes/validator.class.php');
 require_once(dirname(__FILE__) . '/../app/classes/db.class.php');
 require_once(dirname(__FILE__) . '/../app/models/user.php');
 require_once(dirname(__FILE__) . '/../app/models/game.php');

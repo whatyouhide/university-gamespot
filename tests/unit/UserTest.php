@@ -32,7 +32,7 @@ class UserTest extends \Codeception\TestCase\Test {
 
   public function testUpdatePassword() {
     $user = User::create([
-      'email' => "testinupdatepassword@b.com" . time(),
+      'email' => 'ciaoword@bubba.com',
       'password' => '3145yh4qtegr'
     ]);
 
@@ -51,5 +51,27 @@ class UserTest extends \Codeception\TestCase\Test {
     ]);
 
     $this->assertEquals($user->full_name(), 'Sandro Marchionni');
+  }
+
+  public function testValidations() {
+    $user = User::create([
+      'first_name' => 'Sandro',
+      'last_name' => 'Marchionni',
+      'email' => 'testinguser@validations.com',
+      'password' => ''
+    ]);
+
+    $this->assertFalse($user->is_valid());
+    $this->assertContains("Password can't", $user->errors()[0]);
+
+    $user = User::create([
+      'first_name' => 'Sandro',
+      'last_name' => 'Marchionni',
+      'email' => 'aa',
+      'password' => 'hello'
+    ]);
+
+    $this->assertFalse($user->is_valid());
+    $this->assertContains("invalid", $user->errors()[0]);
   }
 }

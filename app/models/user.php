@@ -148,6 +148,17 @@ class User extends Model {
   }
 
   /**
+   * Validate the current user.
+   */
+  protected static function validate($attrs) {
+    $validator = new Validator($attrs);
+
+    $validator->must_not_be_empty('hashed_password', "Password can't be blank");
+    $validator->must_be_valid_email('email');
+    return $validator->error_messages();
+  }
+
+  /**
    * Fetch the profile picture associated with this user.
    * @return Upload The profile picture associated with this user.
    */
@@ -171,7 +182,12 @@ class User extends Model {
    *         updated hashed password in 'hashed_password'.
    */
   private static function with_hashed_password($attrs) {
-    $attrs['hashed_password'] = self::hash_password($attrs['password']);
+    if (empty($attrs['password'])) {
+      $attrs['hashed_password'] = '';
+    } else {
+      $attrs['hashed_password'] = self::hash_password($attrs['password']);
+    }
+
     unset($attrs['password']);
     return $attrs;
   }
