@@ -29,6 +29,10 @@
     </li>
 
     <li>
+      <a href="{url to='/backend/staff_members'}">Staff members</a>
+    </li>
+
+    <li>
       <a href="{url to='/backend/blog'}">Blog</a>
     </li>
 

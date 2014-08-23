@@ -133,6 +133,21 @@ class User extends Model {
   }
 
   /**
+   * Return all the 'backend' users (staff members) of the website except for
+   * the one identified by $id (which usually is the current user).
+   * @param string|int $id
+   * @return array
+   */
+  public static function staff_members_except($id) {
+    $t = static::$table_name;
+    $q = "SELECT * FROM `$t` WHERE"
+      . " `group_id` IS NOT NULL"
+      . " AND `id` <> '$id'";
+
+    return self::new_instances_from_query($q);
+  }
+
+  /**
    * Fetch the profile picture associated with this user.
    * @return Upload The profile picture associated with this user.
    */

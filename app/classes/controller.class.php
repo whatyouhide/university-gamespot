@@ -199,6 +199,22 @@ class Controller {
   }
 
   /**
+   * Safely find an instance of $model. "Safely" means that if no instance is
+   * found, a 404 error will be rendered.
+   * @param string $model The model to search for.
+   * @param string|int $id The id of the searched record.
+   */
+  protected function safe_find($model, $id) {
+    $record = $model::find($id);
+
+    if (is_null($record)) {
+      not_found();
+    } else {
+      return $record;
+    }
+  }
+
+  /**
    * Assign a value to an instance variable and add the instance variable to the
    * list of hidden instance variables (the ones that won't be passed to the
    * rendered template automatically).
