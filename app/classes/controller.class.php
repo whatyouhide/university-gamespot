@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Controller class.
+ */
+
+/**
  * The base controller class (every controller inherits from this class).
  * @package Gamespot
  * @subpackage Controllers

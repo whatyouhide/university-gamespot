@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains the definition of the BackendAccessoriesController class.
+ */
+
+/**
+ * A controller to manage accessories in the backend.
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class BackendAccessoriesController extends BackendController {
   /**
    * GET /accessories

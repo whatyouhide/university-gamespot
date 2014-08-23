@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the User class.
+ */
+
+/**
+ * A user of the website.
  * @package Gamespot
  * @subpackage Models
  */
 class User extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'users';
 
   /**

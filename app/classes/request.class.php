@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Request class.
+ */
+
+/**
  * An abstraction over an HTTP request.
  * @package Gamespot
  * @subpackage Common

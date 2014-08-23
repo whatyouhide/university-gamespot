@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the `url` Smarty template function.
+ */
+
+/**
  * Smarty plugin.
  * File: function.url.php
  * Type: function

@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the ApplicationController class.
+ */
+
+/**
  * The controller that responds to requests to `/`.
  * @package Gamespot
  * @subpackage Controllers

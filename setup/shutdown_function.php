@@ -1,5 +1,10 @@
 <?php
 /**
+ * This file registers a shutdown function so that every PHP fatal error or
+ * exception is handled by a 500 Internal Server Error.
+ */
+
+/**
  * Handle errors with a 500 Internal Server Error.
  */
 function error_handler() {

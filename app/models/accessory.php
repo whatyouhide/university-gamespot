@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the Accessory class.
+ */
+
+/**
+ * Accessories for consoles.
  * @package Gamespot
  * @subpackage Models
  */
 class Accessory extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'accessories';
 
   /**

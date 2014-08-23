@@ -1,18 +1,30 @@
 <?php
 /**
- * This file contains a wrapper class around the `PHPMailer` class.
- * @package Gamespot
- * @subpackage Common
+ * This file contains a wrapper class (Mailer) around the PHPMailer class.
  */
+
+// Require the original PHPMailer class.
 require 'lib/phpmailer/PHPMailerAutoload.php';
 
 /**
  * A wrapper class around the `PHPMailer` class.
+ * @package Gamespot
+ * @subpackage Common
  */
 class Mailer {
+  /**
+   * @var PHPMailer The wrapped instance of PHPMailer.
+   */
   private $mail;
+
+  /**
+   * @var bool Whether the last email was sent successfully.
+   */
   private $sent_successfully;
 
+  /**
+   * Create a new instance of Mailer and setup some common properties.
+   */
   public function __construct() {
     $this->mail = new PHPMailer;
     $this->setup_common_properties();

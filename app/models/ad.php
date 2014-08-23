@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the Ad class.
+ */
+
+/**
+ * An ad.
  * @package Gamespot
  * @subpackage Models
  */
 class Ad extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'ads';
 
   /**

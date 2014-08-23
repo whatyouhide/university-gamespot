@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Router class.
+ */
+
+/**
  * The singleton class that handles routing in the application.
  * @package Gamespot
  * @subpackage Common

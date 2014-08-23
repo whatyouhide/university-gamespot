@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Session class.
+ */
+
+/**
  * An abstraction over the `$_SESSION` object, build in a singleton-style way.
  * @package Gamespot
  * @subpackage Common

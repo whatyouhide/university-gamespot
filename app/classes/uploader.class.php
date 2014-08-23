@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Uploader class.
+ */
+
+/**
  * An interface to the uploaded files ($_FILES).
  * @package Gamespot
  * @subpackage Common

@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains the definition of the BackendAdsController class.
+ */
+
+/**
+ * A controller to manage ads in the backend.
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class BackendAdsController extends BackendController {
   /**
    * GET /ads

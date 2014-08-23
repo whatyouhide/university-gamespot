@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Db class.
+ */
+
+/**
  * This class is an interface to the underlying db.
  * @package Gamespot
  * @subpackage Common

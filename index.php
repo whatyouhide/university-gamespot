@@ -1,4 +1,8 @@
 <?php
+/**
+ * The root of the application.
+ */
+
 // Include the necessary setup for the application.
 include 'setup/shutdown_function.php';
 include 'setup/defines.php';

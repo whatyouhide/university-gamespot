@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains the definition of the BackendUsersController class.
+ */
+
+/**
+ * A controller to manage regular users in the backend.
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class BackendUsersController extends BackendController {
   /**
    * GET /users

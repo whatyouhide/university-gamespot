@@ -1,5 +1,10 @@
 <?php
 /**
+ * This file contains the definition of the AccessoriesController class.
+ */
+
+/**
+ * A controller to see accessories.
  * @package Gamespot
  * @subpackage Controllers
  */

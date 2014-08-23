@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the Upload class.
+ */
+
+/**
+ * An uploaded file.
  * @package Gamespot
  * @subpackage Models
  */
 class Upload extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'uploads';
 
   /**

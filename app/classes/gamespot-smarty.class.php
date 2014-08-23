@@ -1,14 +1,15 @@
 <?php
 /**
  * This file contains a wrapper class around the `Smarty` class.
- * @package Gamespot
- * @subpackage Common
  */
 
+// Include the original Smarty class.
 include 'lib/smarty/libs/Smarty.class.php';
 
 /**
  * A wrapper class around the `Smarty` class.
+ * @package Gamespot
+ * @subpackage Common
  */
 class GamespotSmarty extends Smarty {
   /**

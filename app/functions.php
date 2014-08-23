@@ -1,9 +1,6 @@
 <?php
 /**
  * This file contains common functions used throughout the application.
- * @package Gamespot
- * @subpackage Common
- * @author Andrea Leopardi <an.leopardi@gmail.com>
  */
 
 /**

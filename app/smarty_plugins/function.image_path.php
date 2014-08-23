@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the 'image_path' Smarty template function.
+ */
+
+/**
  * Smarty plugin.
  * File: function.image_path.php
  * Type: function

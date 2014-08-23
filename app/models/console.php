@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the Console class.
+ */
+
+/**
+ * A console.
  * @package Gamespot
  * @subpackage Models
  */
 class Console extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'consoles';
 
   /**

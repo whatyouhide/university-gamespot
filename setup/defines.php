@@ -1,5 +1,9 @@
 <?php
 /**
+ * This files contains a bunch of constants definitions.
+ */
+
+/**
  * The name of the website.
  */
 define('SITE_NAME', 'gamespot');

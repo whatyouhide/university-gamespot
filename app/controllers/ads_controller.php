@@ -1,5 +1,10 @@
 <?php
 /**
+ * This file contains the definition of the AdsController class.
+ */
+
+/**
+ * A controller to manage ads on the frontend.
  * @package Gamespot
  * @subpackage Controllers
  */

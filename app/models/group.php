@@ -1,5 +1,17 @@
 <?php
+/**
+ * This file contains the definition of the Group class.
+ */
+
+/**
+ * A group of users.
+ * @package Gamespot
+ * @subpackage Models
+ */
 class Group extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'groups';
 
   /**
@@ -12,6 +24,11 @@ class Group extends Model {
     $this->convert_to_boolean_attributes();
   }
 
+  /**
+   * Return an array of groups that have a given $permission.
+   * @param string $permission
+   * @return array
+   */
   public static function with_permission($permission) {
     return self::where(["can_$permission" => '1']);
   }

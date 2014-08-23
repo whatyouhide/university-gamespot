@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains the definition of the Model class.
+ */
+
+/**
  * The base model class which all models inherit from.
  * @package Gamespot
  * @subpackage Models
@@ -294,6 +298,13 @@ class Model {
     return $clauses;
   }
 
+  /**
+   * Build a single WHERE clause (the 'attr = val' part) given an attribute name
+   * and a value.
+   * @param string $attr The attribute name.
+   * @param mixed $val The attribute value.
+   * @return string
+   */
   private static function build_single_where_clause($attr, $val) {
     $t = static::$table_name;
 

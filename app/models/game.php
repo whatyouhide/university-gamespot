@@ -1,9 +1,17 @@
 <?php
 /**
+ * This file contains the definition of the Game class.
+ */
+
+/**
+ * A videogame.
  * @package Gamespot
  * @subpackage Models
  */
 class Game extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'games';
 
   /**

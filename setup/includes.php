@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file includes all the necessary PHP libraries and classes that make the
+ * website work.
+ */
+
 // Augment the include path.
 set_include_path(ROOT);
 

@@ -1,5 +1,10 @@
 <?php
 /**
+ * This file contains the definition of the GamesController class.
+ */
+
+/**
+ * A controller for managing games.
  * @package Gamespot
  * @subpackage Controllers
  */

@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains the definition of the BackendConsolesController class.
+ */
+
+/**
+ * A controller to manage consoles.
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class BackendConsolesController extends BackendController {
   /**
    * GET /consoles

@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file contains the definition of the BackendStaffMembersController class.
+ */
+
+/**
+ * A controller for the members of the staff to allow admins to
+ * create/block/unblock them.
+ */
 class BackendStaffMembersController extends BackendController {
   /**
    * GET /admins

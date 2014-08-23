@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains the definition of the BackendGamesController class.
+ */
+
+/**
+ * A controller for managing games in the backend.
+ * @package Gamespot
+ * @subpackage Controllers
+ */
 class BackendGamesController extends BackendController {
   /**
    * GET /games

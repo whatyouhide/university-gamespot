@@ -1,5 +1,10 @@
 <?php
 /**
+ * This file contains the definition of the UsersController class.
+ */
+
+/**
+ * A controller for signin in/up/out and other user-related stuff.
  * @package Gamespot
  * @subpackage Controllers
  */
