@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-23 10:58:23 +0000
+# Generation Time: 2014-08-23 15:57:45 +0000
 # ************************************************************
 
 
@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS `ads`;
 
 CREATE TABLE `ads` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `published_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `price` float unsigned NOT NULL,
   `description` text,
   `city` varchar(50) NOT NULL,
@@ -104,12 +104,9 @@ CREATE TABLE `ads` (
 LOCK TABLES `ads` WRITE;
 /*!40000 ALTER TABLE `ads` DISABLE KEYS */;
 
-INSERT INTO `ads` (`id`, `created_at`, `price`, `description`, `city`, `type`, `published`, `author_id`, `console_id`)
+INSERT INTO `ads` (`id`, `published_at`, `price`, `description`, `city`, `type`, `published`, `author_id`, `console_id`)
 VALUES
-	(3,'2014-08-17 19:24:30',69.99,'Sed cursus rhoncus erat et porta. Cras in sem porttitor, pretium sapien vel, dignissim dolor. Quisque feugiat est eu lectus lobortis scelerisque. Donec mollis eros ut nibh rhoncus, quis facilisis nunc eleifend. Donec imperdiet gravida mattis. Maecenas hendrerit placerat velit nec pulvinar. Mauris accumsan eros non neque ultricies, id gravida purus sollicitudin. Donec lacinia dapibus lectus ultrices placerat.','Roma','game',1,1,1),
-	(5,'2014-08-17 19:24:33',66,'Donec lectus orci, vehicula quis mi at, eleifend euismod dolor. Suspendisse euismod tempus diam non vehicula. Duis lacinia porta nibh, id porta nisi posuere nec. Morbi consectetur velit et elit ornare aliquam. Cras pellentesque purus ut dignissim euismod. Nunc varius lobortis massa non pretium. Nam convallis sed dui non euismod. Maecenas consequat metus non magna ultrices vestibulum. Vestibulum egestas volutpat est ac condimentum. Maecenas neque lacus, venenatis auctor placerat vel, consectetur id magna. Donec vel consequat turpis, non gravida diam.','Roma','game',1,1,2),
 	(6,'2014-08-17 19:24:35',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni','game',1,1,3),
-	(7,'2014-08-17 19:24:36',55,'Aliquam vulputate hendrerit tortor quis venenatis. Phasellus id nulla nec justo interdum feugiat in quis augue. Maecenas at turpis et nunc condimentum fermentum. Nulla vitae tortor eget justo aliquet tincidunt ut at velit. Maecenas tempor, quam vitae pellentesque cursus, tellus orci hendrerit mauris, vitae porttitor leo quam id nibh. Integer suscipit purus vel scelerisque scelerisque. Morbi posuere ante sagittis placerat varius.','Roma','game',1,1,4),
 	(8,'2014-08-17 19:24:37',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara','game',1,1,4),
 	(22,'2014-08-19 15:44:22',33,'r2r23r21','r2r','accessory',1,4,1),
 	(23,'2014-08-19 17:41:25',33,'Hello description','Rome','game',1,4,1);
@@ -189,7 +186,8 @@ VALUES
 	(1,'RPG'),
 	(2,'FPS'),
 	(3,'Sport'),
-	(4,'Puzzle-like');
+	(4,'Puzzle-like'),
+	(5,'Kids');
 
 /*!40000 ALTER TABLE `game_categories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -253,10 +251,7 @@ LOCK TABLES `games_ads` WRITE;
 
 INSERT INTO `games_ads` (`ad_id`, `game_id`)
 VALUES
-	(3,1),
-	(5,2),
 	(6,3),
-	(7,4),
 	(23,4),
 	(8,5);
 
@@ -272,25 +267,26 @@ DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL DEFAULT '',
-  `can_blog` tinyint(1) NOT NULL DEFAULT '0',
-  `can_moderate_blog` tinyint(1) NOT NULL DEFAULT '0',
-  `can_manage_products` tinyint(1) NOT NULL DEFAULT '0',
-  `can_manage_ads` tinyint(1) NOT NULL DEFAULT '0',
-  `can_manage_support` tinyint(1) NOT NULL DEFAULT '0',
-  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  `can_blog` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_moderate_blog` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_manage_products` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_manage_ads` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_manage_support` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_block_users` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_admin` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
 
-INSERT INTO `groups` (`id`, `name`, `can_blog`, `can_moderate_blog`, `can_manage_products`, `can_manage_ads`, `can_manage_support`, `is_admin`)
+INSERT INTO `groups` (`id`, `name`, `can_blog`, `can_moderate_blog`, `can_manage_products`, `can_manage_ads`, `can_manage_support`, `can_block_users`, `is_admin`)
 VALUES
-	(1,'admins',1,1,1,1,1,1),
-	(2,'bloggers',1,0,0,0,0,0),
-	(3,'staff',0,0,1,1,1,0),
-	(4,'moderators',0,1,0,1,0,0),
-	(5,'support',0,0,0,0,1,0);
+	(1,'admins',1,1,1,1,1,1,1),
+	(2,'bloggers',1,0,0,0,0,0,0),
+	(3,'staff',0,0,1,1,1,1,0),
+	(4,'moderators',0,1,0,1,0,0,0),
+	(5,'support',0,0,0,0,1,0,0);
 
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -434,6 +430,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
+  `blocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `group_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_email` (`email`),
@@ -444,12 +441,12 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `group_id`)
+INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `blocked`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1),
-	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',NULL),
-	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',5);
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,1),
+	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',1,3),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,NULL),
+	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,5);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
