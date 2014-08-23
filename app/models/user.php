@@ -79,7 +79,7 @@ class User extends Model {
    * @return bool
    */
   public function can_access_backend() {
-    return ($this->group != null);
+    return !is_null($this->group);
   }
 
   /**

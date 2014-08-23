@@ -22,6 +22,9 @@ class BackendController extends Controller {
    * backend's home page.
    */
   protected function restrict_to_permission($permission) {
+    // First ensure the current user has access to the backend.
+    $this->restrict_to_staff_members();
+
     // Return nothing if the user has the required permission.
     if ($this->current_user->can($permission)) {
       return;
@@ -33,6 +36,14 @@ class BackendController extends Controller {
     $msg .= implode(', ', $array_of_groups);
 
     redirect('/backend', ['error' => $msg]);
+  }
+
+  /**
+   * Ensure the current user can see the backend.
+   */
+  protected function restrict_to_staff_members() {
+    if ($this->current_user->can_access_backend()) { return; }
+    redirect('/', ['error' => 'The backend is for staff members only']);
   }
 
   /**
