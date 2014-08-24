@@ -13,10 +13,11 @@
   <label for="email">Email</label>
   <input name="email" type="email" placeholder="john@doe.com">
 
+  <label for="group_id">Group</label>
   {html_options name='group_id' options=$groups_for_select}
 
   <input type="submit" value="Create staff member">
-
-  {include file='backend/staff_members/_permissions_table.tpl'}
 </form>
+
+{include file='backend/staff_members/_permissions_table.tpl'}
 {/block}

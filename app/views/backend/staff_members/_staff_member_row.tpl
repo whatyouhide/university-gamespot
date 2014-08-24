@@ -27,6 +27,10 @@
         href="{url to='/backend/staff_members/block' id=$user->id}">Block</a>
     {/if}
 
+    <a href="{url to='/backend/staff_members/change_group' id=$user->id}">
+      Change group
+    </a>
+
     <a
       data-confirm
       href="{url to='/backend/staff_members/destroy' id=$user->id}">Destroy</a>

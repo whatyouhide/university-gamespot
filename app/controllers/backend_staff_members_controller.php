@@ -61,6 +61,23 @@ class BackendStaffMembersController extends BackendController {
   }
 
   /**
+   * GET /staff_members/change_group?id=1
+   * POST /staff_members/change_group?id=1
+   * When it's a GET, render the form to change the user's group, when it's a
+   * POST actually change it.
+   */
+  public function change_group() {
+    $this->member = $this->safe_find('User', $this->params['id']);
+    $this->ensure_user_is_staff_member($this->member);
+
+    if ($this->request->is_get()) {
+      $this->change_group_get();
+    } else if ($this->request->is_post()) {
+      $this->change_group_post();
+    }
+  }
+
+  /**
    * GET /staff_members/block?id=1
    * Block a staff member.
    */
@@ -88,9 +105,29 @@ class BackendStaffMembersController extends BackendController {
     $this->restrict_to_admins();
 
     $member = $this->safe_find('User', $this->params['id']);
+    $this->ensure_user_is_staff_member($member);
     $member->destroy();
 
     redirect('/backend/staff_members', ['notice' => 'Destroyed successfully']);
+  }
+
+  /**
+   * Display the form for changing a user's group.
+   */
+  private function change_group_get() {
+    $this->groups = Group::all();
+    $this->groups_for_select = $this->all_groups_for_select();
+    $this->render('staff_members/change_group');
+  }
+
+  /**
+   * Actually change the group of a staff member.
+   */
+  private function change_group_post() {
+    $this->member->update(['group_id' => $this->params['group_id']]);
+    redirect('/backend/staff_members', [
+      'notice' => 'Group changed successfully'
+    ]);
   }
 
   /**
