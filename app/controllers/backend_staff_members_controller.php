@@ -26,6 +26,7 @@ class BackendStaffMembersController extends BackendController {
    */
   public function nuevo() {
     $this->restrict_to_admins();
+
     $this->groups = Group::all();
     $this->groups_for_select = $this->all_groups_for_select();
     $this->render('staff_members/nuevo');
@@ -36,6 +37,8 @@ class BackendStaffMembersController extends BackendController {
    * Create a new staff members.
    */
   public function create() {
+    $this->restrict_to_admins();
+
     $rand_password = User::random_password();
     $new_staff_member = User::create([
       'confirmed' => true,
@@ -61,6 +64,8 @@ class BackendStaffMembersController extends BackendController {
    * Block a staff member.
    */
   public function block() {
+    $this->restrict_to_admins();
+
     $this->set_blocked_to($this->params['id'], true);
   }
 
@@ -69,7 +74,22 @@ class BackendStaffMembersController extends BackendController {
    * Unblock a staff member.
    */
   public function unblock() {
+    $this->restrict_to_admins();
+
     $this->set_blocked_to($this->params['id'], false);
+  }
+
+  /**
+   * GET /staff_members/destroy?id=1
+   * Remove a staff member.
+   */
+  public function destroy() {
+    $this->restrict_to_admins();
+
+    $member = $this->safe_find('User', $this->params['id']);
+    $member->destroy();
+
+    redirect('/backend/staff_members', ['notice' => 'Destroyed successfully']);
   }
 
   /**

@@ -10,6 +10,8 @@
     <a href="mailto:{$user->email}">{$user->email}</a>
   </td>
 
+  <td>{$user->group->name}</td>
+
   <td>{$user->created_at}</td>
 
   <td class="actions">
@@ -24,5 +26,9 @@
         class="block"
         href="{url to='/backend/staff_members/block' id=$user->id}">Block</a>
     {/if}
+
+    <a
+      data-confirm
+      href="{url to='/backend/staff_members/destroy' id=$user->id}">Destroy</a>
   </td>
 </tr>

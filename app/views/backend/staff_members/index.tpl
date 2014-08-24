@@ -6,6 +6,7 @@
   <thead>
     <th>Name</th>
     <th>Email</th>
+    <th>Group</th>
     <th>Created at</th>
     <th>Actions</th>
   </thead>
