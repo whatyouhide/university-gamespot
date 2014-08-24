@@ -14,6 +14,8 @@ class User extends Model {
    */
   public static $table_name = 'users';
 
+  const CONFIRMATION_TOKEN_LENGTH = 32;
+
   /**
    * {@inheritdoc}
    * Also fetch the profile picture and group of this user.
@@ -107,6 +109,14 @@ class User extends Model {
   }
 
   /**
+   * Return true if the user has confirmed her email address.
+   * @return bool
+   */
+  public function is_confirmed() {
+    return $this->confirmed == '1';
+  }
+
+  /**
    * Return the full name of a user (first name + last name).
    * @return string
    */
@@ -118,8 +128,14 @@ class User extends Model {
    * {@inheritdoc}
    * This function also hashes the 'password' attribute before passing it to the
    * 'create' parent's mathod.
+   * If no confirmation token is found in $attrs, the user is assumed to be
+   * confirmed.
    */
   public static function create($attrs) {
+    if (!isset($attrs['confirmation_token'])) {
+      $attrs['confirmed'] = true;
+    }
+
     return parent::create(self::with_hashed_password($attrs));
   }
 
@@ -130,6 +146,14 @@ class User extends Model {
    */
   public static function hash_password($password) {
     return md5($password);
+  }
+
+  /**
+   * Return a valid random confirmation token.
+   * @return string
+   */
+  public static function new_confirmation_token() {
+    return random_string(self::CONFIRMATION_TOKEN_LENGTH);
   }
 
   /**

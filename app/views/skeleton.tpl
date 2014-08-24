@@ -1,4 +1,4 @@
-{if $backend}
+{if isset($backend) && $backend}
   {assign html_class "backend"}
 {else}
   {assign html_class "frontend"}

@@ -1,6 +1,7 @@
 <?php
 /**
  * The root of the application.
+ * @package Gamespot
  */
 
 // Include the necessary setup for the application.

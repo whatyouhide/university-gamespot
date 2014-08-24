@@ -82,6 +82,22 @@ class Controller {
   }
 
   /**
+   * Render a Smarty template as a string. This is different from `render`,
+   * since it doesn't use the flash, it doesn't pass instance variables to
+   * Smarty and doesn't use the smarty instance associated with this object, but
+   * uses a new one each time.
+   * @param string $template A template name, just like in 'render()'.
+   * @param array $assigns An associative array of variable to assign to Smarty,
+   * just like in 'render()'.
+   * @return string The compiled template.
+   */
+  public function render_as_string($template, $assigns = array()) {
+    $mailer_smarty = new GamespotSmarty;
+    $mailer_smarty->mass_assign($assigns);
+    return $mailer_smarty->render_as_string($template);
+  }
+
+  /**
    * Render plain text.
    * @param string $plain_text
    */
