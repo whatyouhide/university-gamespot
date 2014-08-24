@@ -20,4 +20,6 @@
 
 <a href="{url to='/backend/staff_members/nuevo'}">New staff member</a>
 
+{include file='backend/staff_members/_permissions_table.tpl'}
+
 {/block}

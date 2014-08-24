@@ -33,6 +33,10 @@
     </li>
 
     <li>
+      <a href="{url to='/backend/groups'}">Groups</a>
+    </li>
+
+    <li>
       <a href="{url to='/backend/blog'}">Blog</a>
     </li>
 

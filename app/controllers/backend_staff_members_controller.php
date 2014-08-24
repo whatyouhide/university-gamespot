@@ -17,6 +17,7 @@ class BackendStaffMembersController extends BackendController {
 
     $current_id = $this->current_user->id;
     $this->staff_members = User::staff_members_except($current_id);
+    $this->groups = Group::all();
     $this->render('staff_members/index');
   }
 
