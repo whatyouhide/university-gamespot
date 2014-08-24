@@ -42,7 +42,7 @@ function echo_debug($obj) {
  * Return a function that surrounds a string with the given `$surrounder`.
  * @param string $surrounder
  * @return function A function which takes a string as an argument and returns
- *         that string surrounded with `$surrounder`.
+ * that string surrounded with `$surrounder`.
  */
 function surround_with($surrounder) {
   return function ($str) use ($surrounder) {
@@ -89,6 +89,24 @@ function array_restrict($subject, $keys) {
     if (isset($subject[$k])) {
       array_push($result, $subject[$k]);
     }
+  }
+
+  return $result;
+}
+
+/**
+ * Generate a random alphanumeric string with a given number of characters in
+ * it.
+ * @param int $length
+ * @return string
+ */
+function random_string($length = 10) {
+  $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  $number_of_chars = strlen($chars);
+  $result = '';
+
+  for ($i = 0; $i < $length; $i++) {
+    $result .= $chars[rand(0, $number_of_chars - 1)];
   }
 
   return $result;
