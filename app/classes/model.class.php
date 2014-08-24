@@ -123,7 +123,7 @@ class Model {
 
     $i = 0;
     foreach ($attributes as $attr => $val) {
-      $q .= " `$t`.`$attr` = '$val'";
+      $q .= " `$t`.`$attr` = " . (is_null($val) ? "NULL" : "'$val'");
       // If it's not the last iteration, append a comma.
       if ($i < count($attributes) - 1) $q .= ', ';
       $i++;
