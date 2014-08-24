@@ -16,3 +16,6 @@ window.functions.ajaxFlash = function (type, message) {
     .delay(config.flash.ajaxFadeOutAfter)
     .fadeOut(config.flash.ajaxFadeOutIn);
 };
+
+// Reload the current page.
+window.functions.reload = window.location.reload;
