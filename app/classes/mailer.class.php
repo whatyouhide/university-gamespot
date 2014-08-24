@@ -43,6 +43,10 @@ class Mailer {
     $this->mail->Subject = $pars['subject'];
     $this->mail->Body = $pars['body'];
 
+    if (isset($pars['is_html'])) {
+      $this->mail->isHTML(true);
+    }
+
     $this->sent_successfully = $this->mail->send();
 
     return $this->sent_successfully;
