@@ -14,6 +14,11 @@ define('SITE_NAME', 'gamespot');
 define('SITE_ROOT', '/' . SITE_NAME);
 
 /**
+ * The host of the website.
+ */
+define('HOST', 'localhost:8888');
+
+/**
  * The root of the website as an absolute path on the server.
  */
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . SITE_NAME);
