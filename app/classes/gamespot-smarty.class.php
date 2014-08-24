@@ -33,12 +33,21 @@ class GamespotSmarty extends Smarty {
   }
 
   /**
-   * Overrides the `display` function so that you don't need to end the template
-   * name with '.tpl'.
-   * @param string $template The name of the template to display
+   * Replaces the `display` function so that $template doesn't have to end with
+   * '.tpl'.
+   * @param string $template
    */
   public function render($template) {
-    parent::display($this->with_tpl_extension($template));
+    $this->display($this->with_tpl_extension($template));
+  }
+
+  /**
+   * Replaces the `fetch` function so that $template doesn't have to end with
+   * '.tpl'.
+   * @param string $template
+   */
+  public function render_as_string($template) {
+    return $this->fetch($this->with_tpl_extension($template));
   }
 
   /**
@@ -59,6 +68,7 @@ class GamespotSmarty extends Smarty {
     $this->assign('site_name', SITE_NAME);
     $this->assign('site_root', SITE_ROOT);
     $this->assign('root', ROOT);
+    $this->assign('host', HOST);
     $this->assign('controllers', SITE_ROOT . '/app/controllers');
     $this->assign('uploads', SITE_ROOT . '/public/uploads');
     $this->assign('lib', SITE_ROOT . '/lib');
