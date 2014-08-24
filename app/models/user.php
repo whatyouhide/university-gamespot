@@ -15,6 +15,7 @@ class User extends Model {
   public static $table_name = 'users';
 
   const CONFIRMATION_TOKEN_LENGTH = 32;
+  const RANDOM_PASSWORD_LENGTH = 32;
 
   /**
    * {@inheritdoc}
@@ -154,6 +155,14 @@ class User extends Model {
    */
   public static function new_confirmation_token() {
     return random_string(self::CONFIRMATION_TOKEN_LENGTH);
+  }
+
+  /**
+   * Return a random password.
+   * @return string
+   */
+  public static function random_password() {
+    return random_string(self::RANDOM_PASSWORD_LENGTH);
   }
 
   /**

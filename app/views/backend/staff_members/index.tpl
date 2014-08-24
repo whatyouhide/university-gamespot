@@ -17,4 +17,6 @@
   </tbody>
 </table>
 
+<a href="{url to='/backend/staff_members/nuevo'}">New staff member</a>
+
 {/block}
