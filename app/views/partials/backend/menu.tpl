@@ -37,7 +37,7 @@
     </li>
 
     <li>
-      <a href="{url to='/backend/blog'}">Blog</a>
+      <a href="{url to='/backend/posts'}">Blog</a>
     </li>
 
     <li>
