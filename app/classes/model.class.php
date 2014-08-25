@@ -231,6 +231,20 @@ class Model {
   }
 
   /**
+   * Return an array of ['id' => $property] couples which is a <select>-friendly
+   * way to use models. This returns all the models.
+   * @param string $property The value associated with a record id.
+   * @return array
+   */
+  public static function all_for_select_with($property) {
+    $all = static::all();
+    return array_combine(
+      array_pluck($all, 'id'),
+      array_pluck($all, 'name')
+    );
+  }
+
+  /**
    * Perform validations on a set of attributes. Return an array of errors for
    * those attributes (an empty array if no errors are found).
    * @param array $attributes An associative array of 'attr' => 'val' couples.
