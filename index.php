@@ -17,8 +17,8 @@ Db::init();
 
 // Dispatch an action to a controller.
 Router::dispatch_action_to_controller(
-  $_GET['controller'],
-  $_GET['action'],
-  $_GET['backend']
+  isset($_GET['controller']) ? $_GET['controller'] : '',
+  isset($_GET['action'])     ? $_GET['action']     : '',
+  isset($_GET['backend'])    ? $_GET['backend']    : ''
 );
 ?>
