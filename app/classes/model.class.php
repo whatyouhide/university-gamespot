@@ -233,7 +233,6 @@ class Model {
   /**
    * Perform validations on a set of attributes. Return an array of errors for
    * those attributes (an empty array if no errors are found).
-   * @abstract
    * @param array $attributes An associative array of 'attr' => 'val' couples.
    * @return array
    */

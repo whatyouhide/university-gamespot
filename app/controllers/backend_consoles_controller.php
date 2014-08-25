@@ -27,7 +27,6 @@ class BackendConsolesController extends BackendController {
   public function nuevo() {
     $this->restrict_to_permission('manage_products');
 
-    $this->console = Console::find($this->params['id']);
     $this->render('consoles/nuevo');
   }
 
@@ -50,9 +49,14 @@ class BackendConsolesController extends BackendController {
     $this->restrict_to_permission('manage_products');
 
     $new_console = Console::create($this->console_params());
-    $this->update_console_image($new_console);
 
-    redirect('/backend/consoles', ['notice' => 'Successfully created.']);
+    if ($new_console->is_valid()) {
+      $this->update_console_image($new_console);
+      redirect('/backend/consoles', ['notice' => 'Successfully created.']);
+    } else {
+      Session::flash('error', $new_console->errors_as_string());
+      $this->render('consoles/nuevo');
+    }
   }
 
   /**
@@ -62,11 +66,16 @@ class BackendConsolesController extends BackendController {
   public function update() {
     $this->restrict_to_permission('manage_products');
 
-    $console = Console::find($this->params['id']);
-    $console->update($this->console_params());
-    $this->update_console_image($console);
+    $this->console = Console::find($this->params['id']);
+    $this->console->update($this->console_params());
+    $this->update_console_image($this->console);
 
-    redirect('/backend/consoles', ['notice' => 'Successfully updated.']);
+    if ($this->console->is_valid()) {
+      redirect('/backend/consoles', ['notice' => 'Successfully updated.']);
+    } else {
+      Session::flash('error', $this->console->errors_as_string());
+      $this->render('consoles/edit');
+    }
   }
 
   /**

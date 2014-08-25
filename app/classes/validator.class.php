@@ -37,9 +37,29 @@ class Validator {
    * @param string $key
    * @param string $msg
    */
-  public function must_not_be_empty($key, $msg) {
+  public function must_not_be_empty($key, $msg = null) {
     $empty = $this->is_set($key) && empty($this->attrs[$key]);
+
+    if (is_null($msg)) {
+      $msg = ucfirst($key) . " can't be empty";
+    }
+
     $this->add_message_if($empty, $msg);
+  }
+
+  /**
+   * Add an error message if the value at $key is not a number.
+   * @param string $key
+   * @param string $msg
+   */
+  public function must_be_int($key, $msg) {
+    $is_int = $this->is_set($key) && ctype_digit($this->attrs[$key]);
+
+    if (is_null($msg)) {
+      $msg = ucfirst($key) . " is not a number";
+    }
+
+    $this->add_message_if(!$is_int, $msg);
   }
 
   /**

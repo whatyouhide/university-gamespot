@@ -45,6 +45,26 @@ class Console extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function validate($attrs) {
+    $validator = new Validator($attrs);
+
+    $validator->must_not_be_empty('name');
+    $validator->must_not_be_empty('producer');
+    $validator->must_not_be_empty(
+      'release_year',
+      'The release year must not be empty'
+    );
+    $validator->must_be_int(
+      'release_year',
+      'The release year must be an integer'
+    );
+
+    return $validator->error_messages();
+  }
+
+  /**
    * Fetch the image associated with this record.
    * @return Upload
    */

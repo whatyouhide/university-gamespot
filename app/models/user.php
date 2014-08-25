@@ -189,7 +189,7 @@ class User extends Model {
   }
 
   /**
-   * Validate the current user.
+   * {@inheritdoc}
    */
   protected static function validate($attrs) {
     $validator = new Validator($attrs);

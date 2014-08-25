@@ -4,7 +4,15 @@
 
 <h1>New console</h1>
 
-<form action="{url to='/backend/consoles/create'}">
+<form
+  enctype="multipart/form-data"
+  method="POST"
+  action="{url to='/backend/consoles/create'}">
+
+  <label for="console_image">Image</label>
+  <input type="hidden" name="MAX_FILE_SIZE" value="300000000">
+  <input name="console_image" type="file">
+
   <label for="name">Name</label>
   <input name="name" type="text">
 
