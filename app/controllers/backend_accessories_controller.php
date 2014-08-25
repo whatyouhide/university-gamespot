@@ -10,14 +10,20 @@
  */
 class BackendAccessoriesController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict' => 'all',
+    'set_accessory' => ['edit', 'update', 'destroy'],
+    'set_consoles_for_select' => ['nuevo', 'edit']
+  );
+
+  /**
    * GET /accessories
    * List all the accessories.
    */
   public function index() {
-    $this->restrict_to_permission('manage_products');
-
     $this->accessories = Accessory::all();
-    $this->render('accessories/index');
   }
 
   /**
@@ -25,10 +31,6 @@ class BackendAccessoriesController extends BackendController {
    * Render the form for a new accessory.
    */
   public function nuevo() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->consoles_for_select = $this->all_consoles_for_select();
-    $this->render('accessories/nuevo');
   }
 
   /**
@@ -36,11 +38,6 @@ class BackendAccessoriesController extends BackendController {
    * Edit a accessory.
    */
   public function edit() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->accessory = Accessory::find($this->params['id']);
-    $this->consoles_for_select = $this->all_consoles_for_select();
-    $this->render('accessories/edit');
   }
 
   /**
@@ -48,8 +45,6 @@ class BackendAccessoriesController extends BackendController {
    * Create a new accessory.
    */
   public function create() {
-    $this->restrict_to_permission('manage_products');
-
     $new_accessory = Accessory::create($this->accessory_params());
 
     if ($new_accessory->is_valid()) {
@@ -67,19 +62,16 @@ class BackendAccessoriesController extends BackendController {
    * Update an existing accessory.
    */
   public function update() {
-    $this->restrict_to_permission('manage_products');
+    $this->accessory->update($this->accessory_params());
 
-    $accessory = $this->safe_find_from_id('Accessory');
-    $accessory->update($this->accessory_params());
-
-    if ($accessory->is_valid()) {
-      $this->update_accessory_image($accessory);
+    if ($this->accessory->is_valid()) {
+      $this->update_accessory_image($this->accessory);
       redirect('/backend/accessories', ['notice' => 'Successfully updated.']);
     } else {
       redirect(
         '/backend/accessories/edit',
-        ['error' => $accessory->errors_as_string()],
-        ['id' => $accessory->id]
+        ['error' => $this->accessory->errors_as_string()],
+        ['id' => $this->accessory->id]
       );
     }
   }
@@ -89,11 +81,33 @@ class BackendAccessoriesController extends BackendController {
    * Destroy a accessory.
    */
   public function destroy() {
-    $this->restrict_to_permission('manage_products');
-
-    $accessory = Accessory::find($this->params['id']);
-    $accessory->destroy();
+    $this->accessory->destroy();
     redirect('/backend/accessories', ['notice' => 'Successfully destroyed.']);
+  }
+
+  /**
+   * <b>Filter</b>
+   * Restrict the access to the actions of this controller only to the users
+   * with a specific permission.
+   */
+  protected function restrict() {
+    $this->restrict_to_permission('manage_products');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Safely find the Accessory identified by the id in the params.
+   */
+  protected function set_accessory() {
+    $this->accessory = $this->safe_find_from_id('Accessory');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Set the `consoles_for_select` instance variables.
+   */
+  protected function set_consoles_for_select() {
+    $this->consoles_for_select = $this->all_consoles_for_select();
   }
 
   /**

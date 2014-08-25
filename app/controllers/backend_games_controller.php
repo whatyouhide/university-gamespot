@@ -10,14 +10,19 @@
  */
 class BackendGamesController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict_permission' => 'all',
+    'set_game' => ['edit', 'update', 'destroy']
+  );
+
+  /**
    * GET /games
    * List all the games.
    */
   public function index() {
-    $this->restrict_to_permission('manage_products');
-
     $this->games = Game::all();
-    $this->render('games/index');
   }
 
   /**
@@ -25,11 +30,8 @@ class BackendGamesController extends BackendController {
    * Render the form for a new console.
    */
   public function nuevo() {
-    $this->restrict_to_permission('manage_products');
-
     $this->consoles_for_select = $this->all_consoles_for_select();
     $this->game_categories_for_select = $this->all_game_categories_for_select();
-    $this->render('games/nuevo');
   }
 
   /**
@@ -37,13 +39,8 @@ class BackendGamesController extends BackendController {
    * Edit a console.
    */
   public function edit() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->game = $this->safe_find_from_id('Game');
     $this->consoles_for_select = $this->all_consoles_for_select();
     $this->game_categories_for_select = $this->all_game_categories_for_select();
-
-    $this->render('games/edit');
   }
 
   /**
@@ -51,8 +48,6 @@ class BackendGamesController extends BackendController {
    * Create a new console.
    */
   public function create() {
-    $this->restrict_to_permission('manage_products');
-
     $new_game = Game::create($this->game_params());
 
     if ($new_game->is_valid()) {
@@ -70,19 +65,16 @@ class BackendGamesController extends BackendController {
    * Update an existing console.
    */
   public function update() {
-    $this->restrict_to_permission('manage_products');
+    $this->game->update($this->game_params());
 
-    $game = $this->safe_find_from_id('Game');
-    $game->update($this->game_params());
-
-    if ($game->is_valid()) {
-      $this->update_game_cover_image($game);
+    if ($this->game->is_valid()) {
+      $this->update_game_cover_image($this->game);
       redirect('/backend/games', ['notice' => 'Successfully updated.']);
     } else {
       redirect(
         '/backend/games/edit',
-        ['error' => $game->errors_as_string()],
-        ['id' => $game->id]
+        ['error' => $this->game->errors_as_string()],
+        ['id' => $this->game->id]
       );
     }
   }
@@ -92,11 +84,23 @@ class BackendGamesController extends BackendController {
    * Destroy a console.
    */
   public function destroy() {
-    $this->restrict_to_permission('manage_products');
-
-    $console = Game::find($this->params['id']);
-    $console->destroy();
+    $this->game->destroy();
     redirect('/backend/games', ['notice' => 'Successfully destroyed.']);
+  }
+
+  /**
+   * Restrict the actions of this controller to a specific permission.
+   */
+  protected function restrict_permission() {
+    $this->restrict_to_permission('manage_products');
+  }
+
+  /**
+   * Set the `game` instance variable to the Game identified by `id` in the
+   * params.
+   */
+  protected function set_game() {
+    $this->game = $this->safe_find_from_id('Game');
   }
 
   /**

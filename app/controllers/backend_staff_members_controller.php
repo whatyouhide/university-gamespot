@@ -9,16 +9,20 @@
  */
 class BackendStaffMembersController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict_to_admins' => 'all'
+  );
+
+  /**
    * GET /staff_members
    * List all the 'backend users' of the website.
    */
   public function index() {
-    $this->restrict_to_admins();
-
     $current_id = $this->current_user->id;
     $this->staff_members = User::staff_members_except($current_id);
     $this->groups = Group::all();
-    $this->render('staff_members/index');
   }
 
   /**
@@ -26,11 +30,8 @@ class BackendStaffMembersController extends BackendController {
    * Display the form for a new staff member.
    */
   public function nuevo() {
-    $this->restrict_to_admins();
-
     $this->groups = Group::all();
-    $this->groups_for_select = $this->all_groups_for_select();
-    $this->render('staff_members/nuevo');
+    $this->groups_for_select = Group::all_for_select_with('name');
   }
 
   /**
@@ -38,8 +39,6 @@ class BackendStaffMembersController extends BackendController {
    * Create a new staff members.
    */
   public function create() {
-    $this->restrict_to_admins();
-
     $rand_password = User::random_password();
     $new_staff_member = User::create([
       'confirmed' => true,
@@ -82,8 +81,6 @@ class BackendStaffMembersController extends BackendController {
    * Block a staff member.
    */
   public function block() {
-    $this->restrict_to_admins();
-
     $this->set_blocked_to($this->params['id'], true);
   }
 
@@ -92,8 +89,6 @@ class BackendStaffMembersController extends BackendController {
    * Unblock a staff member.
    */
   public function unblock() {
-    $this->restrict_to_admins();
-
     $this->set_blocked_to($this->params['id'], false);
   }
 
@@ -102,8 +97,6 @@ class BackendStaffMembersController extends BackendController {
    * Remove a staff member.
    */
   public function destroy() {
-    $this->restrict_to_admins();
-
     $member = $this->safe_find('User', $this->params['id']);
     $this->ensure_user_is_staff_member($member);
     $member->destroy();
@@ -116,7 +109,7 @@ class BackendStaffMembersController extends BackendController {
    */
   private function change_group_get() {
     $this->groups = Group::all();
-    $this->groups_for_select = $this->all_groups_for_select();
+    $this->groups_for_select = Group::all_for_select_with('name');
     $this->render('staff_members/change_group');
   }
 
@@ -138,8 +131,6 @@ class BackendStaffMembersController extends BackendController {
    * @param bool $is_blocked
    */
   private function set_blocked_to($id, $is_blocked) {
-    $this->restrict_to_admins();
-
     $member = $this->safe_find('User', $id);
     $this->ensure_user_is_staff_member($member);
 
@@ -161,22 +152,10 @@ class BackendStaffMembersController extends BackendController {
   }
 
   /**
-   * Return a <select>-friendly array of groups (id => name).
-   * @return array
-   */
-  private function all_groups_for_select() {
-    $all = Group::all();
-    return array_combine(
-      array_pluck($all, 'id'),
-      array_pluck($all, 'name')
-    );
-  }
-
-  /**
    * Contact a new staff member after she's been added. This also sends her her
    * new password (she can change it later).
    */
-  public function contact_new_staff_member($member, $password) {
+  private function contact_new_staff_member($member, $password) {
     $message = $this->render_as_string('mails/new_staff_member', [
       'staff_member' => $member,
       'password' => $password

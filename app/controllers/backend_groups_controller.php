@@ -10,14 +10,18 @@
  */
 class BackendGroupsController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict_to_admins' => 'all'
+  );
+
+  /**
    * GET /groups
    * Show all the groups.
    */
   public function index() {
-    $this->restrict_to_admins();
-
     $this->groups = Group::all();
-    $this->render('groups/index');
   }
 
   /**
@@ -26,8 +30,6 @@ class BackendGroupsController extends BackendController {
    * false).
    */
   public function create() {
-    $this->restrict_to_admins();
-
     $new_group = Group::create(['name' => $this->params['name']]);
     $this->render_plain($new_group->id);
   }
@@ -37,8 +39,6 @@ class BackendGroupsController extends BackendController {
    * Update a single group and its permissions.
    */
   public function update() {
-    $this->restrict_to_admins();
-
     $group = $this->safe_find_from_id('Group');
     $group->update($this->group_params());
 

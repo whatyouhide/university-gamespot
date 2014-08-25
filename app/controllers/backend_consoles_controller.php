@@ -10,14 +10,19 @@
  */
 class BackendConsolesController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict' => 'all',
+    'set_console' => ['edit', 'update', 'destroy']
+  );
+
+  /**
    * GET /consoles
    * List all the consoles.
    */
   public function index() {
-    $this->restrict_to_permission('manage_products');
-
     $this->consoles = Console::all();
-    $this->render('consoles/index');
   }
 
   /**
@@ -25,9 +30,6 @@ class BackendConsolesController extends BackendController {
    * Render the form for a new console.
    */
   public function nuevo() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->render('consoles/nuevo');
   }
 
   /**
@@ -35,10 +37,6 @@ class BackendConsolesController extends BackendController {
    * Edit a console.
    */
   public function edit() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->console = Console::find($this->params['id']);
-    $this->render('consoles/edit');
   }
 
   /**
@@ -46,8 +44,6 @@ class BackendConsolesController extends BackendController {
    * Create a new console.
    */
   public function create() {
-    $this->restrict_to_permission('manage_products');
-
     $new_console = Console::create($this->console_params());
 
     if ($new_console->is_valid()) {
@@ -64,13 +60,10 @@ class BackendConsolesController extends BackendController {
    * Update an existing console.
    */
   public function update() {
-    $this->restrict_to_permission('manage_products');
-
-    $this->console = Console::find($this->params['id']);
     $this->console->update($this->console_params());
-    $this->update_console_image($this->console);
 
     if ($this->console->is_valid()) {
+      $this->update_console_image($this->console);
       redirect('/backend/consoles', ['notice' => 'Successfully updated.']);
     } else {
       Session::flash('error', $this->console->errors_as_string());
@@ -83,11 +76,24 @@ class BackendConsolesController extends BackendController {
    * Destroy a console.
    */
   public function destroy() {
-    $this->restrict_to_permission('manage_products');
-
-    $console = Console::find($this->params['id']);
-    $console->destroy();
+    $this->console->destroy();
     redirect('/backend/consoles', ['notice' => 'Successfully destroyed.']);
+  }
+
+  /**
+   * <b>Filter</b>
+   * Restrict the actions of this controller to a specific permission.
+   */
+  protected function restrict() {
+    $this->restrict_to_permission('manage_products');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Set the `console` instance variable.
+   */
+  protected function set_console() {
+    $this->console = $this->safe_find_from_id('Console');
   }
 
   /**

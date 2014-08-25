@@ -10,14 +10,19 @@
  */
 class BackendUsersController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict' => 'all',
+    'set_user_and_ensure_is_regular' => ['block', 'unblock']
+  );
+
+  /**
    * GET /users
    * List all <b>regular</b> users on the website.
    */
   public function index() {
-    $this->restrict_to_permission('block_users');
-
     $this->users = User::regular();
-    $this->render('users/index');
   }
 
   /**
@@ -25,12 +30,7 @@ class BackendUsersController extends BackendController {
    * Block a user.
    */
   public function block() {
-    $this->restrict_to_permission('block_users');
-
-    $user = $this->safe_find_user();
-    $this->ensure_user_is_regular($user);
-
-    $user->update(['blocked' => true]);
+    $this->user->update(['blocked' => true]);
     redirect('/backend/users', ['notice' => 'Successfully blocked.']);
   }
 
@@ -39,36 +39,27 @@ class BackendUsersController extends BackendController {
    * Unblock a user.
    */
   public function unblock() {
-    $this->restrict_to_permission('block_users');
-
-    $user = $this->safe_find_user();
-    $this->ensure_user_is_regular($user);
-
-    $user->update(['blocked' => false]);
+    $this->user->update(['blocked' => false]);
     redirect('/backend/users', ['notice' => 'Successfully unblocked.']);
   }
 
   /**
-   * Block the action and redirect with a flash error if the target user isn't a
-   * regular user.
-   * @param $user
+   * <b>Filter</b>
+   * Restrict the actions of this controller to a specific permission.
    */
-  private function ensure_user_is_regular($user) {
-    if ($user->is_regular()) { return; }
-    redirect('/backend/users', ['error' => "Can't touch a non-regular user."]);
+  protected function restrict() {
+    $this->restrict_to_permission('block_users');
   }
 
   /**
-   * Find a user or render a 404 error if none is found.
-   * @return User
+   * <b>Filter</b>
+   * Set the `user` instance variable.
    */
-  private function safe_find_user() {
-    $user = User::find($this->params['id']);
-    if (is_null($user)) {
-      not_found();
-    } else {
-      return $user;
-    }
+  protected function set_user_and_ensure_is_regular() {
+    $this->user = $this->safe_find_from_id('User');
+
+    if ($this->user->is_regular()) { return; }
+    redirect('/backend/users', ['error' => "Can't touch a non-regular user."]);
   }
 }
 ?>
