@@ -63,7 +63,6 @@ class Accessory extends Model {
     $validator->must_not_be_empty('producer');
     $validator->must_not_be_empty('console_id');
     $validator->must_not_be_empty('release_date');
-    $validator->must_be_valid_date('release_date');
 
     return $validator->error_messages();
   }

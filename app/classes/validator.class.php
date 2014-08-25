@@ -22,8 +22,6 @@ class Validator {
    */
   private $messages;
 
-  const DATE_REGEX = '/\d{1,2}\/\d{1,2}\/\d{4}/';
-
   /**
    * Create a new instance based on an array of $attributes.
    * @param array $attributes
@@ -80,23 +78,6 @@ class Validator {
 
     $valid = filter_var($this->attrs[$key], FILTER_VALIDATE_EMAIL);
     $this->add_message_if(!$valid, $msg);
-  }
-
-  /**
-   * Add an error message if the value at $key is not a valid date.
-   * @param string $key
-   * @param string $msg
-   */
-  public function must_be_valid_date($key, $msg) {
-    if (!$this->is_set($key)) { return; }
-
-    $valid_date = preg_match(DATE_REGEX, $this->attrs[$key]);
-
-    if (is_null($msg)) {
-      $msg = ucfirst($key) . " is not a valid date";
-    }
-
-    $this->add_message_if(!$valid_date, $msg);
   }
 
   /**
