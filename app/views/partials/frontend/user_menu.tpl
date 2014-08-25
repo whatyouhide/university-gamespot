@@ -7,7 +7,10 @@
 
   <li class="profile">
     <a href="{$profile_url}">
-      {image_path image=$current_user->profile_picture default="profile_picture.jpg"}
+      {image_path
+        image=$current_user->profile_picture
+        gravatar=$current_user->email
+      }
       <span class="name">{$current_user->first_name}</span>
     </a>
   </li>

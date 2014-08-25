@@ -21,6 +21,7 @@ include 'app/classes/router.class.php';
 include 'app/classes/mailer.class.php';
 include 'app/classes/uploader.class.php';
 include 'app/classes/validator.class.php';
+include 'app/classes/gravatar.class.php';
 
 // Include some utility functions.
 include 'app/functions.php';

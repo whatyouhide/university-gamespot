@@ -17,7 +17,7 @@
     <div class="image-container">
       {image_path
         image=$current_user->profile_picture
-        default="profile_picture.jpg"
+        gravatar=$current_user->email
       }
     </div>
 
