@@ -39,7 +39,7 @@ class BackendGamesController extends BackendController {
   public function edit() {
     $this->restrict_to_permission('manage_products');
 
-    $this->game = Game::find($this->params['id']);
+    $this->game = $this->safe_find_from_id('Game');
     $this->consoles_for_select = $this->all_consoles_for_select();
     $this->game_categories_for_select = $this->all_game_categories_for_select();
 
@@ -72,7 +72,7 @@ class BackendGamesController extends BackendController {
   public function update() {
     $this->restrict_to_permission('manage_products');
 
-    $game = Game::find($this->params['id']);
+    $game = $this->safe_find_from_id('Game');
     $game->update($this->game_params());
 
     if ($game->is_valid()) {

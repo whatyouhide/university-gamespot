@@ -16,6 +16,7 @@ include 'app/classes/controller.class.php';
 include 'app/classes/backend_controller.class.php';
 include 'app/classes/session.class.php';
 include 'app/classes/request.class.php';
+include 'app/classes/response.class.php';
 include 'app/classes/router.class.php';
 include 'app/classes/mailer.class.php';
 include 'app/classes/uploader.class.php';

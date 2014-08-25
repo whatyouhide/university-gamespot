@@ -10,18 +10,8 @@
  */
 class Controller {
   /**
-   * @var array An associative array that maps named HTTP error to codes.
-   */
-  private static $message_to_code = array(
-    'forbidden' => 403,
-    'not_found' => 404,
-    'method_not_allowed' => 405,
-    'internal_server_error' => 500
-  );
-
-  /**
    * @var array Instance variables that won't be passed to the rendered template
-   *            automatically.
+   * automatically.
    */
   protected $hidden_instance_variables;
 
@@ -92,9 +82,9 @@ class Controller {
    * @return string The compiled template.
    */
   public function render_as_string($template, $assigns = array()) {
-    $mailer_smarty = new GamespotSmarty;
-    $mailer_smarty->mass_assign($assigns);
-    return $mailer_smarty->render_as_string($template);
+    $on_the_fly_smarty = new GamespotSmarty;
+    $on_the_fly_smarty->mass_assign($assigns);
+    return $on_the_fly_smarty->render_as_string($template);
   }
 
   /**
@@ -117,10 +107,10 @@ class Controller {
   public function render_error($error, $additional_data = array()) {
     if (is_int($error)) {
       $error_no = $error;
-      $message = array_search($error_no, self::$message_to_code);
+      $message = Response::status_code_to_message($error_no);
       $template_name = "{$error_no}_{$message}";
     } else {
-      $error_no = self::$message_to_code[$error];
+      $error_no = Response::message_to_status_code($error);
       $template_name = "{$error_no}_{$error}";
     }
 
@@ -157,7 +147,7 @@ class Controller {
    * @param int $status_code
    */
   protected function set_status_code($status_code) {
-    http_response_code($status_code);
+    Response::set_status_code($status_code);
     return $this;
   }
 
