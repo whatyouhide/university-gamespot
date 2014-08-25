@@ -223,6 +223,7 @@ class Controller {
    * found, a 404 error will be rendered.
    * @param string $model The model to search for.
    * @param string|int $id The id of the searched record.
+   * @return mixed
    */
   protected function safe_find($model, $id) {
     $record = $model::find($id);
@@ -232,6 +233,19 @@ class Controller {
     } else {
       return $record;
     }
+  }
+
+  /**
+   * Safely find an instance of $model by its id.
+   *
+   * This method assumes the id of the searched record is stored in
+   * `$this->params['id']`. This method is a wrapper around the functionality of
+   * `Controller::safe_find`.
+   * @param string $model The model to search for.
+   * @return mixed
+   */
+  protected function safe_find_from_id($model) {
+    return $this->safe_find($model, $this->params['id']);
   }
 
   /**

@@ -21,7 +21,7 @@
   <input name="name" type="text" value="{$accessory->name}">
 
   <label for="release_date">Release date</label>
-  <input name="release_date" type="text" value="{$accessory->release_date}">
+  <input name="release_date" type="date" value="{$accessory->release_date}">
 
   <label for="producer">Producer</label>
   <input name="producer" type="text" value="{$accessory->producer}">

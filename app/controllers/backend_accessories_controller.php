@@ -51,9 +51,15 @@ class BackendAccessoriesController extends BackendController {
     $this->restrict_to_permission('manage_products');
 
     $new_accessory = Accessory::create($this->accessory_params());
-    $this->update_accessory_image($new_accessory);
 
-    redirect('/backend/accessories', ['notice' => 'Successfully created.']);
+    if ($new_accessory->is_valid()) {
+      $this->update_accessory_image($new_accessory);
+      redirect('/backend/accessories', ['notice' => 'Successfully created.']);
+    } else {
+      redirect('/backend/accessories/nuevo', [
+        'error' => $new_accessory->errors_as_string()]
+      );
+    }
   }
 
   /**
@@ -63,11 +69,19 @@ class BackendAccessoriesController extends BackendController {
   public function update() {
     $this->restrict_to_permission('manage_products');
 
-    $accessory = Accessory::find($this->params['id']);
+    $accessory = $this->safe_find_from_id('Accessory');
     $accessory->update($this->accessory_params());
-    $this->update_accessory_image($accessory);
 
-    redirect('/backend/accessories', ['notice' => 'Successfully updated.']);
+    if ($accessory->is_valid()) {
+      $this->update_accessory_image($accessory);
+      redirect('/backend/accessories', ['notice' => 'Successfully updated.']);
+    } else {
+      redirect(
+        '/backend/accessories/edit',
+        ['error' => $accessory->errors_as_string()],
+        ['id' => $accessory->id]
+      );
+    }
   }
 
   /**

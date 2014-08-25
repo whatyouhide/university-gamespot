@@ -54,6 +54,21 @@ class Accessory extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function validate($attributes) {
+    $validator = new Validator($attributes);
+
+    $validator->must_not_be_empty('name');
+    $validator->must_not_be_empty('producer');
+    $validator->must_not_be_empty('console_id');
+    $validator->must_not_be_empty('release_date');
+    $validator->must_be_valid_date('release_date');
+
+    return $validator->error_messages();
+  }
+
+  /**
    * Fetch the image associated with this accessory.
    * @return Upload
    */
