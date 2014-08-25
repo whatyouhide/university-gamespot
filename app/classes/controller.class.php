@@ -31,9 +31,42 @@ class Controller {
   protected $mailer;
 
   /**
+   * @var array An associative array of 'method_name' => array_of_actions which
+   * tells the current controller which method to call before executing any of
+   * the methods in `array_of_actions`.
+   * An empty array of actions means "execute the filter for all the actions in
+   * the controller".
+   */
+  protected static $before_filters = array();
+
+  /**
+   * @var array An associative array of 'method_name' => array_of_actions which
+   * tells the current controller which method to call after executing any of
+   * the methods in `array_of_actions`.
+   * An empty array of actions means "execute the filter for all the actions in
+   * the controller".
+   */
+  protected static $after_filters = array();
+
+  /**
+   * @var array Like the $before_filters, but they're default to the base
+   * Controller class and can't be overridden in children classes.
+   */
+  private static $default_before_filters = array();
+
+  /**
+   * @var array Like the $after_filters, but they're default to the base
+   * Controller class and can't be overridden in children classes.
+   */
+  private static $default_after_filters = array(
+    'render_default_template' => 'all'
+  );
+
+
+  /**
    * @var string The action to cal on the newly created controller.
    */
-  private $action_to_call;
+  protected $action_to_call;
 
   /**
    * Create a new controller object and call `$action` on it.
@@ -48,6 +81,24 @@ class Controller {
 
     // Just a proxy to access the current request params.
     $this->set_hidden_instance_variable('params', $this->request->params);
+  }
+
+  /**
+   * Call the `action_to_call` action or render a 404 not found if there's no
+   * such action.
+   */
+  public function dispatch() {
+    $action = $this->action_to_call;
+
+    if (method_exists($this, $action)) {
+      $this->call_filters(self::$default_before_filters);
+      $this->call_filters(static::$before_filters);
+      $this->$action();
+      $this->call_filters(static::$after_filters);
+      $this->call_filters(self::$default_after_filters);
+    } else {
+      $this->render_error(404);
+    }
   }
 
   /**
@@ -119,30 +170,6 @@ class Controller {
   }
 
   /**
-   * Render the proper error for when a request method is not allowed on an
-   * action.
-   */
-  public function method_not_allowed() {
-    $this->render_error('method_not_allowed', [
-      'method' => $this->request->method()
-    ]);
-  }
-
-  /**
-   * Call the `action_to_call` action or render a 404 not found if there's no
-   * such action.
-   */
-  public function dispatch() {
-    $action = $this->action_to_call;
-
-    if (method_exists($this, $action)) {
-      $this->$action();
-    } else {
-      $this->render_error(404);
-    }
-  }
-
-  /**
    * Set the status code of the response to $status_code.
    * @param int $status_code
    */
@@ -165,6 +192,46 @@ class Controller {
     $words = array_map(function ($w) { return strtolower($w); }, $words);
 
     return implode('_', $words);
+  }
+
+  /**
+   * Render the template 'controller_name/controller_action'.
+   * This is the perfect last after filter and is used as such.
+   */
+  protected function render_default_template() {
+    $template_name = $this->controller_name()
+      . '/'
+      . $this->action_to_call;
+
+    $this->render($template_name);
+  }
+
+  /**
+   * Call the filters that have `$this->action_to_call` in the array of actions
+   * to call in `$array_of_filters`.
+   * @param array $array_of_filters This can be `$before_filters` or
+   * `$after_filters`.
+   */
+  private function call_filters($array_of_filters) {
+    foreach ($array_of_filters as $filter => $actions) {
+      if ($actions == 'all' || in_array($this->action_to_call, $actions)) {
+        $this->call_filter($filter);
+      }
+    }
+  }
+
+  /**
+   * Handle the call of a single filter: throw an exception if there's no such
+   * filter or call the filter.
+   * @param string $filter
+   * @throws Exception
+   */
+  private function call_filter($filter) {
+    if (method_exists($this, $filter)) {
+      $this->$filter();
+    } else {
+      throw new Exception("Filter ($filter) doesn't exist");
+    }
   }
 
   /**
@@ -255,8 +322,7 @@ class Controller {
    * @param mixed $value The value of the instance variable.
    */
   private function set_hidden_instance_variable($name, $value) {
-    // Start with an array with only the `hidden_instance_variables` variable in
-    // it.
+    // Start with an array with the `hidden_instance_variables` variable in it.
     if (!isset($this->hidden_instance_variables)) {
       $this->hidden_instance_variables = ['hidden_instance_variables'];
     }

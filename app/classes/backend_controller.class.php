@@ -52,6 +52,18 @@ class BackendController extends Controller {
   }
 
   /**
+   * {@inheritdoc}
+   * Also get rid of 'backend_' to find the correct template.
+   */
+  protected function render_default_template() {
+    $template_name = $this->controller_name()
+      . '/'
+      . $this->action_to_call;
+
+    $this->render(str_replace('backend_', '', $template_name));
+  }
+
+  /**
    * Ensure the current user can see the backend.
    */
   protected function restrict_to_staff_members() {
