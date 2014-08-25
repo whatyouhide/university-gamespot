@@ -39,8 +39,12 @@ class BackendGroupsController extends BackendController {
   public function update() {
     $this->restrict_to_admins();
 
-    $group = $this->safe_find('Group', $this->params['id']);
+    $group = $this->safe_find_from_id('Group');
     $group->update($this->group_params());
+
+    if (!$group->is_valid()) {
+      $this->set_status_code(500)->render_plain($group->errors_as_string());
+    }
   }
 
   /**

@@ -124,7 +124,7 @@ class Controller {
       $template_name = "{$error_no}_{$error}";
     }
 
-    http_response_code($error_no);
+    $this->set_status_code($error_no);
     $this->render('errors/' . $template_name, $additional_data);
   }
 
@@ -150,6 +150,15 @@ class Controller {
     } else {
       $this->render_error(404);
     }
+  }
+
+  /**
+   * Set the status code of the response to $status_code.
+   * @param int $status_code
+   */
+  protected function set_status_code($status_code) {
+    http_response_code($status_code);
+    return $this;
   }
 
   /**

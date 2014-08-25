@@ -32,8 +32,9 @@
     var $button = $(this);
     var $row = $button.parents('tr.group');
 
-    var data = dataFromRow($row);
-    $.post(updateUrl, data, flashSuccess);
+    $.post(updateUrl, dataFromRow($row))
+      .done(functions.flashSuccessWithMessage('Saved'))
+      .fail(functions.flashErrorWithResponseText);
   };
 
   // Change a group's name.

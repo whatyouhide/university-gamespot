@@ -80,6 +80,8 @@ $(function () {
     );
 
     promise.done(function () { functions.ajaxFlash('notice', 'Saved'); });
-    promise.fail(function () { functions.ajaxFlash('error', 'Error while saving'); });
+    promise.fail(function (promise) {
+      functions.ajaxFlash('error', promise.responseText);
+    });
   });
 });

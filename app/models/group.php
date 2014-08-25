@@ -25,6 +25,15 @@ class Group extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function validate($attributes) {
+    $validator = new Validator($attributes);
+    $validator->must_not_be_empty('name');
+    return $validator->error_messages();
+  }
+
+  /**
    * Return an array of groups that have a given $permission.
    * @param string $permission
    * @return array

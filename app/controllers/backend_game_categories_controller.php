@@ -30,7 +30,12 @@ class BackendGameCategoriesController extends BackendController {
     $this->restrict_to_permission('manage_products');
 
     $cat = GameCategory::create(['name' => $this->params['name']]);
-    $this->render_plain($cat->id);
+
+    if ($cat->is_valid()) {
+      $this->render_plain($cat->id);
+    } else {
+      $this->render_error('internal_server_error');
+    }
   }
 
   /**
@@ -43,6 +48,10 @@ class BackendGameCategoriesController extends BackendController {
 
     $cat = GameCategory::find($this->params['id']);
     $cat->update(['name' => $this->params['name']]);
+
+    if (!$cat->is_valid()) {
+      $this->set_status_code(500)->render_plain($cat->errors_as_string());
+    }
   }
 
   /**

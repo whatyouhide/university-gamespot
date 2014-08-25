@@ -19,3 +19,20 @@ window.functions.ajaxFlash = function (type, message) {
 
 // Reload the current page.
 window.functions.reload = window.location.reload;
+
+// This callback is used so that a flash error appears on the page, whose
+// message is the response text of the server. To be used with jQuery's
+// Deferred.fail(), which passes an object that responds to `responseText` to
+// its callback.
+window.functions.flashErrorWithResponseText = function (response) {
+  functions.ajaxFlash('error', response.responseText);
+};
+
+// Returns a function that displays a flash notice (success) with a given
+// message. This is useful for Deferred.done() callbacks:
+//     $.get(...).done(functions.flashSuccessWithMessage('Saved'));
+window.functions.flashSuccessWithMessage = function (message) {
+  return function () {
+    functions.ajaxFlash('notice', message);
+  };
+};
