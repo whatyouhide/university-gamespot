@@ -57,6 +57,20 @@ class Game extends Model {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function validate($attributes) {
+    $validator = new Validator($attributes);
+
+    $validator->must_not_be_empty('name');
+    $validator->must_not_be_empty('software_house', 'Software house needed');
+    $validator->must_not_be_empty('console_id');
+    $validator->must_not_be_empty('category_id');
+
+    return $validator->error_messages();
+  }
+
+  /**
    * Get the most recently added games.
    * @param int $limit How many games to retrieve.
    * @return array The most recently added games.

@@ -54,9 +54,15 @@ class BackendGamesController extends BackendController {
     $this->restrict_to_permission('manage_products');
 
     $new_game = Game::create($this->game_params());
-    $this->update_game_cover_image($new_game);
 
-    redirect('/backend/games', ['notice' => 'Successfully created.']);
+    if ($new_game->is_valid()) {
+      $this->update_game_cover_image($new_game);
+      redirect('/backend/games', ['notice' => 'Successfully created.']);
+    } else {
+      redirect('/backend/games/nuevo', [
+        'error' => $new_game->errors_as_string()]
+      );
+    }
   }
 
   /**
@@ -68,9 +74,17 @@ class BackendGamesController extends BackendController {
 
     $game = Game::find($this->params['id']);
     $game->update($this->game_params());
-    $this->update_game_cover_image($game);
 
-    redirect('/backend/games', ['notice' => 'Successfully updated.']);
+    if ($game->is_valid()) {
+      $this->update_game_cover_image($game);
+      redirect('/backend/games', ['notice' => 'Successfully updated.']);
+    } else {
+      redirect(
+        '/backend/games/edit',
+        ['error' => $game->errors_as_string()],
+        ['id' => $game->id]
+      );
+    }
   }
 
   /**

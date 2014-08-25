@@ -21,7 +21,7 @@
   <input name="name" type="text" value="{$game->name}">
 
   <label for="release_date">Release date</label>
-  <input name="release_date" type="text" value="{$game->release_date}">
+  <input name="release_date" type="date" value="{$game->release_date}">
 
   <label for="software_house">Software house</label>
   <input name="software_house" type="text" value="{$game->software_house}">

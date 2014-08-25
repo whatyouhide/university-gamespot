@@ -17,7 +17,7 @@
   <input name="name" type="text">
 
   <label for="release_date">Release date</label>
-  <input name="release_date" type="text">
+  <input name="release_date" type="date">
 
   <label for="software_house">Software house</label>
   <input name="software_house" type="text">
