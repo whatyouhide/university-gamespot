@@ -19,8 +19,6 @@ class GamesController extends Controller {
       'newest' => Game::newest(),
       'with_most_ads' => Game::with_most_ads()
     ];
-
-    $this->render('games/index');
   }
 }
 ?>

@@ -55,8 +55,6 @@ class UsersController extends Controller {
 
     $this->game_ads = $ads['game_ads'];
     $this->accessory_ads = $ads['accessory_ads'];
-
-    $this->render('users/profile');
   }
 
   /**
@@ -64,7 +62,6 @@ class UsersController extends Controller {
    * The settings for a specific user.
    */
   public function settings() {
-    $this->render('users/settings');
   }
 
   /**

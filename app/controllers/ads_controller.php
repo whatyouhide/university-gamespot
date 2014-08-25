@@ -15,24 +15,15 @@ class AdsController extends Controller {
    */
   public function index() {
     $separated = Ad::separate_game_and_accessory(Ad::published());
-
     $this->game_ads = $separated['game_ads'];
     $this->accessory_ads = $separated['accessory_ads'];
-
-    $this->render('ads/index');
   }
 
   /**
    * GET /ads/show?id=1
    */
   public function show() {
-    $this->ad = Ad::find($this->params['id']);
-
-    if ($this->ad) {
-      $this->render('ads/show');
-    } else {
-      $this->render_error(404);
-    }
+    $this->ad = $this->safe_find_from_id('Ad');
   }
 
   /**
@@ -55,11 +46,9 @@ class AdsController extends Controller {
   public function edit() {
     $this->ad = $this->ad_protected_for_current_user($this->params['id']);
 
-    $this->console_names = $this->all_records_for_select('Console');
-    $this->game_names = $this->all_records_for_select('Game');
-    $this->accessorie_names = $this->all_records_for_select('Accessory');
-
-    $this->render('ads/edit');
+    $this->console_names = Console::all_for_select_with('name');
+    $this->game_names = Game::all_for_select_with('name');
+    $this->accessory_names = Accessory::all_for_select_with('name');
   }
 
   /**
@@ -93,8 +82,7 @@ class AdsController extends Controller {
    * Destroy an ad.
    */
   public function destroy() {
-    $ad = Ad::find($this->params['id']);
-
+    $ad = $this->ad_protected_for_current_user($this->params['id']);
     $ad->destroy();
     redirect('/users/profile', ['notice' => 'Destroyed successfully.']);
   }
@@ -169,28 +157,13 @@ class AdsController extends Controller {
   }
 
   /**
-   * Return an array to be used in a <select> tag containing the name of all the
-   * records of `$model`.
-   * @param string $model Instances of this model will be fetched (e.g. 'Game')
-   * @return array An array in the form [name1 => name1, name2 => name2...]
-   */
-  private function all_records_for_select($model) {
-    $all = $model::all();
-
-    $ids = array_map(function ($r) { return $r->id; }, $all);
-    $names = array_map(function ($r) { return $r->name; }, $all);
-
-    return array_combine($ids, $names);
-  }
-
-  /**
    * Find the ad identified by `$id`, but render a 403 Forbidden error if that
    * ad doesn't belong to the current user.
    * @param int|string $id The id that identifies the ad.
    * @return Ad The ad identified by `$id`.
    */
   private function ad_protected_for_current_user($id) {
-    $ad = Ad::find($id);
+    $ad = $this->safe_find('Ad', $id);
 
     if ($ad->author_id != $this->current_user->id) {
       $this->render_error('forbidden');

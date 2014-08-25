@@ -14,8 +14,7 @@ class AccessoriesController extends Controller {
    * List all the accessories.
    */
   public function index() {
-    $accessories = Accessory::all();
-    $this->render('accessories/index', ['accessories' => $accessories]);
+    $this->accessories = Accessory::all();
   }
 }
 ?>
