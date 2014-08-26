@@ -10,6 +10,19 @@
  */
 class UsersController extends Controller {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'ensure_no_signed_in_user' => [
+      'sign_in',
+      'sign_up',
+      'confirm',
+      'forgot_password',
+      'reset_password'
+    ]
+  );
+
+  /**
    * GET /users/sign_in
    * POST /users/sign_in
    * Dispatcher based on the request's type.
@@ -144,10 +157,51 @@ class UsersController extends Controller {
   }
 
   /**
+   * GET /users/forgot_password
+   * POST /users/forgot_password
+   * Dispatch to the forgot_password_{get|post} actions.
+   */
+  public function forgot_password() {
+    if ($this->request->is_post()) {
+      $this->forgot_password_post();
+    } else if ($this->request->is_get()) {
+      $this->forgot_password_get();
+    }
+  }
+
+  /**
+   * GET /users/reset_password
+   * POST /users/reset_password
+   * Dispatch based on the request type.
+   */
+  public function reset_password() {
+    $this->user = $this->safe_find_from_id('User');
+
+    if ($this->user->reset_token != $this->params['token']) {
+      redirect('/', ['error' => 'No matching token']);
+    }
+
+    if ($this->request->is_post()) {
+      $this->reset_password_post();
+    } else if ($this->request->is_get()) {
+      $this->reset_password_get();
+    }
+  }
+
+  /**
+   * <b>Filter</b>
+   * Ensure there's no signed in user.
+   */
+  public function ensure_no_signed_in_user() {
+    if ($this->current_user) {
+      redirect('/', ['error' => 'You are already signed in']);
+    }
+  }
+
+  /**
    * Display the sign in form.
    */
   private function sign_in_get() {
-    $this->render('users/sign_in');
   }
 
   /**
@@ -175,7 +229,6 @@ class UsersController extends Controller {
    * Display the sign up form.
    */
   private function sign_up_get() {
-    $this->render('users/sign_up');
   }
 
   /**
@@ -200,6 +253,66 @@ class UsersController extends Controller {
     } else {
       redirect('/users/sign_up', ['error' => $new_user->errors_as_string()]);
     }
+  }
+
+  /**
+   * Display the 'Forgot password' form.
+   */
+  private function forgot_password_get() {
+  }
+
+  /**
+   * Actually send the recovery email.
+   */
+  private function forgot_password_post() {
+    $user = User::find_by_attribute('email', $this->params['recovery_email']);
+
+    if (!$user) {
+      redirect('/users/forgot_password', [
+        'info' => "No users found with email {$this->params['recovery_email']}"
+      ]);
+    }
+
+    $user->start_reset_process();
+    $this->send_reset_password_email_to($user);
+
+    redirect('/', ['info' => "An email has been sent to {$user->email}"]);
+  }
+
+  /**
+   * Send the email to reset her password to user.
+   * @param User $user
+   */
+  private function send_reset_password_email_to($user) {
+    $message = $this->render_as_string(
+      'mails/reset_password',
+      ['user' => $user]
+    );
+
+    $this->mailer->send([
+      'from' => 'reset@gamespot.com',
+      'from_name' => 'Gamespot reset password',
+      'to' => $user->email,
+      'subject' => 'Reset your password',
+      'body' => $message,
+      'is_html' => true
+    ]);
+  }
+
+  /**
+   * Display the form to reset the password.
+   */
+  private function reset_password_get() {
+  }
+
+  /**
+   * Actually reset the password and 'unblock' the user.
+   */
+  private function reset_password_post() {
+    $this->user->update_password($this->params['new_password']);
+    $this->user->finish_reset_process();
+    Session::store_user($this->user);
+    redirect('/', ['notice' => 'Password successfully reset']);
   }
 
   /**
