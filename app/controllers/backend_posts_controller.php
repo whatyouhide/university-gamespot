@@ -8,11 +8,96 @@
  */
 class BackendPostsController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict' => 'all',
+    'set_post' => ['edit', 'toggle_published', 'update', 'destroy']
+  );
+
+  /**
    * GET /posts
    * List all the posts in the website.
    */
   public function index() {
-    $this->render('posts/index');
+    $this->posts = Post::all();
+  }
+
+  /**
+   * GET /posts/nuevo
+   * Create a new post, save it to the database and redirect to the edit page of
+   * the new post.
+   */
+  public function nuevo() {
+    $new_post = Post::create(['author_id' => $this->current_user->id], false);
+    redirect('/backend/posts/edit', [], ['id' => $new_post->id]);
+  }
+
+  /**
+   * GET /posts/edit?id=1
+   * Edit a post.
+   */
+  public function edit() {
+  }
+
+  /**
+   * POST /posts/update?id=1
+   * Update a post.
+   */
+  public function update() {
+    $this->post->update([
+      'title' => $this->params['title'],
+      'excerpt' => $this->params['excerpt'],
+      'content' => $this->params['content']
+    ]);
+
+    if ($this->post->is_valid()) {
+      $flash = ['notice' => 'Saved Successfully'];
+    } else {
+      $flash = ['error' => $this->post->errors_as_string()];
+    }
+
+    redirect('/backend/posts/edit', $flash, ['id' => $this->post->id]);
+  }
+
+  /**
+   * GET /posts/destroy?id=1
+   * Destroy a post.
+   */
+  public function destroy() {
+    $this->post->destroy();
+    redirect('/backend/posts', ['notice' => 'Successfully destroyed']);
+  }
+
+  /**
+   * POST /posts/toggle_published?id=1
+   * Publish an unbpublished post and unpublish a published one.
+   */
+  public function toggle_published() {
+    $will_be_published = !$this->post->is_published();
+    $this->post->toggle_published();
+    redirect(
+      '/backend/posts/edit',
+      ['notice' => $will_be_published ? 'Published' : 'Unpublished'],
+      ['id' => $this->post->id]
+    );
+  }
+
+  /**
+   * <b>Filter</b>
+   * Restrict the actions of this controller to users which have a specific
+   * permission.
+   */
+  protected function restrict() {
+    $this->restrict_to_permission('blog');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Set the `post` instance variable.
+   */
+  protected function set_post() {
+    $this->post = $this->safe_find_from_id('Post');
   }
 }
 ?>

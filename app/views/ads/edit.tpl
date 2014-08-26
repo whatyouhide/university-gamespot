@@ -47,7 +47,7 @@
   <div class="field">
     {if $ad->published eq "0"}
       <input type="submit" value="Save">
-      <button data-hijack data-confirm="Are you sure?">Pubblica</button>
+      <button data-hijack data-confirm="Are you sure?">Publish</button>
     {else}
       <input type="submit" value="Update">
     {/if}

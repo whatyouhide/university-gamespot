@@ -194,7 +194,7 @@ class Ad extends Model {
    * {@inheritdoc}
    * Also insert a row in the `games_ads` or `accessories_ads` tables.
    */
-  public static function create($attributes) {
+  public static function create($attributes, $validate = true) {
     $type = $attributes['type'];
 
     // The name of the foreign key column, like `game_id`.

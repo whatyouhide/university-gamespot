@@ -6,7 +6,6 @@
       <th>Group name</th>
       <th>Is admin</th>
       <th>Can blog</th>
-      <th>Can moderate blog</th>
       <th>Can manage products</th>
       <th>Can manage ads</th>
       <th>Can manage support</th>
@@ -28,15 +27,6 @@
 
           <td>
             {if $group->can_blog}
-              {assign can 'yes'}
-            {else}
-              {assign can 'no'}
-            {/if}
-            <span class="{$can}">{$can}</span>
-          </td>
-
-          <td>
-            {if $group->can_moderate_blog}
               {assign can 'yes'}
             {else}
               {assign can 'no'}

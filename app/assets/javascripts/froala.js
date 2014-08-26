@@ -1,7 +1,7 @@
-$(function () {
+(function () {
   'use strict';
 
-  $('.froala').editable({
+  var staticOptions = {
     inlineMode: false,
     buttons: [
       'bold',
@@ -21,5 +21,16 @@ $(function () {
       'html',
       'insertHorizontalRule'
     ]
+  };
+
+  // jQuery ready event.
+  $(function () {
+    var $editor = $('.froala');
+    var postId = $editor.parents('form').attr('data-post-id');
+
+    var dynamicOptions = {
+    };
+
+    $editor.editable(_.merge(staticOptions, dynamicOptions));
   });
-});
+})();

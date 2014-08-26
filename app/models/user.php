@@ -132,7 +132,7 @@ class User extends Model {
    * If no confirmation token is found in $attrs, the user is assumed to be
    * confirmed.
    */
-  public static function create($attrs) {
+  public static function create($attrs, $validate = true) {
     if (!isset($attrs['confirmation_token'])) {
       $attrs['confirmed'] = true;
     }

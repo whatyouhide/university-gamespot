@@ -170,6 +170,14 @@ class Controller {
   }
 
   /**
+   * Render a response with no body and a 204 No Content code.
+   */
+  public function no_content() {
+    $this->set_status_code(204);
+    die();
+  }
+
+  /**
    * Set the status code of the response to $status_code.
    * @param int $status_code
    */

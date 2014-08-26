@@ -69,6 +69,14 @@ class Db {
   }
 
   /**
+   * Return a MySQL friendly timestamp of now for use in DATETIME fields.
+   * @return string
+   */
+  public static function datetime() {
+    return date('Y-m-d H:i:s');
+  }
+
+  /**
    * Convert the result of a query to an array (rows).
    * @param mixed $query_result The result of a mysqli query.
    * @return array An array of rows.

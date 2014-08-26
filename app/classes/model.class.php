@@ -210,16 +210,19 @@ class Model {
   /**
    * Create a new instance of the calling model and save it to the db.
    * @param array $attribtutes An array of 'name' => 'value' attributes.
+   * @param bool $validate If false, don't validate the record.
    * @return mixed The record just inserted in the db.
    */
-  public static function create($attributes) {
+  public static function create($attributes, $validate = true) {
     $attrs_names = self::to_attribute_names(array_keys($attributes));
     $attrs_values = self::to_attributes_values(array_values($attributes));
     $t = static::$table_name;
 
-    $errors = static::validate($attributes);
-    if (!empty($errors)) {
-      return new InvalidRecord($errors);
+    if ($validate) {
+      $errors = static::validate($attributes);
+      if (!empty($errors)) {
+        return new InvalidRecord($errors);
+      }
     }
 
     // Build the query and issue it against the db.

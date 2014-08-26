@@ -7,7 +7,6 @@
     <th>Name</th>
     <th>Is admin</th>
     <th>Can blog</th>
-    <th>Can moderate blog</th>
     <th>Can manage products</th>
     <th>Can manage ads</th>
     <th>Can manage support</th>
