@@ -23,4 +23,11 @@ You requested to reset your password.
 Just click
 <a href="{$url}">here</a>.
 
+<br>
+<br>
+
+Wasn't you?
+<a href="{url to='/users/wasnt_me' id=$user->id absolute=true token=$user->reset_token}">
+Here</a>.
+
 {/block}

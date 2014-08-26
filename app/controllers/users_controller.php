@@ -170,7 +170,7 @@ class UsersController extends Controller {
   }
 
   /**
-   * GET /users/reset_password
+   * GET /users/reset_password?id=1&token=abc
    * POST /users/reset_password
    * Dispatch based on the request type.
    */
@@ -191,10 +191,28 @@ class UsersController extends Controller {
   }
 
   /**
+   * GET /users/wasnt_me?id=1&token=abc
+   * The user received an email with a reset password link but didn't asked for
+   * it. Restore her state by clearing her reset token like if she did
+   * everything correctly.
+   */
+  public function wasnt_me() {
+    $user = $this->safe_find_from_id('User');
+
+    if ($user->reset_token != $this->params['token']) {
+      redirect('/', ['error' => 'No matching tokens']);
+    }
+
+    // Restore the user's clean state and redirect to the home page.
+    $user->finish_reset_process();
+    redirect('/', ['notice' => 'Ok, everything is fine now']);
+  }
+
+  /**
    * <b>Filter</b>
    * Ensure there's no signed in user.
    */
-  public function ensure_no_signed_in_user() {
+  protected function ensure_no_signed_in_user() {
     if ($this->current_user) {
       redirect('/', ['error' => 'You are already signed in']);
     }
