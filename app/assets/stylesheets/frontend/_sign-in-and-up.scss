@@ -1,4 +1,4 @@
-.users.sign_in, .users.sign_up {
+.users.sign_in, .users.sign_up, .users.forgot_password, .users.reset_password {
   $width: 400px;
 
   .flashes {
@@ -29,6 +29,8 @@
   input {
     width: 100%;
   }
+
+  .forgot-password { text-align: center; }
 
   input[type=submit] {
     @include button();
