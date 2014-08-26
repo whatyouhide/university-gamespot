@@ -177,7 +177,9 @@ class UsersController extends Controller {
   public function reset_password() {
     $this->user = $this->safe_find_from_id('User');
 
-    if ($this->user->reset_token != $this->params['token']) {
+    if (!$this->user->is_resetting()) {
+      redirect('/', ['error' => "This user isn't resetting his/her password"]);
+    } else if ($this->user->reset_token != $this->params['token']) {
       redirect('/', ['error' => 'No matching token']);
     }
 
@@ -280,6 +282,22 @@ class UsersController extends Controller {
   }
 
   /**
+   * Display the form to reset the password.
+   */
+  private function reset_password_get() {
+  }
+
+  /**
+   * Actually reset the password and 'unblock' the user.
+   */
+  private function reset_password_post() {
+    $this->user->update_password($this->params['new_password']);
+    $this->user->finish_reset_process();
+    Session::store_user($this->user);
+    redirect('/', ['notice' => 'Password successfully reset']);
+  }
+
+  /**
    * Send the email to reset her password to user.
    * @param User $user
    */
@@ -297,22 +315,6 @@ class UsersController extends Controller {
       'body' => $message,
       'is_html' => true
     ]);
-  }
-
-  /**
-   * Display the form to reset the password.
-   */
-  private function reset_password_get() {
-  }
-
-  /**
-   * Actually reset the password and 'unblock' the user.
-   */
-  private function reset_password_post() {
-    $this->user->update_password($this->params['new_password']);
-    $this->user->finish_reset_process();
-    Session::store_user($this->user);
-    redirect('/', ['notice' => 'Password successfully reset']);
   }
 
   /**

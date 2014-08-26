@@ -18,12 +18,18 @@ class Session {
   }
 
   /**
-   * Stores a user in the session.
+   * Stores a user in the session and clear her reset information if there were
+   * any.
    * @param User $user The user to store in the session
    * @return User The user which has just been stored in the session
    */
   public static function store_user($user) {
     $_SESSION['user'] = $user;
+
+    // If a user successfully logged in, she's in no need of resetting her
+    // password.
+    $user->finish_reset_process();
+
     return $user;
   }
 

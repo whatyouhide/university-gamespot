@@ -127,6 +127,14 @@ class User extends Model {
   }
 
   /**
+   * Return true if the user is resetting her password.
+   * @return bool
+   */
+  public function is_resetting() {
+    return $this->resetting == '1';
+  }
+
+  /**
    * Start the recovering process for this user. This function sets the
    * 'recovering' attribute of this user to true and generates a new recovery
    * token.
