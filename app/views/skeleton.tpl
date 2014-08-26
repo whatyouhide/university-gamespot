@@ -5,7 +5,7 @@
 {/if}
 
 <!DOCTYPE html>
-<html class="no-js {$html_class}" lang="en">
+<html class="{$html_class}" lang="en">
 
 <head>
   <meta charset="utf-8">
