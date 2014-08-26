@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-26 16:19:23 +0000
+# Generation Time: 2014-08-26 17:21:35 +0000
 # ************************************************************
 
 
@@ -416,7 +416,8 @@ VALUES
 	(36,'36/ypUQDz7.jpg',86203,'image/jpeg','2014-08-20 21:54:45',4,NULL,NULL,NULL,NULL,NULL),
 	(39,'',0,'','2014-08-21 20:53:05',NULL,NULL,NULL,NULL,NULL,NULL),
 	(40,'',0,'','2014-08-21 20:55:48',NULL,NULL,NULL,NULL,NULL,NULL),
-	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL);
+	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL),
+	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -435,6 +436,8 @@ CREATE TABLE `users` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `blocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `resetting` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `reset_token` varchar(255) DEFAULT NULL,
   `confirmed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `confirmation_token` varchar(255) DEFAULT NULL,
   `group_id` int(11) unsigned DEFAULT NULL,
@@ -447,14 +450,14 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `blocked`, `confirmed`, `confirmation_token`, `group_id`)
+INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,1,NULL,1),
-	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,1,NULL,NULL),
-	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,1,NULL,5),
-	(14,'blogger@gamespot.com','425684bb6aefc61f6ee350aa28f8ad75','2014-08-24 19:31:38','Blo','Ghero',0,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,1,NULL,NULL);
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,NULL,1,NULL,1),
+	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,NULL,1,NULL,3),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,NULL,1,NULL,NULL),
+	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,NULL,1,NULL,5),
+	(14,'blogger@gamespot.com','425684bb6aefc61f6ee350aa28f8ad75','2014-08-24 19:31:38','Blo','Ghero',0,0,NULL,1,NULL,2),
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

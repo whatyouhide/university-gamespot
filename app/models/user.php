@@ -15,6 +15,7 @@ class User extends Model {
   public static $table_name = 'users';
 
   const CONFIRMATION_TOKEN_LENGTH = 32;
+  const RESET_TOKEN_LENGTH = 32;
   const RANDOM_PASSWORD_LENGTH = 32;
 
   /**
@@ -126,6 +127,29 @@ class User extends Model {
   }
 
   /**
+   * Start the recovering process for this user. This function sets the
+   * 'recovering' attribute of this user to true and generates a new recovery
+   * token.
+   */
+  public function start_reset_process() {
+    $this->update([
+      'resetting' => true,
+      'reset_token' => self::new_reset_token()
+    ]);
+  }
+
+  /**
+   * Finish the reset process by resetting the 'reset_token' to null and setting
+   * the 'resetting' attribute to false.
+   */
+  public function finish_reset_process() {
+    $this->update([
+      'resetting' => false,
+      'reset_token' => null
+    ]);
+  }
+
+  /**
    * {@inheritdoc}
    * This function also hashes the 'password' attribute before passing it to the
    * 'create' parent's mathod.
@@ -155,6 +179,14 @@ class User extends Model {
    */
   public static function new_confirmation_token() {
     return random_string(self::CONFIRMATION_TOKEN_LENGTH);
+  }
+
+  /**
+   * Return a valid recovery token.
+   * @return string
+   */
+  public static function new_reset_token() {
+    return random_string(self::RESET_TOKEN_LENGTH);
   }
 
   /**
