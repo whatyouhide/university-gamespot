@@ -11,7 +11,13 @@
       {$status=draft}
     {/if}
 
-    <article class="{$status}">
+    {if $post->author_id eq $current_user->id}
+      {$mine='mine'}
+    {else}
+      {$mine=''}
+    {/if}
+
+    <article class="{$status} {$mine}">
       <h1>{$post->title}</h1>
       <h2>{$status}</h2>
 

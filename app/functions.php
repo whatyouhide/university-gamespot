@@ -65,6 +65,13 @@ function internal_server_error() {
 }
 
 /**
+ * Render a 403 Forbidden error.
+ */
+function forbidden() {
+  (new Controller)->render_error(403);
+}
+
+/**
  * Build an array which contains the return values of the call to $property on
  * each object of the original array.
  * @param array $array The original array.

@@ -12,7 +12,8 @@ class BackendPostsController extends BackendController {
    */
   protected static $before_filters = array(
     'restrict' => 'all',
-    'set_post' => ['edit', 'toggle_published', 'update', 'destroy']
+    'set_post' => ['edit', 'toggle_published', 'update', 'destroy'],
+    'restrict_to_author' => ['edit', 'toggle_published', 'update', 'destroy']
   );
 
   /**
@@ -90,6 +91,16 @@ class BackendPostsController extends BackendController {
    */
   protected function restrict() {
     $this->restrict_to_permission('blog');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Ensure the target post belongs to the current user.
+   */
+  protected function restrict_to_author() {
+    if ($this->post->author_id != $this->current_user->id) {
+      forbidden();
+    }
   }
 
   /**
