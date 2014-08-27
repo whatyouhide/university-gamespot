@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-26 17:21:35 +0000
+# Generation Time: 2014-08-27 15:39:16 +0000
 # ************************************************************
 
 
@@ -210,8 +210,8 @@ CREATE TABLE `games` (
   PRIMARY KEY (`id`),
   KEY `game_belongs_to_console` (`console_id`),
   KEY `game_belongs_to_game_category` (`game_category_id`),
-  CONSTRAINT `game_belongs_to_game_category` FOREIGN KEY (`game_category_id`) REFERENCES `game_categories` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  CONSTRAINT `game_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `game_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `game_belongs_to_game_category` FOREIGN KEY (`game_category_id`) REFERENCES `game_categories` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `games` WRITE;
@@ -242,8 +242,8 @@ CREATE TABLE `games_ads` (
   UNIQUE KEY `ad_id` (`ad_id`),
   KEY `games_ads_references_game` (`game_id`),
   KEY `game_ads_references_ad` (`ad_id`),
-  CONSTRAINT `game_ads_references_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `game_ads_references_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `game_ads_references_games` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `games_ads` WRITE;
@@ -315,9 +315,9 @@ LOCK TABLES `posts` WRITE;
 
 INSERT INTO `posts` (`id`, `title`, `excerpt`, `content`, `updated_at`, `published_at`, `published`, `author_id`)
 VALUES
-	(2,'Lorem ipsum dolor sit amet.','Lipsum.','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-08-26 17:32:15','2014-08-17 13:07:01',0,1),
+	(2,'Lorem ipsum dolor sit amet.','Lipsum.dqqddw\'qwedqwd%qw\'\'%','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-08-27 15:47:21','2014-08-17 13:07:01',0,1),
 	(5,'dew','deqwdqeweq','<p><img class=\"fr-fin\" alt=\"Image title\" src=\"http://i.froala.com/images/579fe26e55893d92d4ff4f3ea77e7f1faa672566.png?1409065933\" width=\"300\"></p><p><br></p>','2014-08-26 17:35:00',NULL,0,1),
-	(6,'dqewdqw','dqewdqew','<p>dqwdqwed</p>','2014-08-26 17:43:49',NULL,0,14);
+	(6,'dqewdqw','dqewdqew','<p>dqwdqwed</p>','2014-08-27 13:02:38','2014-08-27 13:02:38',1,14);
 
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -395,11 +395,11 @@ CREATE TABLE `uploads` (
   KEY `upload_belongs_to_ad` (`ad_id`),
   KEY `upload_belongs_to_console` (`console_image_id`),
   KEY `upload_belongs_to_post` (`post_id`),
-  CONSTRAINT `upload_belongs_to_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_accessory` FOREIGN KEY (`accessory_image_id`) REFERENCES `accessories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_ad` FOREIGN KEY (`ad_id`) REFERENCES `ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_console` FOREIGN KEY (`console_image_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_game` FOREIGN KEY (`game_cover_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `upload_belongs_to_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `upload_belongs_to_user_as_profile_picture` FOREIGN KEY (`user_profile_picture_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -417,7 +417,8 @@ VALUES
 	(39,'',0,'','2014-08-21 20:53:05',NULL,NULL,NULL,NULL,NULL,NULL),
 	(40,'',0,'','2014-08-21 20:55:48',NULL,NULL,NULL,NULL,NULL,NULL),
 	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL),
-	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL);
+	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL),
+	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -454,9 +455,9 @@ INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name
 VALUES
 	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,NULL,1,NULL,NULL),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,NULL,1,NULL,5),
-	(14,'blogger@gamespot.com','425684bb6aefc61f6ee350aa28f8ad75','2014-08-24 19:31:38','Blo','Ghero',0,0,NULL,1,NULL,2),
+	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,NULL,1,NULL,2),
 	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;

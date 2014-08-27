@@ -84,6 +84,24 @@ function array_pluck($array, $property) {
 }
 
 /**
+ * Group an array of elements by the return value of callback (called on each
+ * element).
+ * @param array $array
+ * @param callback $callback
+ * @return array
+ */
+function array_group($array, $callback) {
+  $grouped = array();
+
+  foreach ($array as $elem) {
+    $key = call_user_func($callback, $elem);
+    $grouped[$key][] = $elem;
+  }
+
+  return $grouped;
+}
+
+/**
  * Generate a random alphanumeric string with a given number of characters in
  * it.
  * @param int $length
