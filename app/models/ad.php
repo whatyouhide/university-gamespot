@@ -129,11 +129,20 @@ class Ad extends Model {
   }
 
   /**
-   * All the published ads.
-   * @return array All the published ads.
+   * Return all the published ads.
+   * @return array
    */
   public static function published() {
     return self::where(['published' => '1']);
+  }
+
+  /**
+   * Return the published ads which have a non blocked author.
+   * @return array
+   */
+  public static function published_by_non_blocked_authors() {
+    $by_legit_author = function ($ad) { return !$ad->author->is_blocked(); };
+    return array_filter(self::published(), $by_legit_author);
   }
 
   /**

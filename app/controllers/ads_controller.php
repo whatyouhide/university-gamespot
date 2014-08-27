@@ -5,8 +5,6 @@
 
 /**
  * A controller to manage ads on the frontend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class AdsController extends Controller {
   /**
@@ -14,7 +12,8 @@ class AdsController extends Controller {
    * List all the ads.
    */
   public function index() {
-    $separated = Ad::separate_game_and_accessory(Ad::published());
+    $all = Ad::published_by_non_blocked_authors();
+    $separated = Ad::separate_game_and_accessory($all);
     $this->game_ads = $separated['game_ads'];
     $this->accessory_ads = $separated['accessory_ads'];
   }
@@ -24,6 +23,10 @@ class AdsController extends Controller {
    */
   public function show() {
     $this->ad = $this->safe_find_from_id('Ad');
+
+    if ($this->ad->author->is_blocked()) {
+      redirect('/ads', ['error' => 'The author of this ad is blocked']);
+    }
   }
 
   /**
