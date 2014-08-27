@@ -5,8 +5,6 @@
 
 /**
  * An abstraction over the `$_SESSION` object, build in a singleton-style way.
- * @package Gamespot
- * @subpackage Common
  */
 class Session {
   /**
@@ -14,7 +12,9 @@ class Session {
    * @return null|User The currently logged in user or null if there's none
    */
   public static function user() {
-    return isset($_SESSION['user']) ? $_SESSION['user'] : null;
+    if (!isset($_SESSION['user'])) { return null; }
+    $user = $_SESSION['user'];
+    return $user->reload();
   }
 
   /**

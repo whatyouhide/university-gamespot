@@ -5,8 +5,6 @@
 
 /**
  * The base controller class (every controller inherits from this class).
- * @package Gamespot
- * @subpackage Controllers
  */
 class Controller {
   /**
@@ -287,8 +285,13 @@ class Controller {
    * assign that same variable to Smarty.
    */
   private function setup_current_user() {
-    if (Session::user()) {
-      $this->current_user = Session::user();
+    if (!Session::user()) { return; }
+
+    $this->current_user = Session::user();
+
+    if ($this->current_user->is_blocked()) {
+      Session::sign_out_user();
+      redirect('/users/sign_in', ['error' => 'You have been blocked!']);
     }
   }
 

@@ -302,8 +302,19 @@ class Model {
    * @return array A copy of the original array, but with sanitized values.
    */
   private static function sanitize_attributes($attributes) {
-    return array_map('Db::escape', $attributes);
+    return array_map('self::sanitize_value', $attributes);
   }
+
+  /**
+   * Sanitize a single value for inserting it into the database.
+   * If the attribute is a string, escape it; if it's null, leave it null; etc.
+   * @param mixed $val
+   * @return mixed
+   */
+  private static function sanitize_value($val) {
+    return is_null($val) ? null : Db::escape($val);
+  }
+
 
   /**
    * Return a WHERE clause in the form 'WHERE a1 = v1 AND a2 = v2' from a given
