@@ -13,28 +13,18 @@ class Db {
   public static $connection = NULL;
 
   /**
-   * @var array Options to connect to the MySQL db.
-   */
-  public static $options = [
-    'host' => 'localhost',
-    'user' => 'root',
-    'password' => 'root',
-    'db' => 'gamespot',
-    'port' => 3306
-  ];
-
-  /**
    * Initialize the db connection and raise an exception if something goes
    * wrong.
    * @throws Exception If something goes wrong with the db.
    */
   public static function init() {
+    $options = $GLOBALS['config']['database'];
+
     self::$connection = new mysqli(
-      self::$options['host'],
-      self::$options['user'],
-      self::$options['password'],
-      self::$options['db'],
-      self::$options['port']
+      $options['host'],
+      $options['user'],
+      $options['password'],
+      $options['db']
     );
 
     self::throw_exception_if_error();
