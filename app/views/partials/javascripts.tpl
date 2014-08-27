@@ -5,6 +5,7 @@
 <script src="{$lib}/javascripts/lodash.min.js"></script>
 <script src="{$lib}/javascripts/froala_editor.min.js"></script>
 <script src="{$lib}/javascripts/dropzone.js"></script>
+<script src="{$lib}/javascripts/chosen.jquery.min.js"></script>
 <script src="{$lib}/javascripts/moment.min.js"></script>
 <script src="{$lib}/javascripts/foundation.min.js"></script>
 
@@ -15,6 +16,7 @@
 <script src="{$javascripts}/data-hoverable.js"></script>
 <script src="{$javascripts}/data-confirm.js"></script>
 <script src="{$javascripts}/data-ago.js"></script>
+<script src="{$javascripts}/data-chosen.js"></script>
 <script src="{$javascripts}/flashes.js"></script>
 <script src="{$javascripts}/froala.js"></script>
 <script src="{$javascripts}/style-tweaks.js"></script>
