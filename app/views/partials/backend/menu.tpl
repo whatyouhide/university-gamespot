@@ -46,8 +46,7 @@
   </ul>
 
   <ul class="user-actions">
-    <li>
-      <a href="{url to="/users/sign_out"}">Sign out</a>
-    </li>
+    <li><a href="{url to='/'}">Frontend</a></li>
+    <li><a href="{url to="/users/sign_out"}">Sign out</a></li>
   <ul>
 </nav>
