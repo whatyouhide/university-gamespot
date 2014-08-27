@@ -48,12 +48,16 @@
   </section>
 </div>
 
+<!-- Change password -->
 <form action="{url to='/users/change_password'}" method="POST" class="password">
   <div class="field">
     <input name="old_password" type="password" placeholder="Old password">
   </div>
   <div class="field">
     <input name="new_password" type="password" placeholder="New password">
+  </div>
+  <div class="field">
+    <input name="new_password_confirmation" type="password" placeholder="Retype the new password">
   </div>
   <div class="field">
     <input type="submit" value="Change password">

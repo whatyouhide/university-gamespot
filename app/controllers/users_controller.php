@@ -100,17 +100,20 @@ class UsersController extends Controller {
   public function change_password() {
     $old_hashed = User::hash_password($this->params['old_password']);
     $new_pass = $this->params['new_password'];
+    $new_pass_confirmation = $this->params['new_password_confirmation'];
 
     if ($old_hashed != $this->current_user->hashed_password) {
-      $flash = ['error' => 'Wrong password.'];
+      $flash = ['error' => 'Wrong password'];
     } else if (empty($new_pass)) {
-      $flash = ['error' => "New password can't be empty."];
+      $flash = ['error' => "New password can't be empty"];
     } else if ($old_hashed == User::hash_password($new_pass)) {
-      $flash = ['error' => "Password must change."];
+      $flash = ['error' => 'Password must change'];
+    } else if ($new_password != $new_pass_confirmation) {
+      $flash = ['error' => 'Passwords must match'];
     } else {
       $this->current_user->update_password($new_pass);
       $this->reload_current_user();
-      $flash = ['notice' => 'Password updated successfully.'];
+      $flash = ['notice' => 'Password updated successfully'];
     }
 
     redirect('/users/settings', $flash);
@@ -255,6 +258,11 @@ class UsersController extends Controller {
    * Sign up a user.
    */
   private function sign_up_post() {
+    // Redirect to the sign up page if the passwords don't match.
+    if ($this->params['password'] != $this->params['password_confirmation']) {
+      redirect('/users/sign_up', ['error' => "Passwords don't match"]);
+    }
+
     // Create a new user (which by default is not confirmed).
     $new_user = User::create([
       'email' => $this->params['email'],

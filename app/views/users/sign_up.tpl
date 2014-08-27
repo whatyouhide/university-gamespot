@@ -28,7 +28,8 @@
 
       <div class="field-set">
         <label for="password">Password</label>
-        <input name="password" type="password" placeholder="At least 6 characters long">
+        <input name="password" type="password" placeholder="Your password">
+        <input name="password_confirmation" type="password" placeholder="Retype your password">
       </div>
 
       <div class="field-set">
