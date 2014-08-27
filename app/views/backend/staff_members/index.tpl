@@ -12,8 +12,14 @@
   </thead>
 
   <tbody>
-    {foreach from=$staff_members item=user}
-      {include file='backend/staff_members/_staff_member_row.tpl'}
+    {foreach from=$grouped_staff_members key=group_name item=group_members}
+      <tr class="group-header">
+        <td colspan="5">{$group_name}</td>
+      </tr>
+
+      {foreach from=$group_members item=user}
+        {include file='backend/staff_members/_staff_member_row.tpl'}
+      {/foreach}
     {/foreach}
   </tbody>
 </table>

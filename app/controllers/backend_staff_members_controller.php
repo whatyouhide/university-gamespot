@@ -12,7 +12,8 @@ class BackendStaffMembersController extends BackendController {
    * {@inheritdoc}
    */
   protected static $before_filters = array(
-    'restrict_to_admins' => 'all'
+    'restrict_to_admins' => 'all',
+    'set_groups' => ['index', 'nuevo', 'change_group']
   );
 
   /**
@@ -21,8 +22,11 @@ class BackendStaffMembersController extends BackendController {
    */
   public function index() {
     $current_id = $this->current_user->id;
-    $this->staff_members = User::staff_members_except($current_id);
-    $this->groups = Group::all();
+    $staff_members = User::staff_members_except($current_id);
+
+    $this->grouped_staff_members = array_group($staff_members, function ($m) {
+      return $m->group->name;
+    });
   }
 
   /**
@@ -30,7 +34,6 @@ class BackendStaffMembersController extends BackendController {
    * Display the form for a new staff member.
    */
   public function nuevo() {
-    $this->groups = Group::all();
     $this->groups_for_select = Group::all_for_select_with('name');
   }
 
@@ -105,10 +108,17 @@ class BackendStaffMembersController extends BackendController {
   }
 
   /**
+   * <b>Filter</b>
+   * Set the `groups` instance variable.
+   */
+  protected function set_groups() {
+    $this->groups = Group::all();
+  }
+
+  /**
    * Display the form for changing a user's group.
    */
   private function change_group_get() {
-    $this->groups = Group::all();
     $this->groups_for_select = Group::all_for_select_with('name');
     $this->render('staff_members/change_group');
   }
