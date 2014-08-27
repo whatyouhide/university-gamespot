@@ -5,8 +5,6 @@
 
 /**
  * An uploaded file.
- * @package Gamespot
- * @subpackage Models
  */
 class Upload extends Model {
   /**
@@ -86,6 +84,5 @@ class Upload extends Model {
   private function absolute_path() {
     return (UPLOADS_DIR . '/' . $this->url);
   }
-
 }
 ?>

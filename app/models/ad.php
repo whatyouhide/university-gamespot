@@ -5,8 +5,6 @@
 
 /**
  * An ad.
- * @package Gamespot
- * @subpackage Models
  */
 class Ad extends Model {
   /**
@@ -42,7 +40,7 @@ class Ad extends Model {
     // Remove the 'game_id' or 'accessory_id' member so that we can pass the
     // $attributes "as is" to the `create` function.
     if (isset($attributes[$foreign_key_column])) {
-      $foreign_id = $attributes[$foreign_key_column];
+      $foreign_id = Db::escape($attributes[$foreign_key_column]);
       unset($attributes[$foreign_key_column]);
     }
 
@@ -89,7 +87,7 @@ class Ad extends Model {
    */
   public function add_image($image_upload) {
     $image_upload->update(['ad_id' => $this->id]);
-    array_push($this->images, $image_upload);
+    $this->images[] = $image_upload;
   }
 
   /**
@@ -203,7 +201,7 @@ class Ad extends Model {
     // Remove the 'game_id' or 'accessory_id' member so that we can pass the
     // $attributes "as is" to the `create` function.
     if (isset($attributes[$foreign_key_column])) {
-      $foreign_id = $attributes[$foreign_key_column];
+      $foreign_id = Db::escape($attributes[$foreign_key_column]);
       unset($attributes[$foreign_key_column]);
     }
 

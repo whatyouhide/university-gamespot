@@ -5,8 +5,6 @@
 
 /**
  * A group of users.
- * @package Gamespot
- * @subpackage Models
  */
 class Group extends Model {
   /**

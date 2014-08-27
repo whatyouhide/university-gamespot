@@ -5,8 +5,6 @@
 
 /**
  * This class is an interface to the underlying db.
- * @package Gamespot
- * @subpackage Common
  */
 class Db {
   /**
@@ -74,6 +72,15 @@ class Db {
    */
   public static function datetime() {
     return date('Y-m-d H:i:s');
+  }
+
+  /**
+   * Escape a string to sanitize input.
+   * @param string $str The string to escape.
+   * @return string The escaped string.
+   */
+  public static function escape($str) {
+    return self::$connection->real_escape_string($str);
   }
 
   /**

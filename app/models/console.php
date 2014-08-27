@@ -5,8 +5,6 @@
 
 /**
  * A console.
- * @package Gamespot
- * @subpackage Models
  */
 class Console extends Model {
   /**

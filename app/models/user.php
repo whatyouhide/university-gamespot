@@ -5,8 +5,6 @@
 
 /**
  * A user of the website.
- * @package Gamespot
- * @subpackage Models
  */
 class User extends Model {
   /**
@@ -221,6 +219,8 @@ class User extends Model {
    */
   public static function staff_members_except($id) {
     $t = static::$table_name;
+    $id = Db::escape($id);
+
     $q = "SELECT * FROM `$t` WHERE"
       . " `group_id` IS NOT NULL"
       . " AND `id` <> '$id'";

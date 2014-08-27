@@ -5,8 +5,6 @@
 
 /**
  * A cateogory of games.
- * @package Gamespot
- * @subpackage Models
  */
 class GameCategory extends Model {
   /**

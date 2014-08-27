@@ -5,8 +5,6 @@
 
 /**
  * A videogame.
- * @package Gamespot
- * @subpackage Models
  */
 class Game extends Model {
   /**

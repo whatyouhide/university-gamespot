@@ -5,8 +5,6 @@
 
 /**
  * The base model class which all models inherit from.
- * @package Gamespot
- * @subpackage Models
  */
 class Model {
   /**
@@ -108,6 +106,9 @@ class Model {
     // Return the untouched record if there are no attributes.
     if (empty($attributes)) return $this;
 
+    // Sanitize the attributes.
+    $sanitized = self::sanitize_attributes($attributes);
+
     // If there are validation errors, set them on the current record and return
     // the unmodified record.
     $errors = static::validate($attributes);
@@ -122,10 +123,10 @@ class Model {
     $q = "UPDATE `$t` SET";
 
     $i = 0;
-    foreach ($attributes as $attr => $val) {
+    foreach ($sanitized as $attr => $val) {
       $q .= " `$t`.`$attr` = " . (is_null($val) ? "NULL" : "'$val'");
       // If it's not the last iteration, append a comma.
-      if ($i < count($attributes) - 1) $q .= ', ';
+      if ($i < count($sanitized) - 1) $q .= ', ';
       $i++;
     }
 
@@ -200,9 +201,11 @@ class Model {
     // Return now if there are no attributes to search on.
     if (empty($attributes)) { return self::all(); }
 
+    $sanitized = self::sanitize_attributes($attributes);
+
     // Build the query.
     $t = static::$table_name;
-    $q = "SELECT * FROM `$t` " . self::build_where_clauses_from($attributes);
+    $q = "SELECT * FROM `$t` " . self::build_where_clauses_from($sanitized);
 
     return self::new_instances_from_query($q);
   }
@@ -214,9 +217,11 @@ class Model {
    * @return mixed The record just inserted in the db.
    */
   public static function create($attributes, $validate = true) {
-    $attrs_names = self::to_attribute_names(array_keys($attributes));
-    $attrs_values = self::to_attributes_values(array_values($attributes));
     $t = static::$table_name;
+
+    $sanitized = self::sanitize_attributes($attributes);
+    $attrs_names = self::to_attribute_names(array_keys($sanitized));
+    $attrs_values = self::to_attributes_values(array_values($sanitized));
 
     if ($validate) {
       $errors = static::validate($attributes);
@@ -289,6 +294,15 @@ class Model {
   protected static function instantiate_model_from_query($model, $query) {
     $records = Db::get_rows($query);
     return empty($records) ? null : (new $model($records[0]));
+  }
+
+  /**
+   * Sanitize all the values in an array of attributes.
+   * @param array $attributes An associative array of attribtues.
+   * @return array A copy of the original array, but with sanitized values.
+   */
+  private static function sanitize_attributes($attributes) {
+    return array_map('Db::escape', $attributes);
   }
 
   /**

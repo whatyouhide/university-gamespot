@@ -5,8 +5,6 @@
 
 /**
  * Accessories for consoles.
- * @package Gamespot
- * @subpackage Models
  */
 class Accessory extends Model {
   /**
