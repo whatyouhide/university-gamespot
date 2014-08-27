@@ -108,7 +108,7 @@ class UsersController extends Controller {
       $flash = ['error' => "New password can't be empty"];
     } else if ($old_hashed == User::hash_password($new_pass)) {
       $flash = ['error' => 'Password must change'];
-    } else if ($new_password != $new_pass_confirmation) {
+    } else if ($new_pass != $new_pass_confirmation) {
       $flash = ['error' => 'Passwords must match'];
     } else {
       $this->current_user->update_password($new_pass);
@@ -216,7 +216,7 @@ class UsersController extends Controller {
    * Ensure there's no signed in user.
    */
   protected function ensure_no_signed_in_user() {
-    if ($this->current_user) {
+    if (Session::user()) {
       redirect('/', ['error' => 'You are already signed in']);
     }
   }
