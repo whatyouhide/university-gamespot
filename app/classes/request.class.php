@@ -3,6 +3,8 @@
  * This file contains the definition of the Request class.
  */
 
+namespace Http;
+
 /**
  * An abstraction over an HTTP request.
  * @package Gamespot

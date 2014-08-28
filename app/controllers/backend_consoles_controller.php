@@ -5,7 +5,7 @@
 
 namespace Controllers;
 
-use Session;
+use Common\Session;
 use Models\Console;
 use Models\Upload;
 

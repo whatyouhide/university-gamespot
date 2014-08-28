@@ -5,6 +5,7 @@
 
 namespace Controllers;
 
+use Common\Uploader;
 use Models\Game;
 use Models\Console;
 use Models\GameCategory;

@@ -3,6 +3,8 @@
  * This file contains the 'image_path' Smarty template function.
  */
 
+use Common\Gravatar;
+
 /**
  * Smarty plugin.
  * File: function.image_path.php

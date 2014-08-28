@@ -3,7 +3,10 @@
  * The root of the application.
  */
 
-error_reporting(E_ALL);
+// Report all errors in development.
+if (!isset($_ENV['GAMESPOT_PRODUCTION']) || empty($_ENV['GAMESPOT_PRODUCTION'])) {
+  error_reporting(E_ALL);
+}
 
 // Parse the configuration file (with true as a second argument, the .ini file
 // gets parsed with section-awareness) as the first thing in order to have
@@ -19,7 +22,7 @@ include 'setup/includes.php';
 session_start();
 
 // Connect to the database.
-Db::init();
+Common\Db::init();
 
 // Handle the parameters that Apache passed here (let them default to '') and
 // remove them from the $_GET array in order to have a clean slate when
@@ -31,7 +34,7 @@ foreach(array('controller', 'action', 'backend') as $el) {
 }
 
 // Dispatch an action to a controller.
-Router::dispatch_action_to_controller(
+Common\Router::dispatch_action_to_controller(
   $params['controller'],
   $params['action'],
   $params['backend']

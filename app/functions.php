@@ -3,6 +3,9 @@
  * This file contains common functions used throughout the application.
  */
 
+use Common\Session;
+use Controllers\Controller;
+
 /**
  * Redirect to a page in the site, relative to `SITE_ROOT`.
  * Example:
@@ -54,21 +57,21 @@ function surround_with($surrounder) {
  * Render a 404 Not Found error.
  */
 function not_found() {
-  (new \Controllers\Controller)->render_error(404);
+  (new Controller)->render_error(404);
 }
 
 /**
  * Render a 500 Internal Server Error.
  */
 function internal_server_error() {
-  (new \Controllers\Controller)->render_error(500);
+  (new Controller)->render_error(500);
 }
 
 /**
  * Render a 403 Forbidden error.
  */
 function forbidden() {
-  (new \Controllers\Controller)->render_error(403);
+  (new Controller)->render_error(403);
 }
 
 /**

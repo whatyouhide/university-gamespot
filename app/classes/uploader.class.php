@@ -3,10 +3,10 @@
  * This file contains the definition of the Uploader class.
  */
 
+namespace Common;
+
 /**
  * An interface to the uploaded files ($_FILES).
- * @package Gamespot
- * @subpackage Common
  */
 class Uploader {
   /**

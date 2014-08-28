@@ -3,6 +3,10 @@
  * This file contains the definition of the Db class.
  */
 
+namespace Common;
+
+use mysqli;
+
 /**
  * This class is an interface to the underlying db.
  */

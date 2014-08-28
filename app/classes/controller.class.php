@@ -5,11 +5,11 @@
 
 namespace Controllers;
 
-use \GamespotSmarty;
-use \Request;
-use \Response;
-use \Mailer;
-use \Session;
+use Common\GamespotSmarty;
+use Common\Mailer;
+use Common\Session;
+use Http\Request;
+use Http\Response;
 
 /**
  * The base controller class (every controller inherits from this class).

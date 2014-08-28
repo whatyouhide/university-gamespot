@@ -5,6 +5,7 @@
 
 namespace Controllers;
 
+use Common\Uploader;
 use Models\Accessory;
 use Models\Console;
 use Models\Upload;

@@ -3,15 +3,15 @@
  * This file contains a wrapper class around the `Smarty` class.
  */
 
+namespace Common;
+
 // Include the original Smarty class.
 include 'lib/smarty/libs/Smarty.class.php';
 
 /**
  * A wrapper class around the `Smarty` class.
- * @package Gamespot
- * @subpackage Common
  */
-class GamespotSmarty extends Smarty {
+class GamespotSmarty extends \Smarty {
   /**
    * Call the parent `__construct` function and setup some Gamespot related
    * stuff.

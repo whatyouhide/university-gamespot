@@ -5,7 +5,7 @@
 
 namespace Models;
 
-use Db;
+use Common\Db;
 
 /**
  * A user of the website.
@@ -16,8 +16,13 @@ class User extends Model {
    */
   public static $table_name = 'users';
 
+  /** The length of the confirmation token. */
   const CONFIRMATION_TOKEN_LENGTH = 32;
+
+  /** The length of the reset password token. */
   const RESET_TOKEN_LENGTH = 32;
+
+  /** The length of the random password that is sent to new users. */
   const RANDOM_PASSWORD_LENGTH = 32;
 
   /**

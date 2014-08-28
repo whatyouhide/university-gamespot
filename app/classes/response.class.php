@@ -3,6 +3,8 @@
  * This file contains the definition of the Response class.
  */
 
+namespace Http;
+
 /**
  * A wrapper around an HTTP response.
  */

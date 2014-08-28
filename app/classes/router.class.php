@@ -3,6 +3,10 @@
  * This file contains the definition of the Router class.
  */
 
+namespace Common;
+
+use Http\Request;
+
 /**
  * The singleton class that handles routing in the application.
  */

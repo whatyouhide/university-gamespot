@@ -3,6 +3,8 @@
  * This file contains a wrapper class (Mailer) around the PHPMailer class.
  */
 
+namespace Common;
+
 // Require the original PHPMailer class.
 require 'lib/phpmailer/PHPMailerAutoload.php';
 
@@ -26,7 +28,7 @@ class Mailer {
    * Create a new instance of Mailer and setup some common properties.
    */
   public function __construct() {
-    $this->mail = new PHPMailer;
+    $this->mail = new \PHPMailer;
     $this->setup_common_properties();
   }
 

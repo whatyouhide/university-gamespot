@@ -3,6 +3,8 @@
  * This file contains the definition of the Session class.
  */
 
+namespace Common;
+
 /**
  * An abstraction over the `$_SESSION` object, build in a singleton-style way.
  */

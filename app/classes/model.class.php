@@ -5,8 +5,8 @@
 
 namespace Models;
 
-use \Db;
-use \Validator;
+use Common\Db;
+use Validator;
 
 /**
  * The base model class which all models inherit from.
