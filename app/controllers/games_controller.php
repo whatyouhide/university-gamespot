@@ -3,10 +3,12 @@
  * This file contains the definition of the GamesController class.
  */
 
+namespace Controllers;
+
+use Models\Game;
+
 /**
  * A controller for managing games.
- * @package Gamespot
- * @subpackage Controllers
  */
 class GamesController extends Controller {
   /**

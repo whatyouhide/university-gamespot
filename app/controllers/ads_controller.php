@@ -3,6 +3,14 @@
  * This file contains the definition of the AdsController class.
  */
 
+namespace Controllers;
+
+use Models\Ad;
+use Models\Console;
+use Models\Game;
+use Models\Accessory;
+use Models\Upload;
+
 /**
  * A controller to manage ads on the frontend.
  */
@@ -99,6 +107,7 @@ class AdsController extends Controller {
     $ad = $this->ad_protected_for_current_user($this->params['id']);
     $upload = Upload::create_from_uploaded_file($_FILES['file']);
     $ad->add_image($upload);
+    $this->no_content();
   }
 
   /**

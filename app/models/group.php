@@ -3,6 +3,8 @@
  * This file contains the definition of the Group class.
  */
 
+namespace Models;
+
 /**
  * A group of users.
  */

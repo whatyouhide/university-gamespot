@@ -3,6 +3,10 @@
  * This file contains the definition of the Ad class.
  */
 
+namespace Models;
+
+use Db;
+
 /**
  * An ad.
  */
@@ -56,7 +60,7 @@ class Ad extends Model {
   /**
    * Update the join table for the association with Game or Accessory.
    * @param int|string $foreign_id The id of the game/accessory associated with
-   *        this ad.
+   * this ad.
    */
   public function update_join_table($foreign_id) {
     $type = $this->type;
@@ -64,11 +68,11 @@ class Ad extends Model {
     if ($type == 'game') {
       $join_table = 'games_ads';
       $foreign_key_column = 'game_id';
-      $model = 'Game';
+      $model = 'Models\Game';
     } else if ($type == 'accessory') {
       $join_table = 'accessories_ads';
       $foreign_key_column = 'accessory_id';
-      $model = 'Accessory';
+      $model = 'Models\Accessory';
     }
 
     $query = "INSERT INTO `$join_table`(`ad_id`, `$foreign_key_column`)"

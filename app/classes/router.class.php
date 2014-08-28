@@ -5,8 +5,6 @@
 
 /**
  * The singleton class that handles routing in the application.
- * @package Gamespot
- * @subpackage Common
  */
 class Router {
   /**
@@ -68,6 +66,9 @@ class Router {
       $controller_class = 'Backend' . $controller_class;
     }
 
+    // Namespace this bitch.
+    $controller_class = 'Controllers\\' . $controller_class;
+
     return $controller_class;
   }
 
@@ -81,7 +82,7 @@ class Router {
     // redirect to the login page.
     if (self::needs_authentication($url) && !Session::user()) {
       Session::set_referer_to($url);
-      redirect('/users/sign_in', ['notice' => 'You need to be authenticated.']);
+      redirect('/users/sign_in', ['notice' => 'You need to be authenticated']);
     }
   }
 

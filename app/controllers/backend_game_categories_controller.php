@@ -4,10 +4,12 @@
  * class.
  */
 
+namespace Controllers;
+
+use Models\GameCategory;
+
 /**
  * A controller for managing game categories in the backend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendGameCategoriesController extends BackendController {
   /**

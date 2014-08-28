@@ -3,6 +3,8 @@
  * This file contains the definition of the GameCategory class.
  */
 
+namespace Models;
+
 /**
  * A cateogory of games.
  */

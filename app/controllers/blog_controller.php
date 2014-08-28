@@ -3,6 +3,10 @@
  * This file contains the definition of the BlogController class.
  */
 
+namespace Controllers;
+
+use Models\Post;
+
 /**
  * A controller for checking out the blog in the frontend.
  */

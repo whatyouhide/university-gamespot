@@ -3,6 +3,8 @@
  * This file contains the definition of the Game class.
  */
 
+namespace Models;
+
 /**
  * A videogame.
  */

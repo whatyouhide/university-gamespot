@@ -3,6 +3,10 @@
  * This file contains the definition of the Post class.
  */
 
+namespace Models;
+
+use Db;
+
 /**
  * A blog post.
  */

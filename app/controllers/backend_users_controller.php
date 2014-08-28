@@ -3,10 +3,12 @@
  * This file contains the definition of the BackendUsersController class.
  */
 
+namespace Controllers;
+
+use Models\User;
+
 /**
  * A controller to manage regular users in the backend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendUsersController extends BackendController {
   /**

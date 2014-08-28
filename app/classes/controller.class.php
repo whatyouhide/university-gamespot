@@ -3,6 +3,14 @@
  * This file contains the definition of the Controller class.
  */
 
+namespace Controllers;
+
+use \GamespotSmarty;
+use \Request;
+use \Response;
+use \Mailer;
+use \Session;
+
 /**
  * The base controller class (every controller inherits from this class).
  */
@@ -70,7 +78,7 @@ class Controller {
    * Create a new controller object and call `$action` on it.
    * @param string $action The action to call on the newly created controller.
    */
-  function __construct($action) {
+  public function __construct($action = 'index') {
     $this->set_hidden_instance_variable('action_to_call', $action);
 
     $this->setup_external_instance_variables();
@@ -191,7 +199,7 @@ class Controller {
    */
   protected function controller_name() {
     // Get the name of this controller without the 'Controller' at the end.
-    $name = str_replace('Controller', '', get_class($this));
+    $name = str_replace('Controller', '', get_short_class($this));
 
     // Split it into words (based on camel casing) and make it all lowercase.
     $words = array_filter(preg_split('/(?=[A-Z])/', $name));
@@ -303,6 +311,7 @@ class Controller {
    * @return mixed
    */
   protected function safe_find($model, $id) {
+    $model = 'Models\\' . $model;
     $record = $model::find($id);
 
     if (is_null($record)) {

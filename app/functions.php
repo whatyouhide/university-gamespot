@@ -54,21 +54,21 @@ function surround_with($surrounder) {
  * Render a 404 Not Found error.
  */
 function not_found() {
-  (new Controller)->render_error(404);
+  (new \Controllers\Controller)->render_error(404);
 }
 
 /**
  * Render a 500 Internal Server Error.
  */
 function internal_server_error() {
-  (new Controller)->render_error(500);
+  (new \Controllers\Controller)->render_error(500);
 }
 
 /**
  * Render a 403 Forbidden error.
  */
 function forbidden() {
-  (new Controller)->render_error(403);
+  (new \Controllers\Controller)->render_error(403);
 }
 
 /**
@@ -117,5 +117,14 @@ function random_string($length = 10) {
   }
 
   return $result;
+}
+
+/**
+ * Return the short name of the class (no namespaces) of an $object.
+ * @param mixed $object
+ * @return string
+ */
+function get_short_class($object) {
+  return (new ReflectionClass($object))->getShortName();
 }
 ?>

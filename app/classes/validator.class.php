@@ -3,13 +3,13 @@
  * This file contains the definition of the Validator class.
  */
 
+namespace Models;
+
 /**
  * A class that provides validation utilities.
  * Each method of this class accepts a message as its last argument, which will
  * be attached to an array of error messages that can be requested to the
  * Validator instance with the error_messages() method.
- * @package Gamespot
- * @subpackage Models
  */
 class Validator {
   /**

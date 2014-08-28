@@ -3,10 +3,14 @@
  * This file contains the definition of the BackendAccessoriesController class.
  */
 
+namespace Controllers;
+
+use Models\Accessory;
+use Models\Console;
+use Models\Upload;
+
 /**
  * A controller to manage accessories in the backend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendAccessoriesController extends BackendController {
   /**

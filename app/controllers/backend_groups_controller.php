@@ -3,10 +3,12 @@
  * This file contains the definition of the BackendGroupsController class.
  */
 
+namespace Controllers;
+
+use Models\Group;
+
 /**
  * A controller to manage groups in the backend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendGroupsController extends BackendController {
   /**

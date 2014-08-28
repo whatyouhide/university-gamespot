@@ -3,10 +3,10 @@
  * This file contains the definition of the Session class.
  */
 
+namespace Controllers;
+
 /**
  * The controller for the backend home page.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendApplicationController extends BackendController {
   /**

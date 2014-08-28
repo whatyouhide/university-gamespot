@@ -3,6 +3,10 @@
  * This file contains the definition of the BackendPostsController class.
  */
 
+namespace Controllers;
+
+use Models\Post;
+
 /**
  * A controller for managing blog posts in the backend.
  */

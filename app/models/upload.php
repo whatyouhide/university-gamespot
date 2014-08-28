@@ -3,6 +3,8 @@
  * This file contains the definition of the Upload class.
  */
 
+namespace Models;
+
 /**
  * An uploaded file.
  */

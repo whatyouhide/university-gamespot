@@ -3,6 +3,11 @@
  * This file contains the definition of the Model class.
  */
 
+namespace Models;
+
+use \Db;
+use \Validator;
+
 /**
  * The base model class which all models inherit from.
  */
@@ -293,6 +298,7 @@ class Model {
    */
   protected static function instantiate_model_from_query($model, $query) {
     $records = Db::get_rows($query);
+    $model = 'Models\\' . $model;
     return empty($records) ? null : (new $model($records[0]));
   }
 

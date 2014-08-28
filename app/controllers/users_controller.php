@@ -3,10 +3,15 @@
  * This file contains the definition of the UsersController class.
  */
 
+namespace Controllers;
+
+use Session;
+use Models\User;
+use Models\Ad;
+use Models\Upload;
+
 /**
  * A controller for signin in/up/out and other user-related stuff.
- * @package Gamespot
- * @subpackage Controllers
  */
 class UsersController extends Controller {
   /**

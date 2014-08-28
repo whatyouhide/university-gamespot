@@ -3,6 +3,8 @@
  * This file contains the definition of the Accessory class.
  */
 
+namespace Models;
+
 /**
  * Accessories for consoles.
  */

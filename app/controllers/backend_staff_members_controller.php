@@ -3,6 +3,11 @@
  * This file contains the definition of the BackendStaffMembersController class.
  */
 
+namespace Controllers;
+
+use Models\User;
+use Models\Group;
+
 /**
  * A controller for the members of the staff to allow admins to
  * create/block/unblock them.

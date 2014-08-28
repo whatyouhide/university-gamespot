@@ -3,6 +3,8 @@
  * This file contains the definition of the Console class.
  */
 
+namespace Models;
+
 /**
  * A console.
  */

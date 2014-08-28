@@ -3,6 +3,8 @@
  * This file contains the definition of the BackendController class.
  */
 
+namespace Controllers;
+
 /**
  * This controller is the base class for all the controllers in the backend of
  * the website, and provides some useful methods like:

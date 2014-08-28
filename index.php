@@ -3,6 +3,8 @@
  * The root of the application.
  */
 
+error_reporting(E_ALL);
+
 // Parse the configuration file (with true as a second argument, the .ini file
 // gets parsed with section-awareness) as the first thing in order to have
 // $GLOBALS['config'] set everywhere.

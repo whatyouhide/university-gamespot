@@ -3,10 +3,12 @@
  * This file contains the definition of the AccessoriesController class.
  */
 
+namespace Controllers;
+
+use \Models\Accessory;
+
 /**
  * A controller to see accessories.
- * @package Gamespot
- * @subpackage Controllers
  */
 class AccessoriesController extends Controller {
   /**

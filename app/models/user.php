@@ -3,6 +3,10 @@
  * This file contains the definition of the User class.
  */
 
+namespace Models;
+
+use Db;
+
 /**
  * A user of the website.
  */

@@ -3,13 +3,13 @@
  * This file contains the definition of the InvalidRecord class.
  */
 
+namespace Models;
+
 /**
  * A fake Model class which responds only to the `is_valid` and `errors`
  * methods. This is used so that the Model class can return an instance of
  * InvalidRecord when the creation of a real record fails and we don't have
  * anything in the db.
- * @package Gamespot
- * @subpackage Models
  */
 class InvalidRecord {
   /**

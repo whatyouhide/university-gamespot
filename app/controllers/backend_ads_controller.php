@@ -3,10 +3,12 @@
  * This file contains the definition of the BackendAdsController class.
  */
 
+namespace Controllers;
+
+use Models\Ad;
+
 /**
  * A controller to manage ads in the backend.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendAdsController extends BackendController {
   /**

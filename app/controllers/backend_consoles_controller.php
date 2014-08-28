@@ -3,10 +3,14 @@
  * This file contains the definition of the BackendConsolesController class.
  */
 
+namespace Controllers;
+
+use Session;
+use Models\Console;
+use Models\Upload;
+
 /**
  * A controller to manage consoles.
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendConsolesController extends BackendController {
   /**
