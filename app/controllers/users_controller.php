@@ -59,7 +59,7 @@ class UsersController extends Controller {
    */
   public function sign_out() {
     Session::sign_out_user();
-    redirect('/', ['notice' => 'Signed out successfully.']);
+    redirect('/user/sign_in', ['notice' => 'Successfully signed out']);
   }
 
   /**
