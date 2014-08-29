@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rsync -vzrP --exclude-from=.rsync-excludes \
+  . whatyouhide@do.whatyouhi.de:/home/whatyouhide/gamespot/

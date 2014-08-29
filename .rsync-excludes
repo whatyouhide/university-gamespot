@@ -1,0 +1,12 @@
+bin/
+db
+docs
+config.ini
+templates_c/*
+tests
+README.md
+.git
+.gitignore
+.envrc
+.rsync-excludes
+.sass-cache
