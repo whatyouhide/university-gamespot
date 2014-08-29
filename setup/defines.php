@@ -3,28 +3,24 @@
  * This files contains a bunch of constants definitions.
  */
 
-/**
- * The name of the website.
- */
-define('SITE_NAME', 'gamespot');
+// Note: all the paths in this file are assumed without the trailing '/'
+// character.
 
-/**
- * The root of the website, `/...`.
- */
-define('SITE_ROOT', '/' . SITE_NAME);
+$conf = $GLOBALS['config']['site'];
 
-/**
- * The host of the website.
- */
-define('HOST', 'localhost:8888');
+/** The host of the website. */
+define('HOST', $conf['host']);
 
-/**
- * The root of the website as an absolute path on the server.
- */
-define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . SITE_NAME);
+/** The root of the website. */
+define('SITE_ROOT', $conf['relative_path']);
 
-/**
- * The uploads directory.
- */
+/** The root of the website on the filesystem. */
+if (isset($conf['root_directory'])) {
+  define('ROOT', $conf['root_directory']);
+} else {
+  define('ROOT', $_SERVER['DOCUMENT_ROOT']);
+}
+
+/** The uploads directory. */
 define('UPLOADS_DIR', ROOT . '/public/uploads');
 ?>

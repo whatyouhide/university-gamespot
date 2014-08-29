@@ -65,16 +65,13 @@ class GamespotSmarty extends \Smarty {
    * Assign some Smarty common variables based on environment and constants.
    */
   private function basic_assigns() {
-    $this->assign('site_name', SITE_NAME);
     $this->assign('site_root', SITE_ROOT);
     $this->assign('root', ROOT);
-    $this->assign('host', HOST);
     $this->assign('controllers', SITE_ROOT . '/app/controllers');
     $this->assign('uploads', SITE_ROOT . '/public/uploads');
     $this->assign('lib', SITE_ROOT . '/lib');
     $this->assign('javascripts', SITE_ROOT . '/app/assets/javascripts');
     $this->assign('stylesheets', SITE_ROOT . '/app/assets/stylesheets');
-    $this->assign('globals', $GLOBALS);
   }
 
   /**

@@ -45,16 +45,15 @@ class Request {
 
   /**
    * Return the path of the current request (the REQUEST_URI) stripped of the
-   * initial SITE_NAME.
+   * initial relative path (specified in `config.ini`).
    * Example:
-   * <code>
-   * '/gamespot/test_path' => '/test_path'
-   * </code>
+   * <code>'/gamespot/test_path' => '/test_path'</code>
    *
    * @return string
    */
   public static function path() {
-    $pattern = '/\/' . SITE_NAME . '/';
+    $relative_path = $GLOBALS['config']['site']['relative_path'];
+    $pattern = '/' . preg_quote($relative_path, '/') . '/';
     return preg_replace($pattern, '', $_SERVER['REQUEST_URI'], 1);
   }
 

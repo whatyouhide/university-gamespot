@@ -10,6 +10,16 @@ namespace Common;
  */
 class Session {
   /**
+   * Initialize this class. Set some of the session variables if they aren't
+   * already set.
+   */
+  public static function init() {
+    if (!isset($_SESSION['flash'])) {
+      $_SESSION['flash'] = array();
+    }
+  }
+
+  /**
    * Return the currently logged in user or null if there's no user logged in.
    * @return null|User The currently logged in user or null if there's none
    */
@@ -49,8 +59,6 @@ class Session {
    * @param string $message The message to set
    */
   public static function flash($type, $msg) {
-    if (!isset($_SESSION['flash'])) self::empty_flash();
-
     $_SESSION['flash'][$type] = $msg;
   }
 
@@ -59,7 +67,6 @@ class Session {
    * @param array $messages
    */
   public static function append_flash_messages($messages) {
-    if (!isset($_SESSION['flash'])) self::empty_flash();
     $_SESSION['flash'] = array_merge($_SESSION['flash'], $messages);
   }
 

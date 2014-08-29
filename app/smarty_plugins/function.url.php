@@ -18,7 +18,7 @@ function smarty_function_url($params, $smarty) {
 
   if (isset($params['absolute'])) {
     // No / is necessary since 'site_root' ends with / already.
-    $href = $smarty->getTemplateVars('host') . $href;
+    $href = 'http://' . HOST . $href;
     unset($params['absolute']);
   }
 

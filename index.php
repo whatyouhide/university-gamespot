@@ -20,6 +20,7 @@ include 'setup/includes.php';
 
 // Make $_SESSION available and initialize it.
 session_start();
+Common\Session::init();
 
 // Connect to the database.
 Common\Db::init();

@@ -149,7 +149,7 @@ class Controller {
    * @param string $plain_text
    */
   public function render_plain($plain_text) {
-    echo $plain_text;
+    print($plain_text);
   }
 
   /**
