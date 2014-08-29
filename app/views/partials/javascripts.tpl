@@ -6,6 +6,7 @@
 <script src="{$lib}/javascripts/froala_editor.min.js"></script>
 <script src="{$lib}/javascripts/dropzone.js"></script>
 <script src="{$lib}/javascripts/chosen.jquery.min.js"></script>
+<script src="{$lib}/javascripts/selectize.min.js"></script>
 <script src="{$lib}/javascripts/moment.min.js"></script>
 <script src="{$lib}/javascripts/foundation.min.js"></script>
 
