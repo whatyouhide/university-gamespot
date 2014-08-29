@@ -105,6 +105,25 @@ function array_group($array, $callback) {
 }
 
 /**
+ * Extract a set of keys from an associative array. The keys that are not in
+ * $arr are returned in the new array with a value of $default_value.
+ * @param array $arr
+ * @param array $keys
+ * @param mixed $default_value
+ * @return array
+ */
+function array_extract($arr, $keys, $default_value = null) {
+  $result = array();
+  $arr_keys = array_keys($arr);
+
+  foreach ($keys as $key) {
+    $result[$key] = in_array($key, $arr_keys) ? $arr[$key] : $default_value;
+  }
+
+  return $result;
+}
+
+/**
  * Generate a random alphanumeric string with a given number of characters in
  * it.
  * @param int $length

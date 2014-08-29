@@ -45,4 +45,18 @@ class FunctionsTest extends \Codeception\TestCase\Test {
     // Assert that the female is the right one.
     $this->assertEquals($genders['f'][0], ['name' => 'test2', 'gender' => 'f']);
   }
+
+  public function testArrayExtract() {
+    $arr = ['a' => 1, 'b' => 2, 'c' => 3];
+
+    $this->assertEquals(array_extract($arr, []), []);
+
+    $this->assertEquals(array_extract($arr, ['a']), ['a' => 1]);
+    $this->assertEquals(array_extract($arr, ['a', 'b']), ['a' => 1, 'b' => 2]);
+    $this->assertEquals(array_extract($arr, array_keys($arr)), $arr);
+
+    $this->assertEquals(array_extract($arr, ['nonex']), ['nonex' => null]);
+    $this->assertEquals(array_extract($arr, ['a', 'foo']), ['a' => 1, 'foo' => null]);
+    $this->assertEquals(array_extract($arr, ['nonex'], 'default'), ['nonex' => 'default']);
+  }
 }
