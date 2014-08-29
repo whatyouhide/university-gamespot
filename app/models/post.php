@@ -32,14 +32,19 @@ class Post extends Model {
    * Also set the post tags separately.
    */
   public function update($attributes) {
-    $tag_ids = $attributes['tags'];
-    unset($attributes['tags']);
+    if (isset($attributes['tags'])) {
+      $tag_names = $attributes['tags'];
+      unset($attributes['tags']);
+    }
 
     parent::update($attributes);
 
     if (!$this->is_valid()) { return $this; }
 
-    $this->set_tags_to($tag_ids);
+    if (isset($tag_names)) {
+      $tag_ids = array_map('\Models\Tag::id_from_tag_name', $tag_names);
+      $this->set_tags_to($tag_ids);
+    }
   }
 
   /**

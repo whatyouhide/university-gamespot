@@ -36,7 +36,7 @@
         {$selected=''}
       {/if}
 
-      <option value="{$tag->id}" {$selected}>{$tag->name}</option>
+      <option value="{$tag->name}" {$selected}>{$tag->name}</option>
     {/foreach}
   </select>
 

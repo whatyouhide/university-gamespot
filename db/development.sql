@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-27 15:39:16 +0000
+# Generation Time: 2014-08-29 15:29:08 +0000
 # ************************************************************
 
 
@@ -329,31 +329,12 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `posts_tags`;
 
 CREATE TABLE `posts_tags` (
-  `post_id` int(11) NOT NULL,
-  `tag_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `posts_tags` WRITE;
-/*!40000 ALTER TABLE `posts_tags` DISABLE KEYS */;
-
-INSERT INTO `posts_tags` (`post_id`, `tag_id`)
-VALUES
-	(1,0),
-	(1,0),
-	(2,0);
-
-/*!40000 ALTER TABLE `posts_tags` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table posts_uploads
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `posts_uploads`;
-
-CREATE TABLE `posts_uploads` (
   `post_id` int(11) unsigned NOT NULL,
-  `upload_id` int(11) unsigned NOT NULL
+  `tag_id` int(11) unsigned NOT NULL,
+  KEY `posts_tags_references_posts` (`post_id`),
+  KEY `posts_tags_references_tags` (`tag_id`),
+  CONSTRAINT `posts_tags_references_tags` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `posts_tags_references_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -413,12 +394,12 @@ VALUES
 	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23,NULL),
 	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23,NULL),
 	(25,'',0,'','2014-08-20 21:13:55',NULL,NULL,NULL,NULL,NULL,NULL),
-	(36,'36/ypUQDz7.jpg',86203,'image/jpeg','2014-08-20 21:54:45',4,NULL,NULL,NULL,NULL,NULL),
 	(39,'',0,'','2014-08-21 20:53:05',NULL,NULL,NULL,NULL,NULL,NULL),
 	(40,'',0,'','2014-08-21 20:55:48',NULL,NULL,NULL,NULL,NULL,NULL),
 	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL),
 	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL),
-	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL);
+	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL),
+	(56,'56/2013-08-24 21.47.15.jpg',2117499,'image/jpeg','2014-08-29 17:24:47',4,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
