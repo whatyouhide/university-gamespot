@@ -1,6 +1,11 @@
 <?php
 use Codeception\Util\Stub;
 
+use Common\Db;
+use Models\Model;
+use Models\User;
+use Models\Game;
+
 class ModelTest extends \Codeception\TestCase\Test {
   /**
    * @var \CodeGuy

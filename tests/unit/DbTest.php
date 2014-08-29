@@ -1,5 +1,6 @@
 <?php
 use Codeception\Util\Stub;
+use Common\Db;
 
 class DbTest extends \Codeception\TestCase\Test {
   /**
