@@ -5,14 +5,13 @@
 
 namespace Controllers;
 
+use Models\Group;
+
 /**
  * This controller is the base class for all the controllers in the backend of
  * the website, and provides some useful methods like:
  * - restrict access to backend resources based on the current user group
  * - automatically prepend template names with 'backend/'
- *
- * @package Gamespot
- * @subpackage Controllers
  */
 class BackendController extends Controller {
   /**

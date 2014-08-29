@@ -5,7 +5,8 @@
 
 namespace Models;
 
-use Db;
+use Common\Db;
+use Models\Tag;
 
 /**
  * A blog post.
@@ -23,6 +24,22 @@ class Post extends Model {
   public function __construct($attributes) {
     parent::__construct($attributes);
     $this->author = $this->associated_author();
+    $this->tags = $this->associated_tags();
+  }
+
+  /**
+   * {@inheritdoc}
+   * Also set the post tags separately.
+   */
+  public function update($attributes) {
+    $tag_ids = $attributes['tags'];
+    unset($attributes['tags']);
+
+    parent::update($attributes);
+
+    if (!$this->is_valid()) { return $this; }
+
+    $this->set_tags_to($tag_ids);
   }
 
   /**
@@ -68,11 +85,61 @@ class Post extends Model {
   }
 
   /**
+   * Set the tags of this post to the given list of tags.
+   * @param array $tag_ids
+   */
+  private function set_tags_to($tag_ids) {
+    // First let's remove all the tags from this post, then add all the tags in
+    // the $tag_ids array.
+    $this->remove_all_tags();
+    array_walk($tag_ids, [$this, 'add_tag']);
+  }
+
+  /**
+   * Add a single tag to this post.
+   * @param int $tag_id
+   */
+  private function add_tag($tag_id) {
+    // First let's escape the tag id for security purposes.
+    $tag_id = Db::escape($tag_id);
+
+    $q = <<<SQL
+INSERT INTO `posts_tags`(`post_id`, `tag_id`) VALUES ('{$this->id}', '$tag_id')
+SQL;
+
+    Db::query($q);
+  }
+
+  /**
+   * Remove all the tags from this post.
+   */
+  private function remove_all_tags() {
+    // Let's build a safe query ($this->id is safe).
+    $q = "DELETE FROM `posts_tags` WHERE `post_id` = '{$this->id}'";
+    Db::query($q);
+  }
+
+  /**
    * Fetch the author of this post.
    * @return User
    */
   private function associated_author() {
     return User::find($this->author_id);
+  }
+
+  /**
+   * Fetch the tags associated with this post.
+   * @return array
+   */
+  private function associated_tags() {
+    $q = <<<SQL
+SELECT `tags`.* FROM `tags`
+INNER JOIN `posts_tags`
+ON `posts_tags`.`tag_id` = `tags`.`id`
+WHERE `posts_tags`.`post_id` = '{$this->id}'
+SQL;
+
+    return Tag::new_instances_from_query($q);
   }
 }
 ?>

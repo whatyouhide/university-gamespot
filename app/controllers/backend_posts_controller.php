@@ -6,6 +6,7 @@
 namespace Controllers;
 
 use Models\Post;
+use Models\Tag;
 
 /**
  * A controller for managing blog posts in the backend.
@@ -34,6 +35,7 @@ class BackendPostsController extends BackendController {
    * the new post.
    */
   public function nuevo() {
+    // Create a new post without validating.
     $new_post = Post::create(['author_id' => $this->current_user->id], false);
     redirect('/backend/posts/edit', [], ['id' => $new_post->id]);
   }
@@ -43,6 +45,7 @@ class BackendPostsController extends BackendController {
    * Edit a post.
    */
   public function edit() {
+    $this->tags = Tag::all();
   }
 
   /**
@@ -50,11 +53,7 @@ class BackendPostsController extends BackendController {
    * Update a post.
    */
   public function update() {
-    $this->post->update([
-      'title' => $this->params['title'],
-      'excerpt' => $this->params['excerpt'],
-      'content' => $this->params['content']
-    ]);
+    $this->post->update($this->post_params());
 
     if ($this->post->is_valid()) {
       $flash = ['notice' => 'Saved Successfully'];
@@ -113,6 +112,19 @@ class BackendPostsController extends BackendController {
    */
   protected function set_post() {
     $this->post = $this->safe_find_from_id('Post');
+  }
+
+  /**
+   * Return an array of parameters to pass to Post::update().
+   * @return array
+   */
+  private function post_params() {
+    return [
+      'title' => $this->params['title'],
+      'excerpt' => $this->params['excerpt'],
+      'content' => $this->params['content'],
+      'tags' => $this->params['tags']
+    ];
   }
 }
 ?>

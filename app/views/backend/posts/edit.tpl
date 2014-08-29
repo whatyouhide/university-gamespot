@@ -27,6 +27,19 @@
   <label for="content">Content</label>
   <textarea class="froala" name="content">{$post->content}</textarea>
 
+  <label for="tags[]">Tags</label>
+  <select name="tags[]" multiple data-selectize>
+    {foreach from=$tags item=tag}
+      {if in_array($tag->id, array_pluck($post->tags, 'id'))}
+        {$selected=selected}
+      {else}
+        {$selected=''}
+      {/if}
+
+      <option value="{$tag->id}" {$selected}>{$tag->name}</option>
+    {/foreach}
+  </select>
+
   <input type="submit" value="Save">
 </form>
 
