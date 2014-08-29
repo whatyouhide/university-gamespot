@@ -1,0 +1,16 @@
+; Configuration file for the Gamespot website.
+
+; General configurations.
+[site]
+relative_path = '/gamespot'
+host = localhost:8888
+; If this is not configured, it is assumed to be the Apache document root.
+root_directory = /Users/whatyouhide/Sites/gamespot
+
+
+; Database configuration.
+[database]
+host = localhost
+db = gamespot
+user = root
+password = root

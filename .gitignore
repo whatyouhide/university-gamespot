@@ -1,4 +1,5 @@
 templates_c
+config.ini
 public/uploads
 tests/_log
 docs
