@@ -28,11 +28,7 @@ Common\Db::init();
 // Handle the parameters that Apache passed here (let them default to '') and
 // remove them from the $_GET array in order to have a clean slate when
 // starting.
-$params = array();
-foreach(array('controller', 'action', 'backend') as $el) {
-  $params[$el] = isset($_GET[$el]) ? $_GET[$el] : '';
-  unset($_GET[$el]);
-}
+$params = Http\Request::controller_action_backend();
 
 // Dispatch an action to a controller.
 Common\Router::dispatch_action_to_controller(

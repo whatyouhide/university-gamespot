@@ -37,12 +37,11 @@ class Router {
    * 'application').
    * @param string $a The action to call on the controller, for example 'show'
    * (defaults to 'index').
-   * @param string $backend '1' if the action is in the backend, '0' otherwise.
+   * @param string $backend True if the action is in the backend, false otherwise.
    */
   public static function dispatch_action_to_controller($c, $a, $backend) {
     self::authenticate_route(Request::path());
 
-    $backend = ($backend == '1');
     $controller = empty($c) ? 'application' : $c;
     $action = empty($a) ? 'index' : $a;
 

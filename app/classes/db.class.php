@@ -6,6 +6,7 @@
 namespace Common;
 
 use mysqli;
+use Exception;
 
 /**
  * This class is an interface to the underlying db.

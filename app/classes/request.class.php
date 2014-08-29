@@ -44,6 +44,23 @@ class Request {
   }
 
   /**
+   * Extract the controller, action and backend parameters from the $_GET
+   * variable and unset them. All of them default to ''.
+   * @return array An array in the form [controller=>, action=>, backend=>].
+   */
+  public static function controller_action_backend() {
+    $keys = ['controller', 'action', 'backend'];
+
+    $result = array_extract($_GET, $keys, '');
+    foreach ($keys as $k) { unset($_GET[$k]); }
+
+    // Turn $result['backend'] into a boolean.
+    $result['backend'] = $result['backend'] === '1';
+
+    return $result;
+  }
+
+  /**
    * Return the path of the current request (the REQUEST_URI) stripped of the
    * initial relative path (specified in `config.ini`).
    * Example:
