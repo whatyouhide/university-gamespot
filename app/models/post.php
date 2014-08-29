@@ -7,6 +7,7 @@ namespace Models;
 
 use Common\Db;
 use Models\Tag;
+use Models\Post;
 
 /**
  * A blog post.
@@ -74,6 +75,23 @@ class Post extends Model {
    */
   public static function published() {
     return self::where(['published' => true]);
+  }
+
+  /**
+   * Return all the posts tagged with the given $tag.
+   * @param Tag $tag
+   * @return array
+   */
+  public static function tagged_with($tag) {
+    $q = <<<SQL
+SELECT `posts`.*
+FROM `posts`
+INNER JOIN `posts_tags`
+ON `posts_tags`.`post_id` = `posts`.`id`
+WHERE `posts_tags`.`tag_id` = '{$tag->id}'
+SQL;
+
+    return Post::new_instances_from_query($q);
   }
 
   /**

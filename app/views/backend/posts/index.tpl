@@ -21,6 +21,13 @@
       <h1>{$post->title}</h1>
       <h2>{$status}</h2>
 
+      <div class="tags">
+        {foreach from=array_pluck($post->tags, 'name') item=tag_name name=tags}
+          {assign not_last !$smarty.foreach.tags.last}
+          <span>{$tag_name}</span>{if $not_last},{/if}
+        {/foreach}
+      </div>
+
       <div class="excerpt">{$post->excerpt}</div>
 
       <div class="actions">
