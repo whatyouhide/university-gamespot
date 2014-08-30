@@ -6,5 +6,10 @@ rsync -vzrP --exclude-from=.rsync-excludes \
 ssh whatyouhide@do.whatyouhi.de \
   '~/gamespot/load_db.sh'
 
-ssh whatyouhide@do.whatyouhi.de \
-  'cd ~/gamespot && phpdoc -c phpdoc.dist.xml'
+if [[ $1 == '--docs' ]]; then
+  ssh whatyouhide@do.whatyouhi.de \
+    'cd ~/gamespot && phpdoc -c phpdoc.dist.xml'
+fi
+
+ssh -t whatyouhide@do.whatyouhi.de \
+  'sudo chmod a+rw -R ~/gamespot'
