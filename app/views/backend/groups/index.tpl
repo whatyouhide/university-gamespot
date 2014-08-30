@@ -26,4 +26,12 @@
   <button data-add disabled>Add</button>
 </section>
 
+<div class="warnings">
+  <p>
+    Be careful when adding groups as groups cannot be deleted. If you want to
+    virtually delete a group, just remove all its permissions and change the
+    group of all its members.
+  </p>
+</div>
+
 {/block}

@@ -5,7 +5,11 @@
 {/if}
 
 <!DOCTYPE html>
-<html class="{$html_class} {block name=html_class}{/block}" lang="en">
+<html
+  class="{$html_class} {block name=html_class}{/block}"
+  data-site-root="{$site_root}"
+  lang="en"
+  >
 
 <head>
   <meta charset="utf-8">

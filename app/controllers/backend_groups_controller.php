@@ -46,6 +46,8 @@ class BackendGroupsController extends BackendController {
 
     if (!$group->is_valid()) {
       $this->set_status_code(500)->render_plain($group->errors_as_string());
+    } else {
+      $this->no_content();
     }
   }
 
@@ -58,7 +60,6 @@ class BackendGroupsController extends BackendController {
       'name' => $this->params['name'],
       'is_admin' => $this->boolean_param('is_admin'),
       'can_blog' => $this->boolean_param('can_blog'),
-      'can_moderate_blog' => $this->boolean_param('can_moderate_blog'),
       'can_manage_products' => $this->boolean_param('can_manage_products'),
       'can_manage_ads' => $this->boolean_param('can_manage_ads'),
       'can_manage_support' => $this->boolean_param('can_manage_support'),

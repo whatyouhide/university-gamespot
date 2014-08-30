@@ -4,7 +4,7 @@ $(function () {
   var $table = $('table');
   var $addButton = $('[data-add]');
 
-  var baseUrl = '/' + config.siteName + '/backend/game_categories';
+  var baseUrl = functions.siteRoot() + '/backend/game_categories';
   var createUrl = baseUrl + '/create';
   var destroyUrl = baseUrl + '/destroy';
   var updateUrl = baseUrl + '/update';

@@ -21,6 +21,7 @@ class BackendTagsController extends BackendController {
       $this->render_plain($tag->id);
     } else {
       $this->set_status_code(500);
+      $this->render_as_string($tag->errors_as_string());
     }
   }
 }

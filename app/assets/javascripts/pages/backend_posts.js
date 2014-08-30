@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var createTagUrl = '/' + config.siteName + '/backend/tags/create';
+  var createTagUrl = functions.siteRoot() + '/backend/tags/create';
 
   // Add a tag to the db through a POST request.
   function addTag(tagName) {

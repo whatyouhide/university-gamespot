@@ -7,7 +7,7 @@
   };
 
   // Some common URLs.
-  var baseUrl = '/' + config.siteName + '/backend/groups';
+  var baseUrl = functions.siteRoot() + '/backend/groups';
   var updateUrl = baseUrl + '/update';
   var createUrl = baseUrl + '/create';
 

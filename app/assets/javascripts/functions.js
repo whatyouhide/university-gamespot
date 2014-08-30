@@ -36,3 +36,12 @@ window.functions.flashSuccessWithMessage = function (message) {
     functions.ajaxFlash('notice', message);
   };
 };
+
+// Retrieve the root of the website from a data-attribute of the <html> tag.
+window.functions.siteRoot = function () {
+  if (config.siteRoot === undefined) {
+    config.siteRoot = $('[data-site-root]').attr('data-site-root');
+  }
+
+  return config.siteRoot;
+};

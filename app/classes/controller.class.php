@@ -150,6 +150,7 @@ class Controller {
    */
   public function render_plain($plain_text) {
     print($plain_text);
+    die();
   }
 
   /**
