@@ -44,6 +44,18 @@ class ModelTest extends \Codeception\TestCase\Test {
     $this->assertEquals($user->email, $email);
   }
 
+  public function testCount() {
+    // Clean the 'users' table.
+    Db::query('SET FOREIGN_KEY_CHECKS=0');
+    Db::query('TRUNCATE `users`');
+    Db::query('SET FOREIGN_KEY_CHECKS=1');
+
+    $this->assertEquals(User::count(), 0);
+
+    $this->create_user_called('test', 'user');
+    $this->assertEquals(User::count(), 1);
+  }
+
   public function testCreate() {
     $attrs = [
       'email' => 'test@test.test',

@@ -216,6 +216,16 @@ class Model {
   }
 
   /**
+   * Return the number of records that are in the db for the calling model.
+   * @return int
+   */
+  public static function count() {
+    $t = static::$table_name;
+    $q = "SELECT COUNT(*) FROM `$t`";
+    return intval(Db::get_rows($q)[0]['COUNT(*)']);
+  }
+
+  /**
    * Create a new instance of the calling model and save it to the db.
    * @param array $attribtutes An array of 'name' => 'value' attributes.
    * @param bool $validate If false, don't validate the record.

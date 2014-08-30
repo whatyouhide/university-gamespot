@@ -221,6 +221,16 @@ class User extends Model {
   }
 
   /**
+   * Return all the users that are part of the staff of the website.
+   * @return array
+   */
+  public static function staff_members() {
+    $t = static::$table_name;
+    $q = "SELECT * FROM `$t` WHERE `group_id` IS NOT NULL";
+    return self::new_instances_from_query($q);
+  }
+
+  /**
    * Return all the 'backend' users (staff members) of the website except for
    * the one identified by $id (which usually is the current user).
    * @param string|int $id

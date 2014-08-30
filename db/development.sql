@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-29 15:29:08 +0000
+# Generation Time: 2014-08-30 22:23:48 +0000
 # ************************************************************
 
 
@@ -315,9 +315,9 @@ LOCK TABLES `posts` WRITE;
 
 INSERT INTO `posts` (`id`, `title`, `excerpt`, `content`, `updated_at`, `published_at`, `published`, `author_id`)
 VALUES
-	(2,'Lorem ipsum dolor sit amet.','Lipsum.dqqddw\'qwedqwd%qw\'\'%','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-08-27 15:47:21','2014-08-17 13:07:01',0,1),
-	(5,'dew','deqwdqeweq','<p><img class=\"fr-fin\" alt=\"Image title\" src=\"http://i.froala.com/images/579fe26e55893d92d4ff4f3ea77e7f1faa672566.png?1409065933\" width=\"300\"></p><p><br></p>','2014-08-26 17:35:00',NULL,0,1),
-	(6,'dqewdqw','dqewdqew','<p>dqwdqwed</p>','2014-08-27 13:02:38','2014-08-27 13:02:38',1,14);
+	(2,'The post with tags','A nice excerpt isn\'t long.','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-08-29 19:31:14','2014-08-29 19:31:14',1,1),
+	(6,'dqewdqw','dqewdqew','<p>dqwdqwed</p>','2014-08-27 13:02:38','2014-08-27 13:02:38',1,14),
+	(7,'Dedicato a teeeeeeeeeee','ChissÃ  dove chissÃ  coooome','<p>E ascoltare senza <strong>interruzioniiiiiiiiiiiii</strong>!</p>','2014-08-29 19:52:03','2014-08-29 19:52:03',1,1);
 
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -337,6 +337,23 @@ CREATE TABLE `posts_tags` (
   CONSTRAINT `posts_tags_references_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `posts_tags` WRITE;
+/*!40000 ALTER TABLE `posts_tags` DISABLE KEYS */;
+
+INSERT INTO `posts_tags` (`post_id`, `tag_id`)
+VALUES
+	(2,7),
+	(2,4),
+	(2,8),
+	(2,26),
+	(2,25),
+	(2,18),
+	(2,24),
+	(7,2),
+	(7,9);
+
+/*!40000 ALTER TABLE `posts_tags` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table tags
@@ -347,9 +364,36 @@ DROP TABLE IF EXISTS `tags`;
 CREATE TABLE `tags` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+
+INSERT INTO `tags` (`id`, `name`)
+VALUES
+	(10,'4'),
+	(2,'announcements'),
+	(4,'dew'),
+	(9,'dewdew'),
+	(26,'diosololosa'),
+	(8,'dw'),
+	(7,'dwedeqwedqwfqw'),
+	(24,'eeeeeeeeeeeeeeee'),
+	(11,'ewfqw'),
+	(25,'ppopopopopop'),
+	(3,'promotions'),
+	(18,'qcwnckqepfvqerqr'),
+	(23,'qdqewdqwdqwdqwdqewdqweowjooooo'),
+	(16,'qwfe'),
+	(19,'sane-tag'),
+	(1,'test-tag'),
+	(20,'ttttt'),
+	(22,'wdewdewdewdew');
+
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table uploads
