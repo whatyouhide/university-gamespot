@@ -15,6 +15,7 @@
 <script src="{$javascripts}/functions.js"></script>
 <script src="{$javascripts}/dropzone.js"></script>
 <script src="{$javascripts}/data-hoverable.js"></script>
+<script src="{$javascripts}/data-back.js"></script>
 <script src="{$javascripts}/data-confirm.js"></script>
 <script src="{$javascripts}/data-ago.js"></script>
 <script src="{$javascripts}/data-chosen.js"></script>
