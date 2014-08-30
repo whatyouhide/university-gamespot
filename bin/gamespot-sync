@@ -2,3 +2,9 @@
 
 rsync -vzrP --exclude-from=.rsync-excludes \
   . whatyouhide@do.whatyouhi.de:/home/whatyouhide/gamespot/
+
+ssh whatyouhide@do.whatyouhi.de \
+  '~/gamespot/load_db.sh'
+
+ssh whatyouhide@do.whatyouhi.de \
+  'cd ~/gamespot && phpdoc -c phpdoc.dist.xml'
