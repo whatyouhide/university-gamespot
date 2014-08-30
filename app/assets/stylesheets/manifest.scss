@@ -8,6 +8,10 @@
 @import "base";
 @import "flashes";
 
+.error {
+  @import "error/base";
+}
+
 .frontend {
   @import "frontend/base";
   @import "frontend/menu";

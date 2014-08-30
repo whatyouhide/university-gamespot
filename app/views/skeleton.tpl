@@ -5,13 +5,13 @@
 {/if}
 
 <!DOCTYPE html>
-<html class="{$html_class}" lang="en">
+<html class="{$html_class} {block name=html_class}{/block}" lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Gamespot</title>
+  <title>{block name=title}Gamespot{/block}</title>
 
   {include file='partials/stylesheets.tpl'}
 

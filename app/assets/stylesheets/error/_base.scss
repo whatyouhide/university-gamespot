@@ -1,0 +1,32 @@
+$container-height: 400px;
+
+#container {
+  @extend %page-wide;
+}
+
+.error-container {
+  @include absolute-at($top: 50%, $left: 0);
+  width: 100%;
+  height: $container-height;
+  margin-top: - ($container-height / 2);
+  text-align: center;
+}
+
+// "Error".
+h3 {
+  color: $warning-color;
+  font-size: 250%;
+}
+
+// Error message.
+h1 {
+  margin-bottom: 35px;
+}
+
+// Error code.
+h2 {
+  color: $alert-color;
+  font-size: 1000%;
+  line-height: 75%;
+  margin-bottom: 55px;
+}
