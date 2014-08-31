@@ -21,6 +21,7 @@ class Router {
     '\/users\/change_password',
     '\/users\/upload_profile_picture',
     '\/users\/delete_profile_picture',
+    '\/support',
     '^\/backend'
   );
 

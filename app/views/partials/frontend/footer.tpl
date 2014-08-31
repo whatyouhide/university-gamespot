@@ -19,7 +19,7 @@
       <ul>
         <li><a href="{url to='/pages/about'}">About</a></li>
         <li><a href="{url to='/blog'}">Blog</a></li>
-        <li><a href="#">Contact us</a></li>
+        <li><a href="{url to='/support'}">Support</a></li>
       </ul>
     </section>
   </div>
