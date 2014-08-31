@@ -106,6 +106,8 @@ class Router {
   /**
    * Check if the controller exists and if it does dispatch the action.
    * If it doesn't, render a 404 error.
+   * @param string $controller_class
+   * @param string $action
    */
   private static function dispatch_or_not_found($controller_class, $action) {
     if (class_exists($controller_class)) {

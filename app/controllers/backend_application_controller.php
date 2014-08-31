@@ -22,6 +22,7 @@ class BackendApplicationController extends BackendController {
    * GET /
    */
   public function index() {
+    $this->signed_in_users_count = User::signed_in_count();
     $this->regular_users_count = count(User::regular());
     $this->staff_members_count = count(User::staff_members());
     $this->ads_count = Ad::count();

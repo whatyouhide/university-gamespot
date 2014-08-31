@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-31 17:04:54 +0000
+# Generation Time: 2014-08-31 17:39:30 +0000
 # ************************************************************
 
 
@@ -163,7 +163,11 @@ INSERT INTO `errors` (`id`, `message`, `happened_at`)
 VALUES
 	(1,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/c0048680948c34502569b43f15461084cc250e32.file.index.tpl.php','2014-08-31 18:53:00'),
 	(2,'Uncaught  --> Smarty Compiler: Syntax error in template \"/Users/whatyouhide/Sites/gamespot/app/views/backend/index.tpl\"  on line 12 \"{if}\" missing if condition <-- \n  thrown','2014-08-31 18:53:45'),
-	(3,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/fdc9d9744e0b87c43428b6557e3164b806f4df30.file.index.tpl.php','2014-08-31 19:00:01');
+	(3,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/fdc9d9744e0b87c43428b6557e3164b806f4df30.file.index.tpl.php','2014-08-31 19:00:01'),
+	(4,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(10','2014-08-31 19:28:43'),
+	(5,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(10','2014-08-31 19:30:47'),
+	(6,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = 1\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104)','2014-08-31 19:31:14'),
+	(7,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'users.online\' in \'where clause\'\nQuery: SELECT * FROM `users` WHERE `users`.`online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT * FROM `...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT * FROM `...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(293): Common\\Db::get_rows(\'SELECT * FROM `...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(215): Models\\Model::new_instances_from_query(\'SELECT * FROM `...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(202): Models\\Model::where(Array)\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Contr','2014-08-31 19:32:47');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -464,6 +468,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
+  `signed_in` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `blocked` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `resetting` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `reset_token` varchar(255) DEFAULT NULL,
@@ -479,14 +484,14 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
+INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `signed_in`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,NULL,1,NULL,1),
-	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,NULL,1,NULL,NULL),
-	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,NULL,1,NULL,5),
-	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,NULL,1,NULL,NULL);
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1,0,0,NULL,1,NULL,1),
+	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,0,NULL,1,NULL,3),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,0,NULL,1,NULL,NULL),
+	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,0,NULL,1,NULL,5),
+	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,0,NULL,1,NULL,2),
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,1,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -511,15 +516,15 @@ LOCK TABLES `visits` WRITE;
 
 INSERT INTO `visits` (`id`, `url`, `ip`, `visited_at`, `count`)
 VALUES
-	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',4),
+	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',5),
 	(6,'/backend/ads','::1','2014-08-31 18:21:48',2),
 	(7,'/backend/groups','::1','2014-08-31 18:26:06',3),
-	(8,'/backend','::1','2014-08-31 18:33:57',11),
+	(8,'/backend','::1','2014-08-31 18:33:57',23),
 	(9,'/backend/accessories','::1','2014-08-31 18:50:47',9),
 	(10,'/backend/posts','::1','2014-08-31 18:52:59',1),
 	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',1),
 	(12,'/backend/users','::1','2014-08-31 18:53:02',1),
-	(13,'/backend/errors','::1','2014-08-31 19:00:01',3);
+	(13,'/backend/errors','::1','2014-08-31 19:00:01',5);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;

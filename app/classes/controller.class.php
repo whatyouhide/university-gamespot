@@ -308,6 +308,9 @@ class Controller {
 
     $this->current_user = Session::user();
 
+    // The user just went online.
+    $this->current_user->signed_in();
+
     if ($this->current_user->is_blocked()) {
       Session::sign_out_user();
       redirect('/users/sign_in', ['error' => 'You have been blocked!']);

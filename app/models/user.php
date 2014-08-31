@@ -36,6 +36,20 @@ class User extends Model {
   }
 
   /**
+   * Set the user as online.
+   */
+  public function signed_in() {
+    $this->update(['signed_in' => true]);
+  }
+
+  /**
+   * Set the user as offline.
+   */
+  public function signed_out() {
+    $this->update(['signed_in' => false]);
+  }
+
+  /**
    * Update the user's password.
    * @param string $new_pass The new password (still non hashed)
    */
@@ -177,6 +191,17 @@ class User extends Model {
     }
 
     return parent::create(self::with_hashed_password($attrs));
+  }
+
+  /**
+   * Return the number of online users.
+   * @return int
+   */
+  public static function signed_in_count() {
+    $t = static::$table_name;
+    $q = "SELECT COUNT(*) FROM `$t` WHERE `signed_in` = 1";
+
+    return Db::number_from_query($q);
   }
 
   /**
