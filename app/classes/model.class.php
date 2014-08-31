@@ -326,6 +326,25 @@ class Model {
   }
 
   /**
+   * Build a WHERE clause from an array of single clauses.
+   *
+   * The WHERE clause will be in the form `WHERE a AND b AND c`. The members of
+   * the `$conditions` array will be statements like `price > '13'` and so on.
+   * This is on a lower level than `Model::build_where_clauses_from()`, which
+   * builds a where clause starting with an associative array of attributes.
+   *
+   * @param array $conditions
+   * @return string
+   */
+  protected static function where_clause_from_conditions($conditions) {
+    if (empty($conditions)) {
+      return '';
+    } else {
+      return 'WHERE ' . implode(' AND ', $conditions);
+    }
+  }
+
+  /**
    * Sanitize a single value for inserting it into the database.
    * If the attribute is a string, escape it; if it's null, leave it null; etc.
    * @param mixed $val
@@ -334,7 +353,6 @@ class Model {
   private static function sanitize_value($val) {
     return is_null($val) ? null : Db::escape($val);
   }
-
 
   /**
    * Return a WHERE clause in the form 'WHERE a1 = v1 AND a2 = v2' from a given
