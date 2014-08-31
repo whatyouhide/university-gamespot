@@ -20,7 +20,10 @@ $(function () {
   var disableSelectBasedOnCheckbox = function () {
     var type = $radioButtons.filter(':checked').val();
     $selects.attr('disabled', '');
-    $('select[name=' + type + ']').removeAttr('disabled');
+
+    if (type && type !== '') {
+      $('select[name=' + type + ']').removeAttr('disabled');
+    }
   };
 
   disableSelectBasedOnCheckbox();

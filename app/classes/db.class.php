@@ -41,7 +41,7 @@ class Db {
    */
   public static function query($query) {
     $result = self::$connection->query($query);
-    self::throw_exception_if_error();
+    self::throw_exception_if_error($query);
     return $result;
   }
 
@@ -119,11 +119,13 @@ class Db {
    * Throw an an exception if there has been a connection error.
    * @throws Exception
    */
-  private static function throw_exception_if_error() {
+  private static function throw_exception_if_error($query = null) {
     $error = self::$connection->error;
 
     if ($error) {
-      throw new Exception("Error with the database: $error");
+      $msg = "Error with the database: $error";
+      if (!is_null($query)) { $msg .= "\nQuery: $query"; }
+      throw new Exception($msg);
     }
   }
 }

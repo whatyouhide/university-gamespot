@@ -150,6 +150,60 @@ class Ad extends Model {
   }
 
   /**
+   * Filter all the ads based on a set of parameters (that aren't escaped yet).
+   * @param array $params
+   * @return array
+   */
+  public static function filter_with_params($params) {
+    $params = self::sanitize_attributes($params);
+
+    $where_clauses = array();
+
+    // Filter by console.
+    if (!empty($params['console'])) {
+      $where_clauses[] = "`console_id` = '{$params['console']}'";
+    }
+
+    // Filter by game or accessory.
+    if (!empty($params['type'])) {
+      $where_clauses[] = "`type` = '{$params['type']}'";
+    }
+
+    // Filter by city.
+    if (!empty($params['city'])) {
+      $where_clauses[] = "`city` = '{$params['city']}'";
+    }
+
+    // Filter by publication date.
+    if ($params['last-7-days'] == 'true') {
+      $where_clauses[] = "`published_at` >= CURDATE() - INTERVAL 7 DAY";
+    }
+
+    // Filter by price.
+    $max_price = intval($params['max-price']);
+    if ($max_price > 0) {
+      $where_clauses[] = "`price` <= '$max_price'";
+    }
+
+    // Build the query.
+    $t = static::$table_name;
+    $q = "SELECT * FROM `$t`";
+
+    // Build the WHERE part of the query if there are clauses.
+    if (!empty($where_clauses)) {
+      $where = implode(' AND ', $where_clauses);
+      $q .= " WHERE $where";
+    }
+
+    $result = self::new_instances_from_query($q);
+
+    // Filter this mofo with code instead of SQL in order to avoid JOINs.
+    // TODO filter based on self::associated_with_[game|accessory]
+
+    return $result;
+  }
+
+  /**
    * Return all the distinct cities for all the ads.
    * @return array
    */

@@ -16,20 +16,30 @@ use Models\Upload;
  */
 class AdsController extends Controller {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'set_models_for_selects' => ['index', 'filter'],
+    'set_form_values' => ['index', 'filter']
+  );
+
+  /**
    * GET /ads
    * List all the ads.
    */
   public function index() {
     $all = Ad::published_by_non_blocked_authors();
-    $separated = Ad::separate_game_and_accessory($all);
-    $all_cities = Ad::all_cities();
+    $this->set_game_and_acccessory_ads($all);
+  }
 
-    $this->game_ads = $separated['game_ads'];
-    $this->accessory_ads = $separated['accessory_ads'];
-    $this->consoles_for_select = Console::all_for_select_with('name');
-    $this->games_for_select = Accessory::all_for_select_with('name');
-    $this->accessories_for_select = Accessory::all_for_select_with('name');
-    $this->cities_for_select = array_combine($all_cities, $all_cities);
+  /**
+   * GET /ads/filter
+   * Filter ads.
+   */
+  public function filter() {
+    $ads = Ad::filter_with_params($this->params);
+    $this->set_game_and_acccessory_ads($ads);
+    $this->render('ads/index');
   }
 
   /**
@@ -151,6 +161,46 @@ class AdsController extends Controller {
   }
 
   /**
+   * <b>Filter</b>
+   * Set a bunch of instance variables for dealing with models in <select> tags.
+   */
+  protected function set_models_for_selects() {
+    $this->consoles_for_select = Console::all_for_select_with('name', true);
+    $this->games_for_select = Game::all_for_select_with('name', true);
+    $this->accessories_for_select = Accessory::all_for_select_with('name', true);
+
+    $all_cities = Ad::all_cities();
+    $this->cities_for_select = ['' => ''] + array_combine($all_cities, $all_cities);
+  }
+
+  /**
+   * <b>Filter</b>
+   * Set some starting form values.
+   */
+  protected function set_form_values() {
+    $this->starting_values = $this->params_with_defaults();
+  }
+
+  /**
+   * Return a bunch of filtering parameters with default values where they're
+   * not present.
+   * @return array
+   */
+  private function params_with_defaults() {
+    $pars = ['console', 'city', 'last-7-days', 'type', 'game', 'accessory', 'max-price'];
+
+    return [
+      'console' => isset($this->params['console']) ? $this->params['console'] : '',
+      'city' => isset($this->params['city']) ? $this->params['city'] : '',
+      'last-7-days' => isset($this->params['last-7-days']) ? $this->params['last-7-days'] : '',
+      'type' => isset($this->params['type']) ? $this->params['type'] : '',
+      'game' => isset($this->params['game']) ? $this->params['game'] : '',
+      'accessory' => isset($this->params['accessory']) ? $this->params['accessory'] : '',
+      'max-price' => isset($this->params['max-price']) ? $this->params['max-price'] : '0'
+    ];
+  }
+
+  /**
    * Retrieve the sender's name from the form or the currently logged in user.
    * @return string The name of the sender of the email.
    */
@@ -172,6 +222,17 @@ class AdsController extends Controller {
     } else {
       return $this->params['sender_email'];
     }
+  }
+
+  /**
+   * Set the `game_ads` and `accessory` ads instance variables starting with an
+   * array of ads.
+   * @param array $ads
+   */
+  private function set_game_and_acccessory_ads($ads) {
+    $separated = Ad::separate_game_and_accessory($ads);
+    $this->game_ads = $separated['game_ads'];
+    $this->accessory_ads = $separated['accessory_ads'];
   }
 
   /**

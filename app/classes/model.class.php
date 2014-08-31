@@ -259,12 +259,16 @@ class Model {
    * @param string $property The value associated with a record id.
    * @return array
    */
-  public static function all_for_select_with($property) {
+  public static function all_for_select_with($property, $with_empty = false) {
     $all = static::all();
-    return array_combine(
-      array_pluck($all, 'id'),
-      array_pluck($all, 'name')
-    );
+
+    $result = array_combine(array_pluck($all, 'id'), array_pluck($all, 'name'));
+
+    if ($with_empty) {
+      return ['' => ''] + $result;
+    } else {
+      return $result;
+    }
   }
 
   /**
@@ -317,7 +321,7 @@ class Model {
    * @param array $attributes An associative array of attribtues.
    * @return array A copy of the original array, but with sanitized values.
    */
-  private static function sanitize_attributes($attributes) {
+  protected static function sanitize_attributes($attributes) {
     return array_map('self::sanitize_value', $attributes);
   }
 
