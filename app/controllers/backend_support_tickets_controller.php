@@ -15,6 +15,7 @@ class BackendSupportTicketsController extends BackendController {
    * {@inheritdoc}
    */
   protected static $before_filters = array(
+    'restrict' => 'all',
     'set_ticket' => ['toggle_closed', 'show']
   );
 
@@ -56,6 +57,14 @@ class BackendSupportTicketsController extends BackendController {
    */
   protected function set_ticket() {
     $this->ticket = $this->safe_find_from_id('SupportTicket');
+  }
+
+  /**
+   * <b>Filter</b>
+   * Restrict access to the users with the right permission.
+   */
+  protected function restrict() {
+    $this->restrict_to_permission('manage_support');
   }
 }
 ?>
