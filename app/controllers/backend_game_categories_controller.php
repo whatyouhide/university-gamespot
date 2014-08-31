@@ -13,12 +13,17 @@ use Models\GameCategory;
  */
 class BackendGameCategoriesController extends BackendController {
   /**
+   * {@inheritdoc}
+   */
+  protected static $before_filters = array(
+    'restrict' => 'all'
+  );
+
+  /**
    * GET /game_categories
    * List all the game categories.
    */
   public function index() {
-    $this->restrict_to_permission('manage_products');
-
     $this->game_categories = GameCategory::all();
     $this->render('game_categories/index');
   }
@@ -29,8 +34,6 @@ class BackendGameCategoriesController extends BackendController {
    * <b>Ajax</b>
    */
   public function create() {
-    $this->restrict_to_permission('manage_products');
-
     $cat = GameCategory::create(['name' => $this->params['name']]);
 
     if ($cat->is_valid()) {
@@ -46,8 +49,6 @@ class BackendGameCategoriesController extends BackendController {
    * <b>Ajax</b>
    */
   public function update() {
-    $this->restrict_to_permission('manage_products');
-
     $cat = GameCategory::find($this->params['id']);
     $cat->update(['name' => $this->params['name']]);
 
@@ -62,10 +63,17 @@ class BackendGameCategoriesController extends BackendController {
    * <b>Ajax</b>
    */
   public function destroy() {
-    $this->restrict_to_permission('manage_products');
-
     $cat = GameCategory::find($this->params['id']);
     $cat->destroy();
+  }
+
+  /**
+   * <b>Filter</b>
+   * Restrict all the actions of this controller to users with a given
+   * permission.
+   */
+  protected function restrict() {
+    $this->restrict_to_permission('manage_products');
   }
 }
 ?>
