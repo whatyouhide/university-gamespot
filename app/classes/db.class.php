@@ -54,6 +54,24 @@ class Db {
   }
 
   /**
+   * Return an array of values from a query on a single column.
+   *
+   * When querying the db for stuff like `COUNT(*)`, the result has only one
+   * column ('COUNT(*)'), which results in a PHP array with only one element,
+   * which is itself an associative array with only one element: `COUNT(*) =>
+   * n`. This is annoying, so this method returns an array of values instead of
+   * an array of associative arrays.
+   * @param string $query
+   * @return array
+   */
+  public static function array_from_one_column_query($query) {
+    $result = self::get_rows($query);
+    $extract = function ($el) { return array_values($el)[0]; };
+
+    return array_map($extract, $result);
+  }
+
+  /**
    * Return the id of the last inserted record.
    * @return int The id of the last inserted record.
    */

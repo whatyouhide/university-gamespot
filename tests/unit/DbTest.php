@@ -33,4 +33,10 @@ class DbTest extends \Codeception\TestCase\Test {
 
     $this->assertFalse(array_search($email, $rows));
   }
+
+  public function testArrayFromOneColumnQuery() {
+    $res = Db::array_from_one_column_query("SELECT COUNT(*) FROM users");
+    $this->assertTrue(is_array($res));
+    $this->assertEquals(count($res), 1);
+  }
 }
