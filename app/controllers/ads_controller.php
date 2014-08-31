@@ -5,10 +5,10 @@
 
 namespace Controllers;
 
+use Models\Accessory;
 use Models\Ad;
 use Models\Console;
 use Models\Game;
-use Models\Accessory;
 use Models\Upload;
 
 /**
@@ -22,8 +22,14 @@ class AdsController extends Controller {
   public function index() {
     $all = Ad::published_by_non_blocked_authors();
     $separated = Ad::separate_game_and_accessory($all);
+    $all_cities = Ad::all_cities();
+
     $this->game_ads = $separated['game_ads'];
     $this->accessory_ads = $separated['accessory_ads'];
+    $this->consoles_for_select = Console::all_for_select_with('name');
+    $this->games_for_select = Accessory::all_for_select_with('name');
+    $this->accessories_for_select = Accessory::all_for_select_with('name');
+    $this->cities_for_select = array_combine($all_cities, $all_cities);
   }
 
   /**

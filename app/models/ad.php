@@ -5,7 +5,7 @@
 
 namespace Models;
 
-use Db;
+use Common\Db;
 
 /**
  * An ad.
@@ -147,6 +147,15 @@ class Ad extends Model {
   public static function published_by_non_blocked_authors() {
     $by_legit_author = function ($ad) { return !$ad->author->is_blocked(); };
     return array_filter(self::published(), $by_legit_author);
+  }
+
+  /**
+   * Return all the distinct cities for all the ads.
+   * @return array
+   */
+  public static function all_cities() {
+    $t = static::$table_name;
+    return Db::array_from_one_column_query("SELECT DISTINCT `city` FROM `$t`");
   }
 
   /**
