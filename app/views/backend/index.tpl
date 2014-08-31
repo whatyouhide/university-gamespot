@@ -1,8 +1,12 @@
 {extends 'backend.tpl'}
 
 {block name=content}
-There are {$regularUsersCount} users of the website.
-There are {$staffMembersCount} staff members.
+There are {$regular_users_count} users of the website.
+There are {$staff_members_count} staff members.
 
-There are {$adsCount} ads.
+There are {$ads_count} ads.
+
+There have been {$number_of_visits} visits on the website.
+
+There have been {$unique_visitors_count} unique visitors.
 {/block}

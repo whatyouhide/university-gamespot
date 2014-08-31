@@ -72,6 +72,16 @@ class Db {
   }
 
   /**
+   * Return a number from a query.
+   * @param string $query
+   * @return int
+   */
+  public static function number_from_query($query) {
+    $res = self::array_from_one_column_query($query);
+    return intval($res[0]);
+  }
+
+  /**
    * Return the id of the last inserted record.
    * @return int The id of the last inserted record.
    */

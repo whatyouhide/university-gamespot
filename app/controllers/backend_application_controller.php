@@ -7,6 +7,7 @@ namespace Controllers;
 
 use Models\User;
 use Models\Ad;
+use Models\Visit;
 
 /**
  * The controller for the backend home page.
@@ -21,9 +22,12 @@ class BackendApplicationController extends BackendController {
    * GET /
    */
   public function index() {
-    $this->regularUsersCount = count(User::regular());
-    $this->staffMembersCount = count(User::staff_members());
-    $this->adsCount = Ad::count();
+    $this->regular_users_count = count(User::regular());
+    $this->staff_members_count = count(User::staff_members());
+    $this->ads_count = Ad::count();
+    $this->number_of_visits = Visit::count();
+    $this->unique_visitors_count = Visit::unique_visitors();
+
     $this->render('index');
   }
 }

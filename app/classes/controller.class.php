@@ -58,7 +58,9 @@ class Controller {
    * @var array Like the $before_filters, but they're default to the base
    * Controller class and can't be overridden in children classes.
    */
-  private static $default_before_filters = array();
+  private static $default_before_filters = array(
+    'register_visit' => 'all'
+  );
 
   /**
    * @var array Like the $after_filters, but they're default to the base
@@ -219,6 +221,14 @@ class Controller {
       . $this->action_to_call;
 
     $this->render($template_name);
+  }
+
+  /**
+   * Register a visit to the current url.
+   * This is the perfect first before filter and is used as such.
+   */
+  protected function register_visit() {
+    Request::register_visit();
   }
 
   /**

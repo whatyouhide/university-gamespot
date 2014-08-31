@@ -44,6 +44,16 @@ class Request {
   }
 
   /**
+   * Register a visit to the current url.
+   */
+  public static function register_visit() {
+    \Models\Visit::increment_or_create(
+      self::path(),
+      self::visitor_ip()
+    );
+  }
+
+  /**
    * Extract the controller, action and backend parameters from the $_GET
    * variable and unset them. All of them default to ''.
    * @return array An array in the form [controller=>, action=>, backend=>].
@@ -72,6 +82,14 @@ class Request {
     $relative_path = $GLOBALS['config']['site']['relative_path'];
     $pattern = '/' . preg_quote($relative_path, '/') . '/';
     return preg_replace($pattern, '', $_SERVER['REQUEST_URI'], 1);
+  }
+
+  /**
+   * Return the IP address of the visitor.
+   * @return string
+   */
+  public static function visitor_ip() {
+    return $_SERVER['REMOTE_ADDR'];
   }
 
   /**
