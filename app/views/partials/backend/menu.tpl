@@ -41,7 +41,7 @@
     </li>
 
     <li>
-      <a href="{url to='/backend/support'}">Support</a>
+      <a href="{url to='/backend/support_tickets'}">Support</a>
     </li>
   </ul>
 

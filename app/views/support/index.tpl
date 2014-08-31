@@ -16,7 +16,7 @@
   <label for="topic">Topic</label>
   {html_options name=topic options=$topics}
 
-  <input type="submit" value="Request support">
+  <input type="submit" value="File ticket">
 </form>
 
 {/block}

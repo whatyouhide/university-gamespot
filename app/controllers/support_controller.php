@@ -37,7 +37,7 @@ class SupportController extends Controller {
     $new_ticket = SupportTicket::create($this->ticket_attributes());
 
     if ($new_ticket->is_valid()) {
-      redirect('/support', ['notice' => 'Ticket created successfully']);
+      redirect('/', ['notice' => 'Ticket created successfully']);
     } else {
       redirect('/support', ['error' => $new_ticket->errors_as_string()]);
     }
