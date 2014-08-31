@@ -227,7 +227,7 @@ class Model {
 
   /**
    * Create a new instance of the calling model and save it to the db.
-   * @param array $attribtutes An array of 'name' => 'value' attributes.
+   * @param array $attributes An array of 'name' => 'value' attributes.
    * @param bool $validate If false, don't validate the record.
    * @return mixed The record just inserted in the db.
    */
@@ -257,6 +257,8 @@ class Model {
    * Return an array of ['id' => $property] couples which is a <select>-friendly
    * way to use models. This returns all the models.
    * @param string $property The value associated with a record id.
+   * @param bool $with_empty If true, prepend an empty ('' => '') element to the
+   * array.
    * @return array
    */
   public static function all_for_select_with($property, $with_empty = false) {
@@ -282,11 +284,10 @@ class Model {
   }
 
   /**
-   * Given an array, return a new array where every element is a new instance of
-   * the calling class build with the attributes that were the element of the
-   * argument array.
-   * @param array $arr An array of sets of attributes
-   * @return array An array of instances of the calling class
+   * Given a query, return a new array where every element is an object
+   * instantiated from the ones returned by the query.
+   * @param string $query An array of sets of attributes.
+   * @return array An array of instances of the calling class.
    */
   protected static function new_instances_from_query($query) {
     $results = Db::get_rows($query);

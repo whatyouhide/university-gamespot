@@ -10,3 +10,4 @@ README.md
 .rsync-excludes
 .sass-cache
 .agignore
+report.md

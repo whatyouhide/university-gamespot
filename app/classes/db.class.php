@@ -117,6 +117,8 @@ class Db {
 
   /**
    * Throw an an exception if there has been a connection error.
+   * @param string $query The query that generated the error, defaults to null
+   * (not a query error).
    * @throws Exception
    */
   private static function throw_exception_if_error($query = null) {
