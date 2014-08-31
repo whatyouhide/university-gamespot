@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-31 16:02:02 +0000
+# Generation Time: 2014-08-31 17:04:54 +0000
 # ************************************************************
 
 
@@ -142,6 +142,31 @@ CREATE TABLE `consoles_games` (
   `console_id` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+# Dump of table errors
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `errors`;
+
+CREATE TABLE `errors` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `message` text NOT NULL,
+  `happened_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `errors` WRITE;
+/*!40000 ALTER TABLE `errors` DISABLE KEYS */;
+
+INSERT INTO `errors` (`id`, `message`, `happened_at`)
+VALUES
+	(1,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/c0048680948c34502569b43f15461084cc250e32.file.index.tpl.php','2014-08-31 18:53:00'),
+	(2,'Uncaught  --> Smarty Compiler: Syntax error in template \"/Users/whatyouhide/Sites/gamespot/app/views/backend/index.tpl\"  on line 12 \"{if}\" missing if condition <-- \n  thrown','2014-08-31 18:53:45'),
+	(3,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/fdc9d9744e0b87c43428b6557e3164b806f4df30.file.index.tpl.php','2014-08-31 19:00:01');
+
+/*!40000 ALTER TABLE `errors` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table game_categories
@@ -464,6 +489,39 @@ VALUES
 	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table visits
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `visits`;
+
+CREATE TABLE `visits` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `ip` varchar(20) NOT NULL DEFAULT '',
+  `visited_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `count` bigint(20) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `visits` WRITE;
+/*!40000 ALTER TABLE `visits` DISABLE KEYS */;
+
+INSERT INTO `visits` (`id`, `url`, `ip`, `visited_at`, `count`)
+VALUES
+	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',4),
+	(6,'/backend/ads','::1','2014-08-31 18:21:48',2),
+	(7,'/backend/groups','::1','2014-08-31 18:26:06',3),
+	(8,'/backend','::1','2014-08-31 18:33:57',11),
+	(9,'/backend/accessories','::1','2014-08-31 18:50:47',9),
+	(10,'/backend/posts','::1','2014-08-31 18:52:59',1),
+	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',1),
+	(12,'/backend/users','::1','2014-08-31 18:53:02',1),
+	(13,'/backend/errors','::1','2014-08-31 19:00:01',3);
+
+/*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

@@ -43,6 +43,10 @@
     <li>
       <a href="{url to='/backend/support_tickets'}">Support</a>
     </li>
+
+    <li>
+      <a href="{url to='/backend/errors'}">Errors</a>
+    </li>
   </ul>
 
   <ul class="user-actions">

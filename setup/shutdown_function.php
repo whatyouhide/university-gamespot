@@ -18,6 +18,10 @@ function error_handler() {
 
   $error = error_get_last();
 
+  if ($error) {
+    \Models\Error::create(['message' => $error['message']]);
+  }
+
   if ($error && in_array($error['type'], $fatal_errors)) {
     internal_server_error();
   }
