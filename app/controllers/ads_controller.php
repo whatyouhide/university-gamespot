@@ -230,9 +230,13 @@ class AdsController extends Controller {
    * @param array $ads
    */
   private function set_game_and_acccessory_ads($ads) {
-    $separated = Ad::separate_game_and_accessory($ads);
-    $this->game_ads = $separated['game_ads'];
-    $this->accessory_ads = $separated['accessory_ads'];
+    $separated = array_group($ads, function ($el) { return $el->type; });
+
+    $separated['game'] = isset($separated['game']) ? $separated['game'] : array();
+    $separated['accessory'] = isset($separated['accessory']) ? $separated['accessory'] : array();
+
+    $this->game_ads = $separated['game'];
+    $this->accessory_ads = $separated['accessory'];
   }
 
   /**

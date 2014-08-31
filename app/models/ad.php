@@ -34,58 +34,6 @@ class Ad extends Model {
   }
 
   /**
-   * {@inheritdoc}
-   * Also update the join table if necessary.
-   */
-  public function update($attributes) {
-    // The name of the foreign key column, like `game_id`.
-    $foreign_key_column = $this->type . '_id';
-
-    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
-    // $attributes "as is" to the `create` function.
-    if (isset($attributes[$foreign_key_column])) {
-      $foreign_id = Db::escape($attributes[$foreign_key_column]);
-      unset($attributes[$foreign_key_column]);
-    }
-
-    // Create the new ad.
-    parent::update($attributes);
-
-    // Update the join table if there's a foreign_key.
-    if (isset($foreign_id)) { $this->update_join_table($foreign_id); }
-
-    return $this;
-  }
-
-  /**
-   * Update the join table for the association with Game or Accessory.
-   * @param int|string $foreign_id The id of the game/accessory associated with
-   * this ad.
-   */
-  public function update_join_table($foreign_id) {
-    $type = $this->type;
-
-    if ($type == 'game') {
-      $join_table = 'games_ads';
-      $foreign_key_column = 'game_id';
-      $model = 'Models\Game';
-    } else if ($type == 'accessory') {
-      $join_table = 'accessories_ads';
-      $foreign_key_column = 'accessory_id';
-      $model = 'Models\Accessory';
-    }
-
-    $query = "INSERT INTO `$join_table`(`ad_id`, `$foreign_key_column`)"
-      . " VALUES ('{$this->id}', '$foreign_id')"
-      . " ON DUPLICATE KEY"
-      . " UPDATE `ad_id`=VALUES(ad_id), `$foreign_key_column`=VALUES($foreign_key_column)";
-
-    Db::query($query);
-
-    $this->$type = $model::find($foreign_id);
-  }
-
-  /**
    * Add an image to this ad.
    * @param Upload $image_upload The image to add to this ad.
    */
@@ -157,50 +105,45 @@ class Ad extends Model {
   public static function filter_with_params($params) {
     $params = self::sanitize_attributes($params);
 
-    $where_clauses = array();
+    $conditions = array();
 
     // Filter by console.
     if (!empty($params['console'])) {
-      $where_clauses[] = "`console_id` = '{$params['console']}'";
+      $conditions[] = "`console_id` = '{$params['console']}'";
     }
 
     // Filter by game or accessory.
     if (!empty($params['type'])) {
-      $where_clauses[] = "`type` = '{$params['type']}'";
+      $conditions[] = "`type` = '{$params['type']}'";
+
+      if ($params['type'] == 'game' && isset($params['game']) && !empty($params['game'])) {
+        $conditions[] = "`game_id` = '{$params['game']}'";
+      } else if ($params['type'] == 'accessory' && isset($params['accessory']) && !empty($params['accessory'])) {
+        $conditions[] = "`accessory_id` = '{$params['accessory']}'";
+      }
     }
 
     // Filter by city.
     if (!empty($params['city'])) {
-      $where_clauses[] = "`city` = '{$params['city']}'";
+      $conditions[] = "`city` = '{$params['city']}'";
     }
 
     // Filter by publication date.
-    if ($params['last-7-days'] == 'true') {
-      $where_clauses[] = "`published_at` >= CURDATE() - INTERVAL 7 DAY";
+    if (isset($params['last-7-days']) && $params['last-7-days'] == 'true') {
+      $conditions[] = "`published_at` >= CURDATE() - INTERVAL 7 DAY";
     }
 
     // Filter by price.
     $max_price = intval($params['max-price']);
     if ($max_price > 0) {
-      $where_clauses[] = "`price` <= '$max_price'";
+      $conditions[] = "`price` <= '$max_price'";
     }
 
     // Build the query.
     $t = static::$table_name;
-    $q = "SELECT * FROM `$t`";
+    $q = "SELECT * FROM `$t` " . static::where_clause_from_conditions($conditions);
 
-    // Build the WHERE part of the query if there are clauses.
-    if (!empty($where_clauses)) {
-      $where = implode(' AND ', $where_clauses);
-      $q .= " WHERE $where";
-    }
-
-    $result = self::new_instances_from_query($q);
-
-    // Filter this mofo with code instead of SQL in order to avoid JOINs.
-    // TODO filter based on self::associated_with_[game|accessory]
-
-    return $result;
+    return self::new_instances_from_query($q);
   }
 
   /**
@@ -218,14 +161,7 @@ class Ad extends Model {
    * @return array
    */
   public static function associated_with_game($game_id) {
-    $t = static::$table_name;
-    $q = "SELECT `$t`.*"
-      . " FROM `$t`"
-      . " INNER JOIN `games_ads`"
-      . " ON `games_ads`.`ad_id` = `$t`.`id`"
-      . " WHERE `games_ads`.`game_id` = '$game_id'";
-
-    return self::new_instances_from_query($q);
+    return self::where(['game_id' => $game_id]);
   }
 
   /**
@@ -234,60 +170,7 @@ class Ad extends Model {
    * @return array
    */
   public static function associated_with_accessory($accessory_id) {
-    $t = static::$table_name;
-    $q = "SELECT `$t`.*"
-      . " FROM `$t`"
-      . " INNER JOIN `accessories_ads`"
-      . " ON `accessories_ads`.`ad_id` = `$t`.`id`"
-      . " WHERE `accessories_ads`.`accessory_id` = '$accessory_id'";
-
-    return self::new_instances_from_query($q);
-  }
-
-  /**
-   * Separate the given array of ads in a two-elements array with game ads and
-   * accessory ads.
-   * @param array $ads An array of ads.
-   * @return array A two-element array with keys 'game_ads' and 'accessory_ads'.
-   */
-  public static function separate_game_and_accessory($ads) {
-    $result = ['game_ads' => array(), 'accessory_ads' => array()];
-
-    foreach ($ads as $ad) {
-      if ($ad->type == 'game') {
-        array_push($result['game_ads'], $ad);
-      } else if ($ad->type == 'accessory') {
-        array_push($result['accessory_ads'], $ad);
-      }
-    }
-
-    return $result;
-  }
-
-  /**
-   * {@inheritdoc}
-   * Also insert a row in the `games_ads` or `accessories_ads` tables.
-   */
-  public static function create($attributes, $validate = true) {
-    $type = $attributes['type'];
-
-    // The name of the foreign key column, like `game_id`.
-    $foreign_key_column = $type . '_id';
-
-    // Remove the 'game_id' or 'accessory_id' member so that we can pass the
-    // $attributes "as is" to the `create` function.
-    if (isset($attributes[$foreign_key_column])) {
-      $foreign_id = Db::escape($attributes[$foreign_key_column]);
-      unset($attributes[$foreign_key_column]);
-    }
-
-    // Create the new ad.
-    $new_ad = parent::create($attributes);
-
-    // Update the join table if there's a foreign_key.
-    if ($foreign_id) { $new_ad->update_join_table($foreign_id); }
-
-    return $new_ad;
+    return self::where(['accessory_id' => $accessory_id]);
   }
 
   /**
@@ -310,13 +193,7 @@ class Ad extends Model {
    * @return Game The game associated with this ad.
    */
   private function associated_game() {
-    $q = "SELECT `games`.* "
-      . "FROM `games` "
-      . "INNER JOIN `games_ads` "
-      . "ON `games`.`id` = `games_ads`.`game_id` "
-      . "WHERE `games_ads`.`ad_id` = '{$this->id}'";
-
-    return self::instantiate_model_from_query('Game', $q);
+    return Game::find($this->game_id);
   }
 
   /**
@@ -324,13 +201,7 @@ class Ad extends Model {
    * @return Accessory The accessory associated with this ad.
    */
   private function associated_accessory() {
-    $q = "SELECT `accessories`.* "
-      . "FROM `accessories` "
-      . "INNER JOIN `accessories_ads` "
-      . "ON `accessories`.`id` = `accessories_ads`.`accessory_id` "
-      . "WHERE `accessories_ads`.`ad_id` = '{$this->id}'";
-
-    return self::instantiate_model_from_query('Accessory', $q);
+    return Accessory::find($this->accessory_id);
   }
 
   /**

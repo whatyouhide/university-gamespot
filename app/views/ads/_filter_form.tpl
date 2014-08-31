@@ -26,7 +26,7 @@
   </div>
 
   <div class="type">
-    <label for="type">Ad type:</label>
+    <div>Ad type</div>
 
     <div class="fields-row">
       <label>
@@ -67,7 +67,7 @@
     <div
       class="range-slider"
       data-slider="{$starting_values['max-price']}"
-      data-options="display_selector: #slider-output; start: 0; end: 40;">
+      data-options="display_selector: #slider-output; start: 0; end: 200;">
       <span class="range-slider-handle" role="slider" tabindex="0"></span>
       <span class="range-slider-active-segment"></span>
       <input name="max-price" type="hidden">
@@ -77,4 +77,6 @@
   </div>
 
   <input type="submit" value="Filter">
+
+  <a href="{url to='/ads'}">Clear all filters</a>
 </form>

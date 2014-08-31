@@ -69,10 +69,10 @@ class UsersController extends Controller {
    */
   public function profile() {
     $ads = Ad::where(['author_id' => $this->current_user->id]);
-    $ads = Ad::separate_game_and_accessory($ads);
+    $ads = array_group($ads, function ($el) { return $el->type; });
 
-    $this->game_ads = $ads['game_ads'];
-    $this->accessory_ads = $ads['accessory_ads'];
+    $this->game_ads = $ads['game'];
+    $this->accessory_ads = $ads['accessory'];
   }
 
   /**

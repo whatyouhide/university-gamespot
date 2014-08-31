@@ -96,6 +96,7 @@ class Game extends Model {
    * Get the games with most ads.
    * @param int $limit How many games to retrieve.
    * @return array The games with most ads.
+   * @todo Fix the query since the tables used in the query don't exist anymore.
    */
   public static function with_most_ads($limit = 5) {
     $t = static::$table_name;

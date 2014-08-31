@@ -5,6 +5,10 @@
 {include 'ads/_filter_form.tpl'}
 
 <div class="ads-listing">
+  {if empty($game_ads) && empty($accessory_ads)}
+    <div class="no-results">No results.</div>
+  {/if}
+
   {foreach from=$game_ads item=ad}
     <article>
       <h1>
