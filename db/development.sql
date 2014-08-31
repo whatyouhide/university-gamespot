@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-31 14:18:28 +0000
+# Generation Time: 2014-08-31 16:02:02 +0000
 # ************************************************************
 
 
@@ -305,6 +305,35 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table support_tickets
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `support_tickets`;
+
+CREATE TABLE `support_tickets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `content` text,
+  `topic` varchar(255) DEFAULT NULL,
+  `author_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `support_ticket_belongs_to_author` (`author_id`),
+  CONSTRAINT `support_ticket_belongs_to_author` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `support_tickets` WRITE;
+/*!40000 ALTER TABLE `support_tickets` DISABLE KEYS */;
+
+INSERT INTO `support_tickets` (`id`, `title`, `closed`, `content`, `topic`, `author_id`)
+VALUES
+	(1,'Test ticket',0,'This is a support ticket. It works, doesn\'t it?','help',1),
+	(2,'Another ticket, you suck.',0,'Vestibulum a condimentum nisl. Pellentesque ac feugiat quam, et ullamcorper metus. Fusce sed mauris dapibus, vestibulum ex vel, ornare erat. Fusce sed consectetur urna. Aenean tincidunt nunc a pellentesque elementum. Donec finibus ex ac nulla tempus, eu dictum lorem facilisis. Praesent pellentesque lectus id erat tristique, id elementum est imperdiet. Ut ut placerat ante. Duis maximus arcu quis eros dignissim, vitae sagittis odio scelerisque. Maecenas malesuada, sem ac malesuada faucibus, turpis turpis posuere dui, in iaculis arcu eros et tortor. Integer eget blandit metus. Nam accumsan volutpat pellentesque. Nunc tempor ex id dui ullamcorper placerat. Curabitur semper augue sed viverra lobortis. Sed pellentesque turpis vel viverra scelerisque. Aliquam erat volutpat.\r\n\r\nVivamus ac purus aliquet, imperdiet leo quis, pharetra ipsum. Etiam urna ex, hendrerit sit amet turpis non, accumsan vestibulum urna. Aliquam tempus sem consectetur pellentesque egestas. Maecenas convallis, nibh nec egestas lobortis, dui neque hendrerit mi, id finibus ex sapien vel ligula. Pellentesque cursus consequat leo vitae vestibulum. Nunc risus eros, vehicula non risus in, imperdiet mattis ante. Pellentesque elit risus, hendrerit in erat at, pretium ullamcorper augue. Sed ante nibh, pulvinar eu nisl vel, congue tincidunt dui. Phasellus accumsan turpis a tortor condimentum sollicitudin. Nam ut tincidunt sem, in elementum quam. Sed fringilla sit amet nisl non pharetra. Cras dui dolor, faucibus quis malesuada ut, interdum ut ipsum. Quisque nec ipsum dolor. Nullam a orci rhoncus, posuere ligula id, eleifend mauris. Vestibulum scelerisque placerat nulla in tincidunt.\r\n\r\nDonec sed gravida purus, vitae porta orci. Praesent pulvinar magna ante, quis tempus massa rhoncus et. Cras congue lorem lectus. Sed euismod ac sem nec egestas. Nullam ac eros vel sapien auctor sollicitudin vel eget odio. Suspendisse fermentum vestibulum mattis. Duis sit amet dolor commodo, ultricies enim eget, accumsan nisi. Morbi blandit nulla vel ex tincidunt maximus. Aenean dictum ex eget nisl rhoncus vestibulum.','complain',10);
+
+/*!40000 ALTER TABLE `support_tickets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table tags
 # ------------------------------------------------------------
 
@@ -429,10 +458,10 @@ INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name
 VALUES
 	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,0,NULL,1,NULL,NULL),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,NULL,1,NULL,5),
 	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,NULL,1,NULL,NULL);
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
