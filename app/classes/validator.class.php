@@ -81,6 +81,22 @@ class Validator {
   }
 
   /**
+   * Add an error message if the value at $key is not included in $array.
+   * @param string $key
+   * @param array $array
+   * @param string $msg
+   */
+  public function must_be_included_in($key, $array, $msg = null) {
+    if (!$this->is_set($key)) { return; }
+    if (is_null($msg)) {
+      $msg = ucfirst($key) . " isn't included in [" . implode(', ', $array) . ']';
+    }
+
+    $included = in_array($this->attrs[$key], $array);
+    $this->add_message_if(!$included, $msg);
+  }
+
+  /**
    * Return a list of all the error messages.
    * @return array
    */
