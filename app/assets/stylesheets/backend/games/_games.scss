@@ -1,0 +1,10 @@
+.backend_games.edit {
+  img {
+    max-height: 400px;
+  }
+
+  button[data-hijack] {
+    background: $alert-color;
+    padding: 7px;
+  }
+}
