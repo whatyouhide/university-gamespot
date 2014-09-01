@@ -26,6 +26,7 @@
   <section class="description">{$ad->description}</section>
 
   <section class="images">
+    <h4>Other images</h4>
     {foreach from=$ad->remaining_images() item=image}
       {image_path image=$image}
     {/foreach}

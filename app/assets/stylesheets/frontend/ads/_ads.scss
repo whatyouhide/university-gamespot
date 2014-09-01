@@ -88,6 +88,17 @@
       margin-bottom: 40px;
     }
 
+    .images {
+      h4 { margin-top: 30px; }
+      img {
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        max-height: 450px;
+        max-width: 100%;
+      }
+    }
+
     .price-and-city {
       margin-bottom: 25px;
       .price, .city {
