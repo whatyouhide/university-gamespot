@@ -14,6 +14,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{url to='/favicon.ico'}" >
 
   <title>{block name=title}Gamespot{/block}</title>
 
