@@ -20,6 +20,14 @@
   <section class="other">
     {foreach from=$accessories item=accessory}
       <article>
+        <a
+          href="{url to='/accessories/subscribe' id=$accessory->id}"
+          data-tooltip
+          aria-haspopup="true"
+          title="Subscribe to get notifications when ads about this accessory are published"
+          class="has-tip subscribe">
+          Subscribe
+        </a>
         <h1>
           <a href="{url to='/ads/by_accessory' id=$accessory->id}">
             {$accessory->name}

@@ -20,6 +20,14 @@
   <section class="other">
     {foreach from=$games item=game}
       <article>
+        <a
+          href="{url to='/games/subscribe' id=$game->id}"
+          data-tooltip
+          aria-haspopup="true"
+          title="Subscribe to get notifications when ads about this game are published"
+          class="has-tip subscribe">
+          Subscribe
+        </a>
         <h1>
           <a href="{url to='/ads/by_game' id=$game->id}">
             {$game->name}

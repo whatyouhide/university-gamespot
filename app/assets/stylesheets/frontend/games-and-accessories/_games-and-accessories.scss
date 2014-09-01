@@ -39,6 +39,7 @@
       height: 700px;
       width: 49%;
       float: left;
+      position: relative;
       margin-bottom: 20px;
       padding: 20px;
       &:nth-child(2n + 1) { margin-right: 1%; }
@@ -49,6 +50,15 @@
         @include center;
         max-height: 300px;
         max-width: 100%;
+      }
+
+      .subscribe {
+        @include absolute-at($top: 92px, $right: 20px);
+        @include padding-vertical(4px);
+        @include padding-horizontal(5px);
+        color: $white;
+        background: $primary-color;
+        border: 0;
       }
 
       .description {

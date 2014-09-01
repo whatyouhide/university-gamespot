@@ -39,11 +39,21 @@ class Mailer {
    */
   public function send($pars) {
     $this->mail->From = $pars['from'];
-    $this->mail->FromName = $pars['from_name'];
-    $this->mail->addAddress($pars['to']);
-    $this->mail->addReplyTo($pars['from'], $pars['from_name']);
     $this->mail->Subject = $pars['subject'];
     $this->mail->Body = $pars['body'];
+
+    if (isset($pars['from_name'])) {
+      $this->mail->FromName = $pars['from_name'];
+      $this->mail->addReplyTo($pars['from'], $pars['from_name']);
+    }
+
+    if (is_array($pars['to'])) {
+      foreach ($pars['to'] as $address) {
+        $this->mail->addAddress($address);
+      }
+    } else {
+      $this->mail->addAddress($pars['to']);
+    }
 
     if (isset($pars['is_html'])) {
       $this->mail->isHTML(true);

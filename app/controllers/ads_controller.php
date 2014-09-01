@@ -10,6 +10,8 @@ use Models\Ad;
 use Models\Console;
 use Models\Game;
 use Models\Upload;
+use Models\GameNotification;
+use Models\AccessoryNotification;
 
 /**
  * A controller to manage ads on the frontend.
@@ -119,6 +121,8 @@ class AdsController extends Controller {
       'published' => $this->params['published']
     ]);
 
+    $this->notify_subscribed_users($ad);
+
     redirect(
       '/ads/edit',
       ['notice' => 'Ad updated successfully'],
@@ -221,6 +225,41 @@ class AdsController extends Controller {
       'accessory' => isset($this->params['accessory']) ? $this->params['accessory'] : '',
       'max-price' => isset($this->params['max-price']) ? $this->params['max-price'] : '0'
     ];
+  }
+
+  /**
+   * Notify subscribed users that an ad about the stuff they're interested in
+   * has been created/updates.
+   * @param Ad $ad
+   */
+  private function notify_subscribed_users($ad) {
+    if ($ad->type == 'game') {
+      $emails = GameNotification::emails_of_users_subscribed_to($ad->game);
+      $name = $ad->game->name;
+    } else {
+      $emails = AccessoryNotification::emails_of_users_subscribed_to($ad->accessory);
+      $name = $ad->accessory->name;
+    }
+
+
+    $message = $this->render_as_string('mails/ad_notification', [
+      'ad' => $ad,
+      'name' => $name
+    ]);
+
+    if (!$ad->is_draft()) {
+      $this->mailer->send([
+        'from' => 'notifications@gamespot.com',
+        'to' => $emails,
+        'subject' => 'Gamespot notification',
+        'body' => $message,
+        'is_html' => true
+      ]);
+
+      if (!$this->mailer->sent_successfully()) {
+        redirect('/', ['error' => $this->mailer->error_infos()]);
+      }
+    }
   }
 
   /**

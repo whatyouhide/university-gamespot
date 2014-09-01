@@ -216,6 +216,18 @@ class Model {
   }
 
   /**
+   * Find a set of records by their ids.
+   * @param array $ids
+   * @return array
+   */
+  public static function find_multiple($ids) {
+    $t = static::$table_name;
+    $ids = '(' . implode(', ', $ids) . ')';
+    $q = "SELECT * FROM `$t` WHERE `id` IN $ids";
+    return static::new_instances_from_query($q);
+  }
+
+  /**
    * Return the number of records that are in the db for the calling model.
    * @return int
    */

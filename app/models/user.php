@@ -194,6 +194,19 @@ class User extends Model {
   }
 
   /**
+   * Return an array of emails of users whose ids are in $ids.
+   * This is performance aware and executes only one query.
+   * @param array $ids
+   * @return array
+   */
+  public static function emails_of_ids($ids) {
+    $t = static::$table_name;
+    $ids = '(' . implode(', ', $ids) . ')';
+    $q = "SELECT `email` FROM `$t` WHERE `id` IN $ids";
+    return Db::array_from_one_column_query($q);
+  }
+
+  /**
    * Return the number of online users.
    * @return int
    */
