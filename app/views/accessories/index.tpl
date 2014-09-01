@@ -16,7 +16,6 @@
 
   {foreach from=$accessories item=accessory}
     <article>
-      <h1>{$accessory->name}</h1>
       <h1>
         <a href="{url to='/ads/by_accessory' id=$accessory->id}">
           {$accessory->name}

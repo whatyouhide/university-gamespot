@@ -21,6 +21,7 @@
           {$game->name}
         </a>
       </h1>
+      <div class="category">{$game->game_category->name}</div>
       {image_path image=$game->cover_image}
       <section class="description">{$game->description}</section>
     </article>
