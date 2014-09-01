@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-09-01 00:15:51 +0000
+# Generation Time: 2014-09-01 11:16:31 +0000
 # ************************************************************
 
 
@@ -31,6 +31,7 @@ CREATE TABLE `accessories` (
   `release_date` date DEFAULT NULL,
   `producer` varchar(200) DEFAULT NULL,
   `description` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `console_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accessory_belongs_to_console` (`console_id`),
@@ -40,11 +41,11 @@ CREATE TABLE `accessories` (
 LOCK TABLES `accessories` WRITE;
 /*!40000 ALTER TABLE `accessories` DISABLE KEYS */;
 
-INSERT INTO `accessories` (`id`, `name`, `release_date`, `producer`, `description`, `console_id`)
+INSERT INTO `accessories` (`id`, `name`, `release_date`, `producer`, `description`, `created_at`, `console_id`)
 VALUES
-	(1,'PlayStation Camera','2013-11-11','Sony','Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce in mauris orci. In imperdiet aliquet gravida. Quisque suscipit egestas convallis. Quisque mattis nisi at urna rhoncus faucibus. Ut sed sapien in libero porta gravida et eget risus. Curabitur blandit interdum lobortis. Aenean vitae mattis libero, ut pellentesque ligula. Aenean urna velit, semper eu sollicitudin a, fermentum a libero. Praesent pharetra volutpat justo, non iaculis mi porttitor mattis. Donec vel nulla orci. Suspendisse blandit orci arcu, eu placerat augue ultrices nec. Curabitur lectus metus, cursus nec condimentum eu, bibendum quis urna.',1),
-	(2,'PlayStation Eye','2008-08-01','Sony','Integer in volutpat massa. Aenean eleifend felis ligula, varius interdum elit ultricies vitae. Pellentesque eget elementum mauris. Aenean elementum mauris vitae orci eleifend, luctus rutrum leo tincidunt. Fusce consectetur massa nec elementum ultrices. Nam varius adipiscing tellus, ut hendrerit nunc eleifend non. Nulla in enim at tortor congue aliquam. Ut mi felis, euismod quis nunc eleifend, tristique pellentesque orci. Cras dignissim quis nulla quis ultricies. Nam in elit venenatis, aliquam leo at, venenatis velit. In tristique velit sit amet adipiscing ultricies. Fusce et posuere felis. Quisque at nibh libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus non egestas libero. Maecenas auctor, enim ut tempus iaculis, ante elit dictum metus, sit amet tempor neque dui nec urna.',2),
-	(3,'Xbox Kinect','2009-04-22','Microsoft','Donec quis pharetra tellus. Suspendisse molestie massa eu hendrerit laoreet. Proin est tellus, sollicitudin eu tincidunt at, egestas adipiscing odio. Etiam nec dolor placerat, tincidunt enim eu, vehicula lacus. Nulla sit amet luctus velit, ut posuere sapien. Nam lacinia lacus ac enim hendrerit, quis condimentum lacus faucibus. Suspendisse id lectus ac risus porttitor faucibus at a tellus. Curabitur imperdiet enim nec fringilla malesuada. Pellentesque congue accumsan neque.',3);
+	(1,'PlayStation Camera','2013-11-11','Sony','Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce in mauris orci. In imperdiet aliquet gravida. Quisque suscipit egestas convallis. Quisque mattis nisi at urna rhoncus faucibus. Ut sed sapien in libero porta gravida et eget risus. Curabitur blandit interdum lobortis. Aenean vitae mattis libero, ut pellentesque ligula. Aenean urna velit, semper eu sollicitudin a, fermentum a libero. Praesent pharetra volutpat justo, non iaculis mi porttitor mattis. Donec vel nulla orci. Suspendisse blandit orci arcu, eu placerat augue ultrices nec. Curabitur lectus metus, cursus nec condimentum eu, bibendum quis urna.','0000-00-00 00:00:00',1),
+	(2,'PlayStation Eye','2008-08-01','Sony','Integer in volutpat massa. Aenean eleifend felis ligula, varius interdum elit ultricies vitae. Pellentesque eget elementum mauris. Aenean elementum mauris vitae orci eleifend, luctus rutrum leo tincidunt. Fusce consectetur massa nec elementum ultrices. Nam varius adipiscing tellus, ut hendrerit nunc eleifend non. Nulla in enim at tortor congue aliquam. Ut mi felis, euismod quis nunc eleifend, tristique pellentesque orci. Cras dignissim quis nulla quis ultricies. Nam in elit venenatis, aliquam leo at, venenatis velit. In tristique velit sit amet adipiscing ultricies. Fusce et posuere felis. Quisque at nibh libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus non egestas libero. Maecenas auctor, enim ut tempus iaculis, ante elit dictum metus, sit amet tempor neque dui nec urna.','0000-00-00 00:00:00',2),
+	(3,'Xbox Kinect','2009-04-22','Microsoft','Donec quis pharetra tellus. Suspendisse molestie massa eu hendrerit laoreet. Proin est tellus, sollicitudin eu tincidunt at, egestas adipiscing odio. Etiam nec dolor placerat, tincidunt enim eu, vehicula lacus. Nulla sit amet luctus velit, ut posuere sapien. Nam lacinia lacus ac enim hendrerit, quis condimentum lacus faucibus. Suspendisse id lectus ac risus porttitor faucibus at a tellus. Curabitur imperdiet enim nec fringilla malesuada. Pellentesque congue accumsan neque.','0000-00-00 00:00:00',3);
 
 /*!40000 ALTER TABLE `accessories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -87,7 +88,8 @@ VALUES
 	(8,'2014-08-31 15:55:59',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara','game',1,1,4,2,NULL),
 	(22,'2014-08-31 15:56:00',33,'r2r23r21','r2r','accessory',1,4,1,NULL,1),
 	(23,'2014-08-31 15:56:00',33,'Hello description','Rome','game',1,4,1,1,NULL),
-	(27,'2014-09-01 02:00:37',34.9,'Nunc sem magna, ornare non mi vitae, pellentesque condimentum lectus. Donec accumsan mattis interdum. Fusce quis dictum diam, nec pharetra felis. In arcu odio, consectetur eget eleifend eget, posuere vel turpis. Maecenas bibendum urna eu felis sollicitudin, id ultricies massa interdum. Nulla eget scelerisque tortor. Suspendisse posuere nisl eget leo congue aliquet. Integer euismod nibh eget ligula hendrerit eleifend id sit amet nisl. Morbi vitae iaculis velit, sit amet fringilla dolor. Ut sed nisi tortor. Vestibulum quis arcu sed augue ornare rhoncus. Nam enim lacus, hendrerit quis ex eget, euismod dictum nibh. Proin dui tortor, pellentesque in libero et, consequat elementum neque. Suspendisse consequat dui non massa lacinia imperdiet.','L\'Aquila','game',1,15,2,6,NULL);
+	(27,'2014-09-01 02:00:37',34.9,'Nunc sem magna, ornare non mi vitae, pellentesque condimentum lectus. Donec accumsan mattis interdum. Fusce quis dictum diam, nec pharetra felis. In arcu odio, consectetur eget eleifend eget, posuere vel turpis. Maecenas bibendum urna eu felis sollicitudin, id ultricies massa interdum. Nulla eget scelerisque tortor. Suspendisse posuere nisl eget leo congue aliquet. Integer euismod nibh eget ligula hendrerit eleifend id sit amet nisl. Morbi vitae iaculis velit, sit amet fringilla dolor. Ut sed nisi tortor. Vestibulum quis arcu sed augue ornare rhoncus. Nam enim lacus, hendrerit quis ex eget, euismod dictum nibh. Proin dui tortor, pellentesque in libero et, consequat elementum neque. Suspendisse consequat dui non massa lacinia imperdiet.','L\'Aquila','game',1,15,2,6,NULL),
+	(28,'2014-09-01 13:13:04',99.9,'Sed ornare nunc ut massa hendrerit, nec pulvinar nibh sagittis. Cras pulvinar enim id nulla egestas viverra. Duis luctus metus quis ligula imperdiet, in tristique urna porta. Phasellus et ante vitae dui pulvinar faucibus. Ut eleifend nulla ut nibh ultrices feugiat. Sed viverra sit amet dolor eu semper. Curabitur et interdum ligula. Integer fringilla auctor turpis. Proin viverra tristique mi, ut maximus sapien imperdiet sit amet. Sed laoreet consequat est, non semper lectus placerat eget. In at leo eu leo tincidunt mattis. Praesent finibus urna eu velit efficitur eleifend non vitae lectus. Vestibulum varius lacinia pellentesque. Vestibulum euismod quam ultrices, eleifend libero vitae, lacinia lacus. Nulla ornare porta lorem quis molestie. Praesent blandit libero nisl, vel tincidunt risus viverra rutrum.','Los Angeles','accessory',1,15,1,NULL,1);
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -181,7 +183,95 @@ VALUES
 	(17,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 02:00:31'),
 	(18,'Undefined index: accessory','2014-09-01 02:00:39'),
 	(19,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/2ae02da038d59bb04be0c498cfeef024e5db68ee.file.show.tpl.php','2014-09-01 02:01:26'),
-	(20,'Call to undefined method Common\\Mailer::error_info()','2014-09-01 02:03:54');
+	(20,'Call to undefined method Common\\Mailer::error_info()','2014-09-01 02:03:54'),
+	(21,'Undefined index: accessory','2014-09-01 02:23:37'),
+	(22,'Uncaught  --> Smarty Compiler: Syntax error in template \"/Users/whatyouhide/Sites/gamespot/app/views/index.tpl\"  on line 5 \"{image_path src=logo.png hoverable=true}\"  - Unexpected \".\", expected one of: \"}\" <-- \n  thrown','2014-09-01 09:21:14'),
+	(23,'Trying to get property of non-object','2014-09-01 09:32:24'),
+	(24,'Trying to get property of non-object','2014-09-01 09:32:30'),
+	(25,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'\' in \'order clause\'\nQuery: SELECT * FROM `ads` ORDER BY `` DESC LIMIT 1\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT * FROM `...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT * FROM `...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT * FROM `...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(238): Models\\Model::new_instances_from_query(\'SELECT * FROM `...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/application_controller.php(21): Models\\Model::lastest_by_attribute(\'published_at\')\n#5 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Controllers\\ApplicationController->index()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/router','2014-09-01 09:32:56'),
+	(26,'Trying to get property of non-object','2014-09-01 09:33:14'),
+	(27,'Call to undefined method Models\\Ad::lastest_by_attribute()','2014-09-01 09:33:50'),
+	(28,'Trying to get property of non-object','2014-09-01 09:34:01'),
+	(29,'Trying to get property of non-object','2014-09-01 09:34:24'),
+	(30,'Trying to get property of non-object','2014-09-01 09:34:56'),
+	(31,'Trying to get property of non-object','2014-09-01 10:30:43'),
+	(32,'Trying to get property of non-object','2014-09-01 10:31:18'),
+	(33,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/b148867a3b093f9353de21917a7427d8cba1008e.file.index.tpl.php','2014-09-01 10:35:07'),
+	(34,'Trying to get property of non-object','2014-09-01 10:40:29'),
+	(35,'Trying to get property of non-object','2014-09-01 10:40:40'),
+	(36,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/902e1dacd39365737347fbe2feb4a2d0f34f3edd.file.edit.tpl.php','2014-09-01 11:15:30'),
+	(37,'Undefined index: accessory','2014-09-01 12:09:47'),
+	(38,'Undefined index: accessory','2014-09-01 12:41:22'),
+	(39,'Undefined index: accessory','2014-09-01 12:42:54'),
+	(40,'Undefined index: accessory','2014-09-01 12:43:13'),
+	(41,'Uncaught exception \'Exception\' with message \'Error with the database: Table \'gamespot.games_ads\' doesn\'t exist\nQuery: SELECT\n      `ads`.`id` AS `ad_id`, `games`.*,\n      COUNT(*) `number_of_ads`\n      FROM `games_ads`\n      JOIN `games` ON `games_ads`.`game_id` = `games`.`id`\n      JOIN `ads` ON `games_ads`.`ad_id` = `ads`.`id`\n      GROUP BY `games`.`name`\n      ORDER BY `number_of_ads` DESC\n      LIMIT 5\n    \' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT?      `a...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT?      `a...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT?      `a...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(113): Models\\Model::new_instances_from_query(\'SELECT?      `a...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_c','2014-09-01 12:43:45'),
+	(42,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/3d45c270fe4e4986585d5e7d0afd11e5b20c96e3.file.index.tpl.php','2014-09-01 12:43:49'),
+	(43,'Undefined index: accessory','2014-09-01 12:44:00'),
+	(44,'Undefined index: accessory','2014-09-01 12:44:18'),
+	(45,'Undefined index: accessory','2014-09-01 12:44:21'),
+	(46,'Undefined index: accessory','2014-09-01 12:45:09'),
+	(47,'Undefined index: accessory','2014-09-01 12:45:40'),
+	(48,'Undefined index: accessory','2014-09-01 12:45:41'),
+	(49,'Undefined index: accessory','2014-09-01 12:45:53'),
+	(50,'Undefined index: accessory','2014-09-01 12:45:54'),
+	(51,'Undefined index: accessory','2014-09-01 12:45:55'),
+	(52,'Undefined index: accessory','2014-09-01 12:45:56'),
+	(53,'Undefined index: accessory','2014-09-01 12:46:01'),
+	(54,'Undefined index: accessory','2014-09-01 12:46:02'),
+	(55,'Undefined index: accessory','2014-09-01 12:46:32'),
+	(56,'Undefined index: accessory','2014-09-01 12:46:33'),
+	(57,'Undefined index: accessory','2014-09-01 12:47:19'),
+	(58,'Undefined index: accessory','2014-09-01 12:47:20'),
+	(59,'Undefined index: accessory','2014-09-01 12:48:01'),
+	(60,'Undefined index: accessory','2014-09-01 12:48:01'),
+	(61,'Undefined index: accessory','2014-09-01 12:48:03'),
+	(62,'Undefined index: accessory','2014-09-01 12:48:10'),
+	(63,'Undefined index: accessory','2014-09-01 12:48:51'),
+	(64,'Undefined index: accessory','2014-09-01 12:48:52'),
+	(65,'Undefined index: accessory','2014-09-01 12:49:05'),
+	(66,'Undefined index: accessory','2014-09-01 12:49:06'),
+	(67,'Undefined index: accessory','2014-09-01 12:49:17'),
+	(68,'Undefined index: accessory','2014-09-01 12:49:18'),
+	(69,'Undefined index: accessory','2014-09-01 12:49:40'),
+	(70,'Undefined index: accessory','2014-09-01 12:50:56'),
+	(71,'Undefined index: accessory','2014-09-01 12:50:57'),
+	(72,'Undefined index: accessory','2014-09-01 12:51:10'),
+	(73,'Undefined index: accessory','2014-09-01 12:51:10'),
+	(74,'Undefined index: accessory','2014-09-01 12:51:17'),
+	(75,'Undefined index: accessory','2014-09-01 12:51:39'),
+	(76,'Undefined index: accessory','2014-09-01 12:51:40'),
+	(77,'Undefined index: accessory','2014-09-01 12:51:41'),
+	(78,'Undefined index: accessory','2014-09-01 12:51:49'),
+	(79,'Undefined index: accessory','2014-09-01 12:51:50'),
+	(80,'Undefined index: accessory','2014-09-01 12:52:04'),
+	(81,'Undefined index: accessory','2014-09-01 12:52:23'),
+	(82,'Undefined index: accessory','2014-09-01 12:52:44'),
+	(83,'Undefined index: accessory','2014-09-01 12:52:57'),
+	(84,'Undefined index: accessory','2014-09-01 12:52:58'),
+	(85,'Undefined index: accessory','2014-09-01 12:53:06'),
+	(86,'Undefined index: accessory','2014-09-01 12:53:07'),
+	(87,'Undefined index: accessory','2014-09-01 12:53:25'),
+	(88,'Undefined index: accessory','2014-09-01 12:53:37'),
+	(89,'Undefined index: accessory','2014-09-01 12:53:55'),
+	(90,'Undefined index: accessory','2014-09-01 12:53:56'),
+	(91,'Undefined index: accessory','2014-09-01 12:53:57'),
+	(92,'Undefined index: accessory','2014-09-01 12:53:57'),
+	(93,'Undefined index: accessory','2014-09-01 12:54:01'),
+	(94,'Undefined index: accessory','2014-09-01 12:54:23'),
+	(95,'Undefined index: accessory','2014-09-01 12:54:24'),
+	(96,'Undefined index: accessory','2014-09-01 12:54:24'),
+	(97,'Undefined index: accessory','2014-09-01 12:54:26'),
+	(98,'Undefined index: accessory','2014-09-01 12:54:44'),
+	(99,'Undefined index: accessory','2014-09-01 12:54:45'),
+	(100,'Undefined index: accessory','2014-09-01 12:54:59'),
+	(101,'Undefined index: accessory','2014-09-01 12:54:59'),
+	(102,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 12:59:28'),
+	(103,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 12:59:31'),
+	(104,'Undefined index: accessory','2014-09-01 13:09:12'),
+	(105,'Trying to get property of non-object','2014-09-01 13:09:14'),
+	(106,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:35'),
+	(107,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:37'),
+	(108,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:39');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -307,9 +397,9 @@ LOCK TABLES `posts` WRITE;
 
 INSERT INTO `posts` (`id`, `title`, `excerpt`, `content`, `updated_at`, `published_at`, `published`, `author_id`)
 VALUES
-	(2,'The post with tags','A nice excerpt isn\'t long.','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-08-29 19:31:14','2014-08-29 19:31:14',1,1),
+	(2,'The post with tags','A nice excerpt isn\'t long.','<p>Phasellus dignissim tempor urna eget consequat. Vestibulum bibendum porta eleifend. Mauris auctor, metus et fringilla hendrerit, lectus magna facilisis erat, non imperdiet sapien lectus eu sem. Integer interdum felis eu est lobortis, sed scelerisque dolor vestibulum. Mauris sit amet pulvinar ligula. Donec tincidunt dui laoreet, pharetra turpis quis, laoreet neque. Etiam ut mattis elit. In vel turpis at urna suscipit dignissim. Donec ullamcorper velit sit amet dapibus malesuada. Nullam at lorem diam. Nullam consectetur venenatis diam, in posuere mauris sollicitudin fermentum. Morbi eu tellus sit amet elit pulvinar ullamcorper. Vivamus sed dolor sit amet arcu porta pretium at sit amet erat. Morbi ac dolor ornare, faucibus nibh sed, scelerisque justo. Proin vel condimentum nibh.</p>','2014-09-01 11:15:33',NULL,0,1),
 	(6,'dqewdqw','dqewdqew','<p>dqwdqwed</p>','2014-08-27 13:02:38','2014-08-27 13:02:38',1,14),
-	(7,'Dedicato a teeeeeeeeeee','ChissÃ  dove chissÃ  coooome','<p>E ascoltare senza <strong>interruzioniiiiiiiiiiiii</strong>!</p>','2014-08-29 19:52:03','2014-08-29 19:52:03',1,1);
+	(7,'Dedicato a teh','ChissÃ  dove chissÃ  coooome?','<p>E ascoltare senza <strong>interruzioniiiiiiiiiiiii</strong>!</p>','2014-09-01 11:23:53','2014-08-29 19:52:03',1,1);
 
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -342,7 +432,7 @@ VALUES
 	(2,18),
 	(2,24),
 	(7,2),
-	(7,9);
+	(7,27);
 
 /*!40000 ALTER TABLE `posts_tags` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -396,6 +486,7 @@ INSERT INTO `tags` (`id`, `name`)
 VALUES
 	(10,'4'),
 	(2,'announcements'),
+	(27,'cool-stuff'),
 	(4,'dew'),
 	(9,'dewdew'),
 	(26,'diosololosa'),
@@ -465,7 +556,12 @@ VALUES
 	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL),
 	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL),
 	(56,'56/2013-08-24 21.47.15.jpg',2117499,'image/jpeg','2014-08-29 17:24:47',4,NULL,NULL,NULL,NULL,NULL),
-	(57,'57/1370955297-knack-2.jpg',1659155,'image/jpeg','2014-09-01 02:00:31',NULL,NULL,NULL,NULL,27,NULL);
+	(57,'57/1370955297-knack-2.jpg',1659155,'image/jpeg','2014-09-01 02:00:31',NULL,NULL,NULL,NULL,27,NULL),
+	(58,'58/3EtzCi3.jpg',105741,'image/jpeg','2014-09-01 12:59:28',NULL,NULL,NULL,NULL,27,NULL),
+	(59,'59/5IljutD.jpg',24264,'image/jpeg','2014-09-01 12:59:31',NULL,NULL,NULL,NULL,27,NULL),
+	(60,'60/4fQKn7c.png',465936,'image/png','2014-09-01 13:09:35',NULL,NULL,NULL,NULL,28,NULL),
+	(61,'61/8l15GYP.jpg',100841,'image/jpeg','2014-09-01 13:09:37',NULL,NULL,NULL,NULL,28,NULL),
+	(62,'62/bmOq96z.png',2032377,'image/png','2014-09-01 13:09:39',NULL,NULL,NULL,NULL,28,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -503,10 +599,10 @@ INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name
 VALUES
 	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,0,0,NULL,1,NULL,NULL),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,0,NULL,1,NULL,5),
 	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,0,NULL,1,NULL,NULL);
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -531,29 +627,52 @@ LOCK TABLES `visits` WRITE;
 
 INSERT INTO `visits` (`id`, `url`, `ip`, `visited_at`, `count`)
 VALUES
-	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',6),
-	(6,'/backend/ads','::1','2014-08-31 18:21:48',2),
-	(7,'/backend/groups','::1','2014-08-31 18:26:06',6),
-	(8,'/backend','::1','2014-08-31 18:33:57',31),
-	(9,'/backend/accessories','::1','2014-08-31 18:50:47',10),
-	(10,'/backend/posts','::1','2014-08-31 18:52:59',1),
-	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',1),
-	(12,'/backend/users','::1','2014-08-31 18:53:02',1),
-	(13,'/backend/errors','::1','2014-08-31 19:00:01',5),
-	(14,'/backend/consoles','::1','2014-08-31 19:40:15',3),
-	(15,'/backend/games','::1','2014-08-31 19:40:15',1),
-	(16,'/','::1','2014-08-31 19:41:21',5),
-	(17,'/users/sign_out','::1','2014-08-31 19:41:25',3),
-	(18,'/users/sign_in','::1','2014-08-31 19:41:25',10),
+	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',14),
+	(6,'/backend/ads','::1','2014-08-31 18:21:48',6),
+	(7,'/backend/groups','::1','2014-08-31 18:26:06',15),
+	(8,'/backend','::1','2014-08-31 18:33:57',120),
+	(9,'/backend/accessories','::1','2014-08-31 18:50:47',16),
+	(10,'/backend/posts','::1','2014-08-31 18:52:59',83),
+	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',28),
+	(12,'/backend/users','::1','2014-08-31 18:53:02',18),
+	(13,'/backend/errors','::1','2014-08-31 19:00:01',10),
+	(14,'/backend/consoles','::1','2014-08-31 19:40:15',45),
+	(15,'/backend/games','::1','2014-08-31 19:40:15',12),
+	(16,'/','::1','2014-08-31 19:41:21',144),
+	(17,'/users/sign_out','::1','2014-08-31 19:41:25',14),
+	(18,'/users/sign_in','::1','2014-08-31 19:41:25',33),
 	(19,'/users/forgot_password','::1','2014-09-01 01:56:10',1),
-	(20,'/users/profile','::1','2014-09-01 01:57:14',4),
+	(20,'/users/profile','::1','2014-09-01 01:57:14',70),
 	(21,'/ads/nuevo?type=game','::1','2014-09-01 01:57:17',4),
-	(22,'/ads/edit?id=27','::1','2014-09-01 01:59:35',4),
+	(22,'/ads/edit?id=27','::1','2014-09-01 01:59:35',54),
 	(23,'/ads/update?id=27','::1','2014-09-01 01:59:54',3),
-	(24,'/ads/upload_image?id=27','::1','2014-09-01 02:00:31',1),
-	(25,'/ads','::1','2014-09-01 02:01:21',1),
-	(26,'/ads/show?id=27','::1','2014-09-01 02:01:25',10),
-	(27,'/ads/contact','::1','2014-09-01 02:01:31',7);
+	(24,'/ads/upload_image?id=27','::1','2014-09-01 02:00:31',3),
+	(25,'/ads','::1','2014-09-01 02:01:21',93),
+	(26,'/ads/show?id=27','::1','2014-09-01 02:01:25',65),
+	(27,'/ads/contact','::1','2014-09-01 02:01:31',14),
+	(28,'/backend/users/block?id=10','::1','2014-09-01 10:31:56',1),
+	(29,'/backend/users/block?id=15','::1','2014-09-01 10:34:14',1),
+	(30,'/backend/users/unblock?id=15','::1','2014-09-01 10:34:16',1),
+	(31,'/backend/users/unblock?id=10','::1','2014-09-01 10:34:18',1),
+	(32,'/backend/staff_members','::1','2014-09-01 10:34:23',8),
+	(33,'/backend/posts/edit?id=2','::1','2014-09-01 11:15:30',2),
+	(34,'/backend/posts/toggle_published?id=2','::1','2014-09-01 11:15:33',1),
+	(35,'/backend/posts/edit?id=7','::1','2014-09-01 11:21:22',22),
+	(36,'/backend/posts/update?id=7','::1','2014-09-01 11:21:25',4),
+	(37,'/backend/tags/create','::1','2014-09-01 11:21:32',1),
+	(38,'/backend/support_tickets/show?id=1','::1','2014-09-01 11:36:34',15),
+	(39,'/backend/support_tickets/toggle_closed?id=1','::1','2014-09-01 11:38:04',2),
+	(40,'/backend/support_tickets/show?id=2','::1','2014-09-01 11:40:27',1),
+	(41,'/support','::1','2014-09-01 11:41:11',2),
+	(42,'/ads/show?id=23','::1','2014-09-01 12:19:15',2),
+	(43,'/ads/show?id=6','::1','2014-09-01 12:20:01',2),
+	(44,'/users/settings','::1','2014-09-01 12:43:25',1),
+	(45,'/games','::1','2014-09-01 12:43:45',1),
+	(46,'/accessories','::1','2014-09-01 12:43:49',1),
+	(47,'/ads/nuevo?type=accessory','::1','2014-09-01 13:09:14',1),
+	(48,'/ads/edit?id=28','::1','2014-09-01 13:09:14',14),
+	(49,'/ads/update?id=28','::1','2014-09-01 13:09:31',2),
+	(50,'/ads/upload_image?id=28','::1','2014-09-01 13:09:35',3);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;
