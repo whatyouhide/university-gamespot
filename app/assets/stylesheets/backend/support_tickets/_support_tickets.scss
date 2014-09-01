@@ -1,0 +1,28 @@
+.backend_support_tickets {
+  .wrapper {
+
+    article {
+      @include padding-vertical(20px);
+    }
+
+    .status, .toggle-status {
+      display: inline-block;
+    }
+
+    .toggle-status { color: $warning-color; }
+
+    .status span {
+      padding: 10px;
+      border-radius: 10px;
+      color: $white;
+      &.open { background: $success-color; }
+      &.closed { background: $alert-color; }
+    }
+  }
+
+  &.show {
+    .status { margin: 20px 0; }
+
+    .content { margin-bottom: 35px; }
+  }
+}

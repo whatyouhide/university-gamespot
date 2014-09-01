@@ -1,7 +1,7 @@
 {extends 'backend.tpl'}
 {block name=content}
 
-<section class="support-tickets">
+<section class="wrapper">
   <h1>Support tickets</h1>
 
   <div class="filter">
@@ -20,7 +20,6 @@
 
       {include 'backend/support_tickets/_status.tpl'}
       {include 'backend/support_tickets/_close_or_reopen.tpl'}
-
     </article>
   {/foreach}
 </section>

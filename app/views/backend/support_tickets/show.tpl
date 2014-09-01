@@ -1,8 +1,8 @@
 {extends 'backend.tpl'}
 {block name=content}
 
-  <section data-status="{if $ticket->is_closed()}closed{else}open{/if}">
-   <header>
+<section class="wrapper" data-status="{if $ticket->is_closed()}closed{else}open{/if}">
+  <header>
       <h1>
         {$ticket->title}
         <span class="ticket-number">#{$ticket->id}</span>

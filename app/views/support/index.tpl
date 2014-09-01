@@ -11,7 +11,7 @@
   <input name="title" type="text">
 
   <label for="content">Content</label>
-  <textarea name="content"></textarea>
+  <textarea class="froala" name="content"></textarea>
 
   <label for="topic">Topic</label>
   {html_options name=topic options=$topics}
