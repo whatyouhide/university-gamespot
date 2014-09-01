@@ -30,4 +30,10 @@
     @include absolute-at($bottom: 0, $left: 0);
     li { border-top: 1px solid $light-gray; }
   }
+
+  li.inactive {
+    opacity: 0.2;
+    a { cursor: default; }
+    &:hover a { background: $white; }
+  }
 }

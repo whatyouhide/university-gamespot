@@ -2,19 +2,23 @@
 
 {block name=content}
 
-<table class="users">
-  <thead>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Created at</th>
-    <th>Actions</th>
-  </thead>
+<section class="wrapper">
+  <h1>Users</h1>
 
-  <tbody>
-    {foreach from=$users item=user}
-      {include file='backend/users/_user_row.tpl'}
-    {/foreach}
-  </tbody>
-</table>
+  <table class="users">
+    <thead>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </thead>
+
+    <tbody>
+      {foreach from=$users item=user}
+        {include file='backend/users/_user_row.tpl'}
+      {/foreach}
+    </tbody>
+  </table>
+</section>
 
 {/block}

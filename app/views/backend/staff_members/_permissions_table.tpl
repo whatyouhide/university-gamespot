@@ -1,5 +1,5 @@
 <section class="permissions-table">
-  <h1>Groups and permissions</h1>
+  <h1>Groups and permissions (reference)</h1>
 
   <table>
     <thead>

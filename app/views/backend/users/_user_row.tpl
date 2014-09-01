@@ -1,9 +1,9 @@
 <tr>
   <td>
-    <span class="name">{$user->full_name()}</span>
     {if $user->is_blocked()}
       <span class="blocked">Blocked</span>
     {/if}
+    <span class="name">{$user->full_name()}</span>
   </td>
 
   <td>

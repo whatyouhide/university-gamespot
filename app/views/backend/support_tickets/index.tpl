@@ -2,6 +2,8 @@
 {block name=content}
 
 <section class="support-tickets">
+  <h1>Support tickets</h1>
+
   <div class="filter">
     <a href="#" data-filter data-show-closed>show closed</a>
     /

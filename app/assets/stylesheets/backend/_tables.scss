@@ -1,0 +1,23 @@
+table {
+  .actions {
+    .edit {}
+    .destroy { color: $alert-color; }
+    .block { color: $warning-color; }
+  }
+
+  button {
+    &[data-destroy] {
+      @include button($bg: $alert-color);
+    }
+  }
+
+  .smaller-column {
+    width: 30%;
+  }
+
+  // The "blocked" text near a user's name.
+  span.blocked {
+    color: $light-gray;
+    font-weight: 200;
+  }
+}

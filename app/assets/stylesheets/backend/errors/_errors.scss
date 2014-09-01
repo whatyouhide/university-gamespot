@@ -1,0 +1,7 @@
+.backend_errors.index {
+  th {
+    &:nth-child(1) { width: 5%; }
+    &:nth-child(2) { width: 85%; }
+    &:nth-child(3) { width: 10%; }
+  }
+}

@@ -2,30 +2,34 @@
 
 {block name=content}
 
-<table class="staff_members">
-  <thead>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Group</th>
-    <th>Created at</th>
-    <th>Actions</th>
-  </thead>
+<section class="wrapper">
+  <h1>Staff members</h1>
 
-  <tbody>
-    {foreach from=$grouped_staff_members key=group_name item=group_members}
-      <tr class="group-header">
-        <td colspan="5">{$group_name}</td>
-      </tr>
+  <table class="staff_members">
+    <thead>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Group</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </thead>
 
-      {foreach from=$group_members item=user}
-        {include file='backend/staff_members/_staff_member_row.tpl'}
+    <tbody>
+      {foreach from=$grouped_staff_members key=group_name item=group_members}
+        <tr class="group-header">
+          <td colspan="5">{$group_name}</td>
+        </tr>
+
+        {foreach from=$group_members item=user}
+          {include file='backend/staff_members/_staff_member_row.tpl'}
+        {/foreach}
       {/foreach}
-    {/foreach}
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<a href="{url to='/backend/staff_members/nuevo'}">New staff member</a>
+  <a class="new-item" href="{url to='/backend/staff_members/nuevo'}">New staff member</a>
 
-{include file='backend/staff_members/_permissions_table.tpl'}
+  {include file='backend/staff_members/_permissions_table.tpl'}
+</section>
 
 {/block}

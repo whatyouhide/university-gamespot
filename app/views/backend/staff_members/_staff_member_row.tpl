@@ -32,6 +32,7 @@
     </a>
 
     <a
+      class="destroy"
       data-confirm
       href="{url to='/backend/staff_members/destroy' id=$user->id}">Destroy</a>
   </td>
