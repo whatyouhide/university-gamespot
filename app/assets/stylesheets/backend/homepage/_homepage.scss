@@ -1,0 +1,28 @@
+.backend_application.index {
+  section.stats { @extend %clear-after; }
+
+  h1 {
+    text-align: center;
+    font-size: 500%;
+    font-weight: 200;
+    margin: 0;
+  }
+
+  div {
+    float: left;
+    width: percentage(1 / 3);
+    @include padding-vertical(60px);
+  }
+
+  p {
+    margin: 0;
+    text-align: center;
+  }
+
+  .number {
+    font-size: 700%;
+    font-weight: 100;
+    line-height: 90%;
+    color: $success-color;
+  }
+}
