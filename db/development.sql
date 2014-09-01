@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-09-01 11:16:31 +0000
+# Generation Time: 2014-09-01 15:00:32 +0000
 # ************************************************************
 
 
@@ -95,18 +95,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table categories_games
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `categories_games`;
-
-CREATE TABLE `categories_games` (
-  `category_id` int(11) unsigned NOT NULL,
-  `game_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
 # Dump of table consoles
 # ------------------------------------------------------------
 
@@ -133,18 +121,6 @@ VALUES
 
 /*!40000 ALTER TABLE `consoles` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table consoles_games
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `consoles_games`;
-
-CREATE TABLE `consoles_games` (
-  `game_id` int(11) unsigned NOT NULL,
-  `console_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 
 # Dump of table errors
@@ -271,7 +247,8 @@ VALUES
 	(105,'Trying to get property of non-object','2014-09-01 13:09:14'),
 	(106,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:35'),
 	(107,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:37'),
-	(108,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:39');
+	(108,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:39'),
+	(109,'Call to a member function signed_out() on a non-object','2014-09-01 13:46:09');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -297,7 +274,8 @@ VALUES
 	(2,'FPS'),
 	(6,'Sport'),
 	(7,'Strategy'),
-	(8,'Adventure');
+	(8,'Adventure'),
+	(9,'Test category');
 
 /*!40000 ALTER TABLE `game_categories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -597,12 +575,12 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `signed_in`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,0,NULL,1,NULL,1),
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1,0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,0,NULL,1,NULL,3),
 	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,0,NULL,1,NULL,5),
 	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,0,NULL,1,NULL,NULL);
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -627,10 +605,10 @@ LOCK TABLES `visits` WRITE;
 
 INSERT INTO `visits` (`id`, `url`, `ip`, `visited_at`, `count`)
 VALUES
-	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',14),
+	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',16),
 	(6,'/backend/ads','::1','2014-08-31 18:21:48',6),
-	(7,'/backend/groups','::1','2014-08-31 18:26:06',15),
-	(8,'/backend','::1','2014-08-31 18:33:57',120),
+	(7,'/backend/groups','::1','2014-08-31 18:26:06',16),
+	(8,'/backend','::1','2014-08-31 18:33:57',122),
 	(9,'/backend/accessories','::1','2014-08-31 18:50:47',16),
 	(10,'/backend/posts','::1','2014-08-31 18:52:59',83),
 	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',28),
@@ -638,9 +616,9 @@ VALUES
 	(13,'/backend/errors','::1','2014-08-31 19:00:01',10),
 	(14,'/backend/consoles','::1','2014-08-31 19:40:15',45),
 	(15,'/backend/games','::1','2014-08-31 19:40:15',12),
-	(16,'/','::1','2014-08-31 19:41:21',144),
-	(17,'/users/sign_out','::1','2014-08-31 19:41:25',14),
-	(18,'/users/sign_in','::1','2014-08-31 19:41:25',33),
+	(16,'/','::1','2014-08-31 19:41:21',149),
+	(17,'/users/sign_out','::1','2014-08-31 19:41:25',17),
+	(18,'/users/sign_in','::1','2014-08-31 19:41:25',39),
 	(19,'/users/forgot_password','::1','2014-09-01 01:56:10',1),
 	(20,'/users/profile','::1','2014-09-01 01:57:14',70),
 	(21,'/ads/nuevo?type=game','::1','2014-09-01 01:57:17',4),
@@ -672,7 +650,8 @@ VALUES
 	(47,'/ads/nuevo?type=accessory','::1','2014-09-01 13:09:14',1),
 	(48,'/ads/edit?id=28','::1','2014-09-01 13:09:14',14),
 	(49,'/ads/update?id=28','::1','2014-09-01 13:09:31',2),
-	(50,'/ads/upload_image?id=28','::1','2014-09-01 13:09:35',3);
+	(50,'/ads/upload_image?id=28','::1','2014-09-01 13:09:35',3),
+	(51,'/backend/game_categories/create','::1','2014-09-01 13:58:17',1);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;
