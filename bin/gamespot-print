@@ -1,0 +1,29 @@
+#!/bin/sh
+
+target_pdf="$HOME/Desktop/tdw-code.pdf"
+
+echo 'Searching files...'
+
+files_to_print=`find . \
+  -name tests -prune \
+  -o -name docs -prune \
+  -o -name lib -prune \
+  -o -name public -prune \
+  -o -name templates_c -prune \
+  -o -name "*.php" -print \
+  -o -name "*.tpl" -print \
+  -o -name "*.js" -print \
+  -o -name "*.scss" -print \
+  -o -name "*.ini" -print \
+  `
+
+echo "Printing PDF to $target_pdf"
+
+enscript \
+  -r -2 \
+  --highlight \
+  --line-numbers \
+  -o - $files_to_print \
+  | ps2pdf - "$target_pdf"
+
+open "$target_pdf"
