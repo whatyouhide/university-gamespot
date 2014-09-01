@@ -1,0 +1,50 @@
+.backend_posts.index {
+  .tags {
+    font-size: 95%;
+    font-style: italic;
+    font-weight: 200;
+    margin-bottom: 15px;
+  }
+
+  .destroy { color: $alert-color; }
+
+  section.posts {
+    @extend %clear-after;
+    article {
+      position: relative;
+      float: left;
+      width: 47%;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid $light-gray;
+      height: 300px;
+
+      &.not-mine { opacity: 0.6; }
+
+      &.draft { background: transparentize($success-color, 0.93); }
+    }
+
+    .actions {
+      @include absolute-at($bottom: 0, $right: 0);
+      padding: 13px;
+    }
+
+    h1 { font-size: 230%; }
+    h2 { font-size: 100%; }
+  }
+}
+
+.backend_posts.edit {
+  .wrapper {
+    .status {
+      font-size: 110%;
+      font-style: italic;
+      font-weight: 200;
+    }
+
+    input[type=submit] { width: 100%; }
+    .save-button { margin-top: 40px; }
+    .publish-unpublish { @include button($bg: $warning-color); }
+  }
+}

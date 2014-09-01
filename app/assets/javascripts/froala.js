@@ -2,6 +2,7 @@
   'use strict';
 
   var staticOptions = {
+    height: 250,
     inlineMode: false,
     buttons: [
       'bold',

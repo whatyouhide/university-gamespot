@@ -8,52 +8,54 @@
   {$status=draft}
 {/if}
 
-<h1>Edit post</h1>
-<h2 class="status {$status}">Status: {$status}</h2>
+<section class="wrapper">
+  <h1>Edit post</h1>
+  <h2 class="status {$status}">Status: {$status}</h2>
 
-<form
-  action="{url to='/backend/posts/update' id=$post->id}"
-  method="POST"
-  enctype="multipart/form-data">
+  <form
+    action="{url to='/backend/posts/update' id=$post->id}"
+    method="POST"
+    enctype="multipart/form-data">
 
-  <input name="published" type="hidden" value="{$post->published}">
+    <input name="published" type="hidden" value="{$post->published}">
 
-  <label for="title">Title</label>
-  <input name="title" type="text" value="{$post->title}">
+    <label for="title">Title</label>
+    <input name="title" type="text" value="{$post->title}">
 
-  <label for="excerpt">Excerpt</label>
-  <textarea maxlength="250" name="excerpt">{$post->excerpt}</textarea>
+    <label for="excerpt">Excerpt</label>
+    <textarea maxlength="250" name="excerpt">{$post->excerpt}</textarea>
 
-  <label for="content">Content</label>
-  <textarea class="froala" name="content">{$post->content}</textarea>
+    <label for="content">Content</label>
+    <textarea class="froala" name="content">{$post->content}</textarea>
 
-  <label for="tags[]">Tags</label>
-  <select name="tags[]" multiple data-selectize>
-    {foreach from=$tags item=tag}
-      {if in_array($tag->id, array_pluck($post->tags, 'id'))}
-        {$selected=selected}
-      {else}
-        {$selected=''}
-      {/if}
+    <label for="tags[]">Tags</label>
+    <select name="tags[]" multiple data-selectize>
+      {foreach from=$tags item=tag}
+        {if in_array($tag->id, array_pluck($post->tags, 'id'))}
+          {$selected=selected}
+        {else}
+          {$selected=''}
+        {/if}
 
-      <option value="{$tag->name}" {$selected}>{$tag->name}</option>
-    {/foreach}
-  </select>
+        <option value="{$tag->name}" {$selected}>{$tag->name}</option>
+      {/foreach}
+    </select>
 
-  <input type="submit" value="Save">
-</form>
+    <input class="save-button" type="submit" value="Save">
+  </form>
 
-<form
-  action="{url to='/backend/posts/toggle_published' id=$post->id}"
-  method="POST">
+  <form
+    action="{url to='/backend/posts/toggle_published' id=$post->id}"
+    method="POST">
 
-  {if $post->is_published()}
-    {$action=Unpublish}
-  {else}
-    {$action=Publish}
-  {/if}
+    {if $post->is_published()}
+      {$action=Unpublish}
+    {else}
+      {$action=Publish}
+    {/if}
 
-  <input type="submit" data-confirm value="{$action}">
-</form>
+    <input class="publish-unpublish" type="submit" data-confirm value="{$action}">
+  </form>
+</section>
 
 {/block}
