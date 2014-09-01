@@ -1,20 +1,24 @@
 <form action="{url to='/ads/filter'}" method="GET">
   <div class="fields-row">
-    <label for="console">Filter by console:</label>
-    {html_options
-      name=console
-      options=$consoles_for_select
-      selected=$starting_values.console
-    }
+    <div class="field">
+      <label for="console">Filter by console:</label>
+      {html_options
+        name=console
+        options=$consoles_for_select
+        selected=$starting_values.console
+      }
+    </div>
 
-    <label for="city">Filter by city:</label>
-    {html_options
-      name=city
-      options=$cities_for_select
-      selected=$starting_values.city
-    }
+    <div class="field">
+      <label for="city">Filter by city:</label>
+      {html_options
+        name=city
+        options=$cities_for_select
+        selected=$starting_values.city
+      }
+    </div>
 
-    <label>
+    <label class="checkbox">
       {if $starting_values['last-7-days'] eq 'true'}
         {$checked=checked}
       {else}
@@ -26,7 +30,7 @@
   </div>
 
   <div class="type">
-    <div>Ad type</div>
+    <h5>Type</h5>
 
     <div class="fields-row">
       <label>
@@ -73,10 +77,10 @@
       <input name="max-price" type="hidden">
     </div>
 
-    <div><span id="slider-output"></span></div>
+    <div class="slider-output"><span id="slider-output"></span></div>
   </div>
 
   <input type="submit" value="Filter">
 
-  <a href="{url to='/ads'}">Clear all filters</a>
+  <a class="clear-filters" href="{url to='/ads'}">Clear all filters</a>
 </form>
