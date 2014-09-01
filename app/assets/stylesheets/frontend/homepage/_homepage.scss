@@ -1,4 +1,8 @@
 .application.index {
+  .latests {
+    @extend %clear-after;
+  }
+
   header.site-name-and-description {
     text-align: center;
     margin-bottom: 90px;
@@ -14,17 +18,14 @@
     $padding: 8px;
     $image-height: 250px;
 
-    text-align: center;
+    float: left;
     height: 425px;
     overflow: hidden;
-    float: left;
-    width: percentage(1 / 3);
+    text-align: center;
     transition: transform 0.3s;
+    width: percentage(1 / 3);
 
-    &:hover {
-      background: $very-light-gray;
-      transform: scale(1.1);
-    }
+    &:hover { transform: scale(1.1); }
 
     &:nth-child(1) { padding-right: $padding; }
     &:nth-child(2) { padding-left: $padding; padding-right: $padding; }
@@ -34,7 +35,14 @@
 
     h3 {
       color: $light-gray;
-      font-style: italic;
+      font-size: 170%;
+      font-weight: 200;
+    }
+
+    // The game/accessory name of the latest ad.
+    h2 {
+      font-size: 150%;
+      font-weight: 200;
     }
 
     img {
