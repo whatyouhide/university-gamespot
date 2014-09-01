@@ -17,6 +17,7 @@ class AccessoriesController extends Controller {
    */
   public function index() {
     $this->accessories = Accessory::all();
+    $this->accessory_with_most_ads = Accessory::with_most_ads();
   }
 }
 ?>

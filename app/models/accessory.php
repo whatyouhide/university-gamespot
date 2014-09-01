@@ -68,6 +68,28 @@ class Accessory extends Model {
   }
 
   /**
+   * Get the accessories with most ads.
+   * @param int $limit How many accessories to retrieve.
+   * @return array
+   */
+  public static function with_most_ads($limit = 1) {
+    $t = static::$table_name;
+
+    $q = <<<SQL
+SELECT `$t`.*, COUNT(*) ads_count
+FROM `ads`
+JOIN `$t` ON `ads`.`accessory_id` = `$t`.`id`
+WHERE `ads`.`type` = 'accessory'
+GROUP BY `$t`.`id`
+ORDER BY ads_count DESC
+LIMIT $limit
+SQL;
+
+    $result = self::new_instances_from_query($q);
+    return ($limit == 1) ? $result[0] : $result;
+  }
+
+  /**
    * Fetch the image associated with this accessory.
    * @return Upload
    */

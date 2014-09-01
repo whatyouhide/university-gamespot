@@ -76,9 +76,7 @@ class Game extends Model {
    * @return array The most recently added games.
    */
   public static function recently_added($limit = 5) {
-    $t = static::$table_name;
-    $q = "SELECT * FROM `$t` ORDER BY `created_at` DESC LIMIT $limit";
-    return self::new_instances_from_query($q);
+    return self::latest_by_attribute('created_at', $limit);
   }
 
   /**
@@ -87,30 +85,29 @@ class Game extends Model {
    * @return array The most recently released games.
    */
   public static function newest($limit = 5) {
-    $t = static::$table_name;
-    $q = "SELECT * FROM `$t` ORDER BY `release_date` DESC LIMIT $limit";
-    return self::new_instances_from_query($q);
+    return self::latest_by_attribute('release_date', $limit);
   }
 
   /**
    * Get the games with most ads.
    * @param int $limit How many games to retrieve.
    * @return array The games with most ads.
-   * @todo Fix the query since the tables used in the query don't exist anymore.
    */
-  public static function with_most_ads($limit = 5) {
+  public static function with_most_ads($limit = 1) {
     $t = static::$table_name;
-    $q = "SELECT
-      `ads`.`id` AS `ad_id`, `$t`.*,
-      COUNT(*) `number_of_ads`
-      FROM `games_ads`
-      JOIN `$t` ON `games_ads`.`game_id` = `games`.`id`
-      JOIN `ads` ON `games_ads`.`ad_id` = `ads`.`id`
-      GROUP BY `$t`.`name`
-      ORDER BY `number_of_ads` DESC
-      LIMIT $limit
-    ";
-    return self::new_instances_from_query($q);
+
+    $q = <<<SQL
+SELECT `$t`.*, COUNT(*) ads_count
+FROM `ads`
+JOIN `$t` ON `ads`.`game_id` = `$t`.`id`
+WHERE `ads`.`type` = 'game'
+GROUP BY `$t`.`id`
+ORDER BY ads_count DESC
+LIMIT $limit
+SQL;
+
+    $result = self::new_instances_from_query($q);
+    return ($limit == 1) ? $result[0] : $result;
   }
 
   /**

@@ -16,11 +16,8 @@ class GamesController extends Controller {
    * The games homepage.
    */
   public function index() {
-    $this->all_games = [
-      'recently_added' => Game::recently_added(),
-      'newest' => Game::newest(),
-      'with_most_ads' => Game::with_most_ads()
-    ];
+    $this->games = Game::all();
+    $this->game_with_most_ads = Game::with_most_ads();
   }
 }
 ?>
