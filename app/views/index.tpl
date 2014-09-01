@@ -19,7 +19,7 @@
   </article>
 
   <article class="game">
-    <a href="{url to='/ads/by_game' game_id=$latest_game->id}">
+    <a href="{url to='/ads/by_game' id=$latest_game->id}">
       <h3>Latest game</h3>
       <h1>{$latest_game->name}</h1>
       {image_path image=$latest_game->cover_image}

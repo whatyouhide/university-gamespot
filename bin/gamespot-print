@@ -5,8 +5,7 @@ target_pdf="$HOME/Desktop/tdw-code.pdf"
 echo 'Searching files...'
 
 files_to_print=`find . \
-  -name tests -prune \
-  -o -name docs -prune \
+  -name docs -prune \
   -o -name lib -prune \
   -o -name public -prune \
   -o -name templates_c -prune \

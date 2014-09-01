@@ -43,6 +43,28 @@ class AdsController extends Controller {
   }
 
   /**
+   * GET /ads/by_game?id=1
+   * Get all the ads for the given name.
+   */
+  public function by_game() {
+    redirect('/ads/filter', [], [
+      'game' => $this->params['id'],
+      'type' => 'game'
+    ]);
+  }
+
+  /**
+   * GET /ads/by_accessory?id=1
+   * Get all the ads for the given accessory.
+   */
+  public function by_accessory() {
+    redirect('/ads/filter', [], [
+      'accessory' => $this->params['id'],
+      'type' => 'accessory'
+    ]);
+  }
+
+  /**
    * GET /ads/show?id=1
    */
   public function show() {
