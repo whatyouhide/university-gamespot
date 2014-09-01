@@ -1,0 +1,67 @@
+.games.index, .accessories.index {
+
+  .with-most-ads {
+    @extend %clear-after;
+    @include center;
+    height: 170px;
+    position: relative;
+    background: transparentize($success-color, 0.85);
+    padding: 20px;
+    width: 75%;
+
+    &:hover { background: transparentize($success-color, 0.7); }
+
+    h1 { text-align: center; }
+
+    h2 {
+      @include absolute-at($bottom: 15px, $left: 15px);
+      margin: 0;
+    }
+
+    .infos {
+      @include absolute-at($bottom: 15px, $right: 15px);
+      text-align: right;
+
+      .number {
+        font-size: 280%;
+        font-weight: 200;
+        line-height: 120%;
+      }
+    }
+  }
+
+  .other {
+    margin-top: 70px;
+    @extend %clear-after;
+
+    article {
+      background: $very-light-gray;
+      height: 700px;
+      width: 49%;
+      float: left;
+      margin-bottom: 20px;
+      padding: 20px;
+      &:nth-child(2n + 1) { margin-right: 1%; }
+      &:nth-child(2n) { margin-left: 1%; }
+
+      img {
+        display: block;
+        @include center;
+        max-height: 300px;
+        max-width: 100%;
+      }
+
+      .description {
+        @include center;
+        margin-top: 25px;
+        width: 90%;
+      }
+
+      .category {
+        font-weight: 200;
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
