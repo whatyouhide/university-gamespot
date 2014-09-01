@@ -77,9 +77,9 @@ class Mailer {
     // Gmail.
     $this->mail->isSMTP();
     $this->mail->SMTPAuth = true;
-    $this->mail->SMTPSecure = 'tls';
+    $this->mail->SMTPSecure = 'ssl';
     $this->mail->Host = 'smtp.gmail.com';
-    $this->mail->Port = 587;
+    $this->mail->Port = 465;
     $this->mail->Username = 'twdgamespot@gmail.com';
     $this->mail->Password = 'tecnodelweb';
 

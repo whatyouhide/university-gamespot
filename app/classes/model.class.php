@@ -226,6 +226,21 @@ class Model {
   }
 
   /**
+   * Return the latest record based on the value of $attribute.
+   * @param string $attribute
+   * @param int $limit How many records to fetch, defaults to one.
+   * @return mixed
+   */
+  public static function latest_by_attribute($attribute, $limit = 1) {
+    $t = static::$table_name;
+    $q = "SELECT * FROM `$t` ORDER BY `$attribute` DESC LIMIT $limit";
+
+    $results = static::new_instances_from_query($q);
+    return ($limit == 1) ? $results[0] : $results;
+  }
+
+
+  /**
    * Create a new instance of the calling model and save it to the db.
    * @param array $attributes An array of 'name' => 'value' attributes.
    * @param bool $validate If false, don't validate the record.
