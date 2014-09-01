@@ -1,0 +1,57 @@
+.ads.edit, .ads.update {
+  .edit-ad {
+    .selects {
+      @include row;
+      select {
+        @include column(49%);
+        &:first-child { margin-right: 1%; }
+        &:last-child { margin-left: 1%; }
+      }
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 200;
+    }
+
+    .warning {
+      font-style: italic;
+      color: $light-gray;
+      font-weight: 200;
+    }
+
+    .dropzone { margin-bottom: 30px; }
+
+    .actions {
+      @extend %clear-after;
+      input[type=submit], button { @include column(49%); }
+
+      input[type=submit] { margin-right: 1%; }
+      button {
+        margin-left: 1%;
+        background: $warning-color;
+      }
+    }
+
+    .images {
+      @extend %clear-after;
+      margin-bottom: 35px;
+
+      li {
+        margin: 0 15px 15px 0;
+        position: relative;
+        float: left;
+      }
+      a.remove-image {
+        @include absolute-at($bottom: 10px, $left: 10px);
+        display: block;
+        color: $white;
+        background: $alert-color;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      img { max-height: 300px; }
+    }
+  }
+}

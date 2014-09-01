@@ -1,0 +1,25 @@
+.users.profile {
+  .welcome { margin-bottom: 30px; }
+  .new-ad { @include button; }
+
+  li { @extend %clear-after; }
+  li h3 { @include column(80%); }
+  .actions {
+    @include column(20%);
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  .destroy { color: $alert-color; }
+
+  .type { color: $light-gray; }
+
+  .status {
+    font-style: italic;
+    font-weight: 200;
+  }
+
+  .my-ads {
+    margin-top: 45px;
+  }
+}

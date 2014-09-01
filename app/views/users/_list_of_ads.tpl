@@ -1,20 +1,18 @@
 <ul class="my-{$game_or_accessory}-ads">
   {foreach from=$list item=ad}
     <li>
-      <h1>
-        {$game_or_accessory|@ucfirst} ad:
+      <h3>
+        <span class="type">{$game_or_accessory|@ucfirst} ad</span>
         {$ad->$game_or_accessory->name}
         ({$ad->console->name})
-      </h1>
+        <span class="status">{if $ad->is_draft()}Draft{else}Published{/if}</span>
+      </h3>
 
-      {if $ad->is_draft()}
-        <h2>Draft</h2>
-      {else}
-        <h2>Published</h2>
-      {/if}
-
-      <a data-confirm href="{$site_root}/ads/destroy?id={$ad->id}">Destroy</a>
-      <a href="{$site_root}/ads/edit?id={$ad->id}">Edit</a>
+      <div class="actions">
+        <a href="{$site_root}/ads/edit?id={$ad->id}">Edit</a>
+        /
+        <a class="destroy" data-confirm href="{$site_root}/ads/destroy?id={$ad->id}">Remove</a>
+      </div>
     </li>
   {/foreach}
 </ul>
