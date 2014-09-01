@@ -49,6 +49,7 @@ class Session {
    * Sign out the current user by removing it from the session.
    */
   public static function sign_out_user() {
+    if (!isset($_SESSION['user'])) { return; }
     $_SESSION['user']->signed_out();
     unset($_SESSION['user']);
   }
