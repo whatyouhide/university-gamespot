@@ -1,4 +1,44 @@
 .ads.index, .ads.filter {
+  article {
+    border: 1px solid $light-gray;
+    height: 400px;
+    margin: 25px 0;
+    padding: 25px;
+    position: relative;
+    transition: transform 0.2s;
+
+    &:hover { transform: scale(1.1); }
+
+    header {
+      @include absolute-at($top: 0, $right: 0);
+      text-align: right;
+      padding: 15px;
+    }
+
+    .image {
+      @include column(70%);
+      img {
+        max-height: 347px;
+        max-width: 100%;
+        display: block;
+      }
+    }
+
+    .city-and-price {
+      @include column(30%);
+      @include absolute-at($bottom: 0, $right: 0);
+      text-align: right;
+      padding: 15px;
+
+      .city { font-weight: 200; }
+    }
+
+    .type {
+      color: $light-gray;
+      font-weight: 200;
+    }
+  }
+
   form {
     .fields-row {
       @extend %clear-after;
@@ -30,5 +70,43 @@
         margin-top: 10px;
       }
     }
+  }
+}
+
+.ads.show {
+  .single-ad {
+    @include center;
+    width: 80%;
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 700px;
+    }
+
+    .main-image {
+      margin-bottom: 40px;
+    }
+
+    .price-and-city {
+      margin-bottom: 25px;
+      .price, .city {
+        display: inline-block;
+        font-size: 300%;
+        font-weight: 200;
+      }
+
+      .city {
+        margin-left: 30px;
+        float: right;
+      }
+    }
+  }
+
+  // The contact form.
+  .contact {
+    margin: 55px 0 40px;
+    textarea { height: 200px; }
+    input { width: 100%; }
   }
 }
