@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-08-31 17:39:30 +0000
+# Generation Time: 2014-09-01 00:15:51 +0000
 # ************************************************************
 
 
@@ -58,13 +58,13 @@ DROP TABLE IF EXISTS `ads`;
 CREATE TABLE `ads` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `published_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `price` float unsigned NOT NULL,
+  `price` float unsigned DEFAULT NULL,
   `description` text,
-  `city` varchar(50) NOT NULL,
+  `city` varchar(50) DEFAULT '',
   `type` varchar(10) NOT NULL DEFAULT '',
   `published` tinyint(1) unsigned DEFAULT '0',
   `author_id` int(11) unsigned NOT NULL,
-  `console_id` int(11) unsigned NOT NULL,
+  `console_id` int(11) unsigned DEFAULT NULL,
   `game_id` int(11) unsigned DEFAULT NULL,
   `accessory_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -86,7 +86,8 @@ VALUES
 	(6,'2014-08-31 15:55:57',87.45,'Cras dictum augue id iaculis dignissim. Nunc consequat mi in porta interdum. Nam tortor neque, auctor eget enim sit amet, ultrices semper mi. Sed non pharetra lacus, nec bibendum orci. Phasellus lobortis neque tortor, vitae ultrices arcu porttitor eu. Mauris non facilisis felis, interdum blandit enim. Proin mollis dignissim urna, id dignissim purus commodo vitae. Morbi tincidunt id sem vitae blandit. Proin mattis luctus nulla, eu congue quam eleifend lacinia. Quisque commodo, lectus sed tristique consectetur, felis felis condimentum neque, eu egestas diam tortor quis nisl. Nulla eleifend adipiscing tortor et rutrum. Duis vitae mauris augue. In tincidunt, lorem a malesuada egestas, urna arcu imperdiet metus, sed sodales justo est non odio. Nullam vestibulum vel sapien vitae aliquam. Suspendisse sagittis est sem, vel iaculis mi elementum a. Etiam dictum lectus magna, vitae porta est porttitor non.','Terni','game',1,1,3,1,NULL),
 	(8,'2014-08-31 15:55:59',77.9,'Nunc elementum dolor non pretium consequat. Donec feugiat tincidunt tortor vitae eleifend. Vestibulum rhoncus justo et est bibendum, in sollicitudin turpis scelerisque. Nulla euismod ultricies eros, nec mattis magna dapibus vitae. Praesent lobortis laoreet gravida. Quisque nec arcu non lectus pharetra posuere non id diam. Vestibulum tincidunt mi non libero blandit tincidunt. Integer venenatis, nibh eget fringilla ornare, nulla enim tempor neque, at varius mauris nulla at nibh. Integer a pretium mauris, eget lacinia orci. Mauris viverra magna ut faucibus elementum. Morbi aliquam risus vel justo laoreet varius. Mauris sit amet nibh ipsum. In et luctus dolor. Nam dolor purus, eleifend non massa vel, suscipit elementum nibh. Nulla aliquet velit vitae dapibus elementum. Nunc nulla odio, malesuada eget gravida a, consectetur sed mi.','Pescara','game',1,1,4,2,NULL),
 	(22,'2014-08-31 15:56:00',33,'r2r23r21','r2r','accessory',1,4,1,NULL,1),
-	(23,'2014-08-31 15:56:00',33,'Hello description','Rome','game',1,4,1,1,NULL);
+	(23,'2014-08-31 15:56:00',33,'Hello description','Rome','game',1,4,1,1,NULL),
+	(27,'2014-09-01 02:00:37',34.9,'Nunc sem magna, ornare non mi vitae, pellentesque condimentum lectus. Donec accumsan mattis interdum. Fusce quis dictum diam, nec pharetra felis. In arcu odio, consectetur eget eleifend eget, posuere vel turpis. Maecenas bibendum urna eu felis sollicitudin, id ultricies massa interdum. Nulla eget scelerisque tortor. Suspendisse posuere nisl eget leo congue aliquet. Integer euismod nibh eget ligula hendrerit eleifend id sit amet nisl. Morbi vitae iaculis velit, sit amet fringilla dolor. Ut sed nisi tortor. Vestibulum quis arcu sed augue ornare rhoncus. Nam enim lacus, hendrerit quis ex eget, euismod dictum nibh. Proin dui tortor, pellentesque in libero et, consequat elementum neque. Suspendisse consequat dui non massa lacinia imperdiet.','L\'Aquila','game',1,15,2,6,NULL);
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -167,7 +168,20 @@ VALUES
 	(4,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(10','2014-08-31 19:28:43'),
 	(5,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(10','2014-08-31 19:30:47'),
 	(6,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'online\' in \'where clause\'\nQuery: SELECT COUNT(*) FROM `users` WHERE `online` = 1\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT COUNT(*)...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT COUNT(*)...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(68): Common\\Db::get_rows(\'SELECT COUNT(*)...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(80): Common\\Db::array_from_one_column_query(\'SELECT COUNT(*)...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(204): Common\\Db::number_from_query(\'SELECT COUNT(*)...\')\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104)','2014-08-31 19:31:14'),
-	(7,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'users.online\' in \'where clause\'\nQuery: SELECT * FROM `users` WHERE `users`.`online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT * FROM `...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT * FROM `...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(293): Common\\Db::get_rows(\'SELECT * FROM `...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(215): Models\\Model::new_instances_from_query(\'SELECT * FROM `...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(202): Models\\Model::where(Array)\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Contr','2014-08-31 19:32:47');
+	(7,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'users.online\' in \'where clause\'\nQuery: SELECT * FROM `users` WHERE `users`.`online` = \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT * FROM `...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT * FROM `...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(293): Common\\Db::get_rows(\'SELECT * FROM `...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(215): Models\\Model::new_instances_from_query(\'SELECT * FROM `...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/models/user.php(202): Models\\Model::where(Array)\n#5 /Users/whatyouhide/Sites/gamespot/app/controllers/backend_application_controller.php(30): Models\\User::online_count()\n#6 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Contr','2014-08-31 19:32:47'),
+	(8,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/93630bc495f480351daf742356d8552aa7293379.file.index.tpl.php','2014-08-31 19:40:15'),
+	(9,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/0a3d6f5ffc25f54ddfa7beac4ceb0aaf29c271f4.file.index.tpl.php','2014-08-31 19:40:15'),
+	(10,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/2e3257d90af80828975f66a0f3b65516bfba89d1.file.profile.tpl.php','2014-09-01 01:57:14'),
+	(11,'Uncaught exception \'Exception\' with message \'Error with the database: Cannot add or update a child row: a foreign key constraint fails (`gamespot`.`ads`, CONSTRAINT `ad_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION)\nQuery: INSERT INTO `ads`(`type`, `author_id`) VALUES (\'game\', \'15\')\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'INSERT INTO `ad...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(250): Common\\Db::query(\'INSERT INTO `ad...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/controllers/ads_controller.php(64): Models\\Model::create(Array)\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Controllers\\AdsController->nuevo()\n#4 /Users/whatyouhide/Sites/gamespot/app/classes/router.class.php(115): Controllers\\Controller->dispatch()\n#5 /Users/whatyouhide/Sites/gamesp','2014-09-01 01:57:17'),
+	(12,'Uncaught exception \'Exception\' with message \'Error with the database: Cannot add or update a child row: a foreign key constraint fails (`gamespot`.`ads`, CONSTRAINT `ad_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION)\nQuery: INSERT INTO `ads`(`type`, `author_id`) VALUES (\'game\', \'15\')\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'INSERT INTO `ad...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(250): Common\\Db::query(\'INSERT INTO `ad...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/controllers/ads_controller.php(64): Models\\Model::create(Array)\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Controllers\\AdsController->nuevo()\n#4 /Users/whatyouhide/Sites/gamespot/app/classes/router.class.php(115): Controllers\\Controller->dispatch()\n#5 /Users/whatyouhide/Sites/gamesp','2014-09-01 01:57:50'),
+	(13,'Undefined index: accessory','2014-09-01 01:57:52'),
+	(14,'Uncaught exception \'Exception\' with message \'Error with the database: Cannot add or update a child row: a foreign key constraint fails (`gamespot`.`ads`, CONSTRAINT `ad_belongs_to_console` FOREIGN KEY (`console_id`) REFERENCES `consoles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION)\nQuery: INSERT INTO `ads`(`type`, `author_id`) VALUES (\'game\', \'15\')\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'INSERT INTO `ad...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(250): Common\\Db::query(\'INSERT INTO `ad...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/controllers/ads_controller.php(64): Models\\Model::create(Array)\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Controllers\\AdsController->nuevo()\n#4 /Users/whatyouhide/Sites/gamespot/app/classes/router.class.php(115): Controllers\\Controller->dispatch()\n#5 /Users/whatyouhide/Sites/gamesp','2014-09-01 01:57:53'),
+	(15,'Undefined index: accessory','2014-09-01 01:59:34'),
+	(16,'Trying to get property of non-object','2014-09-01 01:59:35'),
+	(17,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 02:00:31'),
+	(18,'Undefined index: accessory','2014-09-01 02:00:39'),
+	(19,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/2ae02da038d59bb04be0c498cfeef024e5db68ee.file.show.tpl.php','2014-09-01 02:01:26'),
+	(20,'Call to undefined method Common\\Mailer::error_info()','2014-09-01 02:03:54');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -311,8 +325,8 @@ CREATE TABLE `posts_tags` (
   `tag_id` int(11) unsigned NOT NULL,
   KEY `posts_tags_references_posts` (`post_id`),
   KEY `posts_tags_references_tags` (`tag_id`),
-  CONSTRAINT `posts_tags_references_tags` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `posts_tags_references_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `posts_tags_references_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `posts_tags_references_tags` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `posts_tags` WRITE;
@@ -450,7 +464,8 @@ VALUES
 	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL),
 	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL),
 	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL),
-	(56,'56/2013-08-24 21.47.15.jpg',2117499,'image/jpeg','2014-08-29 17:24:47',4,NULL,NULL,NULL,NULL,NULL);
+	(56,'56/2013-08-24 21.47.15.jpg',2117499,'image/jpeg','2014-08-29 17:24:47',4,NULL,NULL,NULL,NULL,NULL),
+	(57,'57/1370955297-knack-2.jpg',1659155,'image/jpeg','2014-09-01 02:00:31',NULL,NULL,NULL,NULL,27,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -486,12 +501,12 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `signed_in`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1,0,0,NULL,1,NULL,1),
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,0,NULL,1,NULL,NULL),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,0,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,0,NULL,1,NULL,5),
 	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,1,0,NULL,1,NULL,NULL);
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -516,15 +531,29 @@ LOCK TABLES `visits` WRITE;
 
 INSERT INTO `visits` (`id`, `url`, `ip`, `visited_at`, `count`)
 VALUES
-	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',5),
+	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',6),
 	(6,'/backend/ads','::1','2014-08-31 18:21:48',2),
-	(7,'/backend/groups','::1','2014-08-31 18:26:06',3),
-	(8,'/backend','::1','2014-08-31 18:33:57',23),
-	(9,'/backend/accessories','::1','2014-08-31 18:50:47',9),
+	(7,'/backend/groups','::1','2014-08-31 18:26:06',6),
+	(8,'/backend','::1','2014-08-31 18:33:57',31),
+	(9,'/backend/accessories','::1','2014-08-31 18:50:47',10),
 	(10,'/backend/posts','::1','2014-08-31 18:52:59',1),
 	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',1),
 	(12,'/backend/users','::1','2014-08-31 18:53:02',1),
-	(13,'/backend/errors','::1','2014-08-31 19:00:01',5);
+	(13,'/backend/errors','::1','2014-08-31 19:00:01',5),
+	(14,'/backend/consoles','::1','2014-08-31 19:40:15',3),
+	(15,'/backend/games','::1','2014-08-31 19:40:15',1),
+	(16,'/','::1','2014-08-31 19:41:21',5),
+	(17,'/users/sign_out','::1','2014-08-31 19:41:25',3),
+	(18,'/users/sign_in','::1','2014-08-31 19:41:25',10),
+	(19,'/users/forgot_password','::1','2014-09-01 01:56:10',1),
+	(20,'/users/profile','::1','2014-09-01 01:57:14',4),
+	(21,'/ads/nuevo?type=game','::1','2014-09-01 01:57:17',4),
+	(22,'/ads/edit?id=27','::1','2014-09-01 01:59:35',4),
+	(23,'/ads/update?id=27','::1','2014-09-01 01:59:54',3),
+	(24,'/ads/upload_image?id=27','::1','2014-09-01 02:00:31',1),
+	(25,'/ads','::1','2014-09-01 02:01:21',1),
+	(26,'/ads/show?id=27','::1','2014-09-01 02:01:25',10),
+	(27,'/ads/contact','::1','2014-09-01 02:01:31',7);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;

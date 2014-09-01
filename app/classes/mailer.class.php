@@ -63,12 +63,26 @@ class Mailer {
   }
 
   /**
+   * Return infos about the last error.
+   * @return string
+   */
+  public function error_infos() {
+    return $this->mail->ErrorInfo;
+  }
+
+  /**
    * Setup common properties that all sent emails should share.
    */
   private function setup_common_properties() {
+    // Gmail.
     $this->mail->isSMTP();
-    $this->mail->Host = '127.0.0.1:1025';
-    $this->mail->SMTPAuth = false;
+    $this->mail->SMTPAuth = true;
+    $this->mail->SMTPSecure = 'tls';
+    $this->mail->Host = 'smtp.gmail.com';
+    $this->mail->Port = 587;
+    $this->mail->Username = 'twdgamespot@gmail.com';
+    $this->mail->Password = 'tecnodelweb';
+
     $this->mail->isHTML(false);
     $this->mail->WordWrap = 50;
   }
