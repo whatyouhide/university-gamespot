@@ -9,6 +9,9 @@ namespace Models;
  * A notification subscription which ties up a user and an accessory.
  */
 class AccessoryNotification extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'accessory_notifications';
 
   /**

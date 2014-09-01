@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-09-01 16:25:14 +0000
+# Generation Time: 2014-09-01 22:05:07 +0000
 # ************************************************************
 
 
@@ -51,6 +51,34 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table accessory_notifications
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `accessory_notifications`;
+
+CREATE TABLE `accessory_notifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `accessory_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `accessory_id` (`accessory_id`),
+  CONSTRAINT `accessory_notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `accessory_notifications_ibfk_2` FOREIGN KEY (`accessory_id`) REFERENCES `accessories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `accessory_notifications` WRITE;
+/*!40000 ALTER TABLE `accessory_notifications` DISABLE KEYS */;
+
+INSERT INTO `accessory_notifications` (`id`, `user_id`, `accessory_id`)
+VALUES
+	(1,15,1),
+	(2,15,2);
+
+/*!40000 ALTER TABLE `accessory_notifications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table ads
 # ------------------------------------------------------------
 
@@ -89,9 +117,42 @@ VALUES
 	(22,'2014-08-31 15:56:00',33,'r2r23r21','r2r','accessory',1,4,1,NULL,1),
 	(23,'2014-08-31 15:56:00',33,'Hello description','Rome','game',1,4,1,1,NULL),
 	(27,'2014-09-01 02:00:37',34.9,'Nunc sem magna, ornare non mi vitae, pellentesque condimentum lectus. Donec accumsan mattis interdum. Fusce quis dictum diam, nec pharetra felis. In arcu odio, consectetur eget eleifend eget, posuere vel turpis. Maecenas bibendum urna eu felis sollicitudin, id ultricies massa interdum. Nulla eget scelerisque tortor. Suspendisse posuere nisl eget leo congue aliquet. Integer euismod nibh eget ligula hendrerit eleifend id sit amet nisl. Morbi vitae iaculis velit, sit amet fringilla dolor. Ut sed nisi tortor. Vestibulum quis arcu sed augue ornare rhoncus. Nam enim lacus, hendrerit quis ex eget, euismod dictum nibh. Proin dui tortor, pellentesque in libero et, consequat elementum neque. Suspendisse consequat dui non massa lacinia imperdiet.','L\'Aquila','game',1,15,2,6,NULL),
-	(28,'2014-09-01 13:13:04',99.9,'Sed ornare nunc ut massa hendrerit, nec pulvinar nibh sagittis. Cras pulvinar enim id nulla egestas viverra. Duis luctus metus quis ligula imperdiet, in tristique urna porta. Phasellus et ante vitae dui pulvinar faucibus. Ut eleifend nulla ut nibh ultrices feugiat. Sed viverra sit amet dolor eu semper. Curabitur et interdum ligula. Integer fringilla auctor turpis. Proin viverra tristique mi, ut maximus sapien imperdiet sit amet. Sed laoreet consequat est, non semper lectus placerat eget. In at leo eu leo tincidunt mattis. Praesent finibus urna eu velit efficitur eleifend non vitae lectus. Vestibulum varius lacinia pellentesque. Vestibulum euismod quam ultrices, eleifend libero vitae, lacinia lacus. Nulla ornare porta lorem quis molestie. Praesent blandit libero nisl, vel tincidunt risus viverra rutrum.','Los Angeles','accessory',1,15,1,NULL,1);
+	(28,'2014-09-01 13:13:04',99.9,'Sed ornare nunc ut massa hendrerit, nec pulvinar nibh sagittis. Cras pulvinar enim id nulla egestas viverra. Duis luctus metus quis ligula imperdiet, in tristique urna porta. Phasellus et ante vitae dui pulvinar faucibus. Ut eleifend nulla ut nibh ultrices feugiat. Sed viverra sit amet dolor eu semper. Curabitur et interdum ligula. Integer fringilla auctor turpis. Proin viverra tristique mi, ut maximus sapien imperdiet sit amet. Sed laoreet consequat est, non semper lectus placerat eget. In at leo eu leo tincidunt mattis. Praesent finibus urna eu velit efficitur eleifend non vitae lectus. Vestibulum varius lacinia pellentesque. Vestibulum euismod quam ultrices, eleifend libero vitae, lacinia lacus. Nulla ornare porta lorem quis molestie. Praesent blandit libero nisl, vel tincidunt risus viverra rutrum.','Los Angeles','accessory',1,15,1,NULL,1),
+	(29,'2014-09-01 23:44:26',33,'qwdeqwedqwdqwedeqwdewqdqwdeqwdqewdqqw','rwqfqwdqwe','game',1,10,2,1,NULL),
+	(30,'2014-09-01 23:58:02',22,'dewqdeqwd','dqwdqw','accessory',1,10,1,NULL,1);
 
 /*!40000 ALTER TABLE `ads` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table game_notifications
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `game_notifications`;
+
+CREATE TABLE `game_notifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `game_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `game_id` (`game_id`),
+  CONSTRAINT `game_notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `game_notifications_ibfk_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `game_notifications` WRITE;
+/*!40000 ALTER TABLE `game_notifications` DISABLE KEYS */;
+
+INSERT INTO `game_notifications` (`id`, `user_id`, `game_id`)
+VALUES
+	(1,15,1),
+	(3,15,2),
+	(4,15,3),
+	(5,15,4),
+	(6,15,6);
+
+/*!40000 ALTER TABLE `game_notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -259,7 +320,32 @@ VALUES
 	(117,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) ads_count\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY ads_count DESC\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.','2014-09-01 18:16:17'),
 	(118,'Object of class Models\\Game could not be converted to string','2014-09-01 18:17:26'),
 	(119,'Object of class Models\\Game could not be converted to string','2014-09-01 18:17:35'),
-	(120,'Trying to get property of non-object','2014-09-01 18:21:04');
+	(120,'Trying to get property of non-object','2014-09-01 18:21:04'),
+	(121,'Undefined index: max-price','2014-09-01 18:54:24'),
+	(122,'Undefined index: max-price','2014-09-01 18:54:31'),
+	(123,'Undefined index: max-price','2014-09-01 18:54:36'),
+	(124,'Undefined index: max-price','2014-09-01 18:55:31'),
+	(125,'Undefined index: max-price','2014-09-01 18:56:22'),
+	(126,'Trying to get property of non-object','2014-09-01 19:08:42'),
+	(127,'Trying to get property of non-object','2014-09-01 19:08:44'),
+	(128,'Undefined index: max-price','2014-09-01 19:43:13'),
+	(129,'Undefined index: max-price','2014-09-01 19:43:16'),
+	(130,'Call to undefined method Models\\GameNotification::create()','2014-09-01 22:55:31'),
+	(131,'Uncaught exception \'Exception\' with message \'Error with the database: Unknown column \'game_notifications.id\' in \'where clause\'\nQuery: SELECT * FROM `game_notifications` WHERE `game_notifications`.`id` = \'0\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT * FROM `...\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT * FROM `...\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT * FROM `...\')\n#3 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(215): Models\\Model::new_instances_from_query(\'SELECT * FROM `...\')\n#4 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(184): Models\\Model::where(Array)\n#5 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(268): Models\\Model::find(0)\n#6 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.','2014-09-01 22:55:56'),
+	(132,'session_start(): Cannot send session cache limiter - headers already sent (output started at /Users/whatyouhide/Sites/gamespot/app/models/accessory_notification.php:33)','2014-09-01 23:06:33'),
+	(133,'Class \'Controllers\\AccessoryNotification\' not found','2014-09-01 23:06:34'),
+	(134,'Call to undefined method Models\\AccessoryNotification::tie_up_user_and_accessory()','2014-09-01 23:07:37'),
+	(135,'Cannot modify header information - headers already sent by (output started at /Users/whatyouhide/Sites/gamespot/app/models/accessory_notification.php:33)','2014-09-01 23:08:04'),
+	(136,'Call to undefined method Models\\GameNotification::tie_up_user_and_accessory()','2014-09-01 23:29:12'),
+	(137,'Undefined index: accessory','2014-09-01 23:34:28'),
+	(138,'Trying to get property of non-object','2014-09-01 23:34:30'),
+	(139,'Undefined index: from_name','2014-09-01 23:34:49'),
+	(140,'Cannot modify header information - headers already sent by (output started at /Users/whatyouhide/Sites/gamespot/app/functions.php:39)','2014-09-01 23:45:13'),
+	(141,'Cannot modify header information - headers already sent by (output started at /Users/whatyouhide/Sites/gamespot/app/functions.php:39)','2014-09-01 23:45:34'),
+	(142,'Cannot modify header information - headers already sent by (output started at /Users/whatyouhide/Sites/gamespot/app/functions.php:39)','2014-09-01 23:45:57'),
+	(143,'Undefined index: accessory','2014-09-01 23:57:03'),
+	(144,'Trying to get property of non-object','2014-09-01 23:57:05'),
+	(145,'Undefined index: max-price','2014-09-02 00:00:27');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -545,7 +631,8 @@ VALUES
 	(59,'59/5IljutD.jpg',24264,'image/jpeg','2014-09-01 12:59:31',NULL,NULL,NULL,NULL,27,NULL),
 	(60,'60/4fQKn7c.png',465936,'image/png','2014-09-01 13:09:35',NULL,NULL,NULL,NULL,28,NULL),
 	(61,'61/8l15GYP.jpg',100841,'image/jpeg','2014-09-01 13:09:37',NULL,NULL,NULL,NULL,28,NULL),
-	(62,'62/bmOq96z.png',2032377,'image/png','2014-09-01 13:09:39',NULL,NULL,NULL,NULL,28,NULL);
+	(62,'62/bmOq96z.png',2032377,'image/png','2014-09-01 13:09:39',NULL,NULL,NULL,NULL,28,NULL),
+	(63,'63/fifa14-poland-cover.jpg',500669,'image/jpeg','2014-09-01 19:30:24',NULL,5,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -581,12 +668,12 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `hashed_password`, `created_at`, `first_name`, `last_name`, `signed_in`, `blocked`, `resetting`, `reset_token`, `confirmed`, `confirmation_token`, `group_id`)
 VALUES
-	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',1,0,0,NULL,1,NULL,1),
+	(1,'admin@gamespot.com','21232f297a57a5a743894a0e4a801fc3','2014-02-23 12:20:13','Ammi','Nistratore',0,0,0,NULL,1,NULL,1),
 	(4,'staff@gamespot.com','1253208465b1efa876f982d8a9e73eef','2014-02-24 23:49:05','Membero','Dello Staff',0,0,0,NULL,1,NULL,3),
-	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',0,0,0,NULL,1,NULL,NULL),
+	(10,'regular@gamespot.com','af37d08ae228a87dc6b265fd1019c97d','2014-08-21 14:16:34','Regolare','Userone',1,0,0,NULL,1,NULL,NULL),
 	(11,'support@gamespot.com','434990c8a25d2be94863561ae98bd682','2014-08-21 15:07:29','Suppor','Tomini',0,0,0,NULL,1,NULL,5),
 	(14,'blogger@gamespot.com','c8eb6ea7e78913e97329f6eee2cdef5d','2014-08-24 19:31:38','Blo','Ghero',0,0,0,NULL,1,NULL,2),
-	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',0,0,0,NULL,1,NULL,NULL);
+	(15,'an.leopardi@gmail.com','9003d1df22eb4d3820015070385194c8','2014-08-25 19:05:09','Andrea','Leopardi',1,0,0,NULL,1,NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -614,24 +701,24 @@ VALUES
 	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',16),
 	(6,'/backend/ads','::1','2014-08-31 18:21:48',6),
 	(7,'/backend/groups','::1','2014-08-31 18:26:06',16),
-	(8,'/backend','::1','2014-08-31 18:33:57',131),
+	(8,'/backend','::1','2014-08-31 18:33:57',134),
 	(9,'/backend/accessories','::1','2014-08-31 18:50:47',16),
 	(10,'/backend/posts','::1','2014-08-31 18:52:59',83),
 	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',28),
 	(12,'/backend/users','::1','2014-08-31 18:53:02',18),
-	(13,'/backend/errors','::1','2014-08-31 19:00:01',10),
+	(13,'/backend/errors','::1','2014-08-31 19:00:01',11),
 	(14,'/backend/consoles','::1','2014-08-31 19:40:15',45),
-	(15,'/backend/games','::1','2014-08-31 19:40:15',15),
-	(16,'/','::1','2014-08-31 19:41:21',156),
-	(17,'/users/sign_out','::1','2014-08-31 19:41:25',17),
-	(18,'/users/sign_in','::1','2014-08-31 19:41:25',39),
+	(15,'/backend/games','::1','2014-08-31 19:40:15',18),
+	(16,'/','::1','2014-08-31 19:41:21',170),
+	(17,'/users/sign_out','::1','2014-08-31 19:41:25',18),
+	(18,'/users/sign_in','::1','2014-08-31 19:41:25',45),
 	(19,'/users/forgot_password','::1','2014-09-01 01:56:10',1),
-	(20,'/users/profile','::1','2014-09-01 01:57:14',70),
-	(21,'/ads/nuevo?type=game','::1','2014-09-01 01:57:17',4),
+	(20,'/users/profile','::1','2014-09-01 01:57:14',74),
+	(21,'/ads/nuevo?type=game','::1','2014-09-01 01:57:17',5),
 	(22,'/ads/edit?id=27','::1','2014-09-01 01:59:35',54),
 	(23,'/ads/update?id=27','::1','2014-09-01 01:59:54',3),
 	(24,'/ads/upload_image?id=27','::1','2014-09-01 02:00:31',3),
-	(25,'/ads','::1','2014-09-01 02:01:21',93),
+	(25,'/ads','::1','2014-09-01 02:01:21',95),
 	(26,'/ads/show?id=27','::1','2014-09-01 02:01:25',65),
 	(27,'/ads/contact','::1','2014-09-01 02:01:31',14),
 	(28,'/backend/users/block?id=10','::1','2014-09-01 10:31:56',1),
@@ -650,17 +737,42 @@ VALUES
 	(41,'/support','::1','2014-09-01 11:41:11',2),
 	(42,'/ads/show?id=23','::1','2014-09-01 12:19:15',2),
 	(43,'/ads/show?id=6','::1','2014-09-01 12:20:01',2),
-	(44,'/users/settings','::1','2014-09-01 12:43:25',1),
-	(45,'/games','::1','2014-09-01 12:43:45',13),
-	(46,'/accessories','::1','2014-09-01 12:43:49',6),
-	(47,'/ads/nuevo?type=accessory','::1','2014-09-01 13:09:14',1),
+	(44,'/users/settings','::1','2014-09-01 12:43:25',2),
+	(45,'/games','::1','2014-09-01 12:43:45',149),
+	(46,'/accessories','::1','2014-09-01 12:43:49',42),
+	(47,'/ads/nuevo?type=accessory','::1','2014-09-01 13:09:14',2),
 	(48,'/ads/edit?id=28','::1','2014-09-01 13:09:14',14),
 	(49,'/ads/update?id=28','::1','2014-09-01 13:09:31',2),
 	(50,'/ads/upload_image?id=28','::1','2014-09-01 13:09:35',3),
 	(51,'/backend/game_categories/create','::1','2014-09-01 13:58:17',1),
-	(52,'/backend/games/edit?id=1','::1','2014-09-01 17:53:56',12),
+	(52,'/backend/games/edit?id=1','::1','2014-09-01 17:53:56',13),
 	(53,'/backend/games/update?id=1','::1','2014-09-01 17:57:22',1),
-	(54,'/backend/games/edit?id=2','::1','2014-09-01 17:57:24',1);
+	(54,'/backend/games/edit?id=2','::1','2014-09-01 17:57:24',1),
+	(55,'/ads/by_game?id=1','::1','2014-09-01 18:54:24',2),
+	(56,'/ads/filter?game=1&type=game','::1','2014-09-01 18:54:24',2),
+	(57,'/ads/by_game?id=2','::1','2014-09-01 18:54:35',1),
+	(58,'/ads/filter?game=2&type=game','::1','2014-09-01 18:54:36',1),
+	(59,'/ads/by_accessory?id=1','::1','2014-09-01 18:55:31',3),
+	(60,'/ads/filter?accessory=1&type=accessory','::1','2014-09-01 18:55:31',4),
+	(61,'/ads/filter?console=&city=&type=game&game=3&max-price=0','::1','2014-09-01 18:55:35',1),
+	(62,'/ads/by_game?id=6','::1','2014-09-01 18:56:22',1),
+	(63,'/ads/filter?game=6&type=game','::1','2014-09-01 18:56:22',1),
+	(64,'/ads/show?id=28','::1','2014-09-01 18:56:26',18),
+	(65,'/backend/games/edit?id=5','::1','2014-09-01 19:30:17',2),
+	(66,'/backend/games/update?id=5','::1','2014-09-01 19:30:24',1),
+	(67,'/games/subscribe?id=1','::1','2014-09-01 22:55:31',8),
+	(68,'/games/subscribe?id=2','::1','2014-09-01 23:02:57',2),
+	(69,'/accessories/subscribe?id=1','::1','2014-09-01 23:06:34',6),
+	(70,'/accessories/subscribe?id=2','::1','2014-09-01 23:08:48',1),
+	(71,'/games/subscribe?id=3','::1','2014-09-01 23:33:48',1),
+	(72,'/games/subscribe?id=4','::1','2014-09-01 23:33:51',1),
+	(73,'/games/subscribe?id=6','::1','2014-09-01 23:33:55',1),
+	(74,'/ads/edit?id=29','::1','2014-09-01 23:34:30',8),
+	(75,'/ads/update?id=29','::1','2014-09-01 23:34:43',12),
+	(76,'/ads/show?id=29','::1','2014-09-01 23:48:19',1),
+	(77,'/ads/edit?id=30','::1','2014-09-01 23:57:05',4),
+	(78,'/ads/update?id=30','::1','2014-09-01 23:57:13',5),
+	(79,'/ads/show?id=30','::1','2014-09-01 23:58:38',1);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;

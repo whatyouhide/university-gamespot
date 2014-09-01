@@ -9,6 +9,9 @@ namespace Models;
  * A notification subscription which ties up a user and a game.
  */
 class GameNotification extends Model {
+  /**
+   * {@inheritdoc}
+   */
   public static $table_name = 'game_notifications';
 
   /**
