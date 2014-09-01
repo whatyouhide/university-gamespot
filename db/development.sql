@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.34-log)
 # Database: gamespot
-# Generation Time: 2014-09-01 15:00:32 +0000
+# Generation Time: 2014-09-01 16:25:14 +0000
 # ************************************************************
 
 
@@ -248,7 +248,18 @@ VALUES
 	(106,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:35'),
 	(107,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:37'),
 	(108,'Indirect modification of overloaded property Models\\Ad::$images has no effect','2014-09-01 13:09:39'),
-	(109,'Call to a member function signed_out() on a non-object','2014-09-01 13:46:09');
+	(109,'Call to a member function signed_out() on a non-object','2014-09-01 13:46:09'),
+	(110,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/956b40e4486b55f7edb2247dbb2c6d7f14bb8424.file.edit.tpl.php','2014-09-01 17:53:56'),
+	(111,'filemtime(): stat failed for /Users/whatyouhide/Sites/gamespot/templates_c/2264ec2b4ce86a90412f9d4cc6a07926f4fac73f.file.index.tpl.php','2014-09-01 18:13:33'),
+	(112,'Uncaught exception \'Exception\' with message \'Error with the database: Undeclared variable: 1\nQuery: SELECT `games`.*, COUNT(*) `ads_count`\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY `ads_count`\nLIMIT `1`\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.php(20): Models\\Game::with_most_ads()\n#5 /Users/whatyouhide/Sites/gamespot/app/classes/controller.class.php(104): Controllers\\Ga','2014-09-01 18:14:58'),
+	(113,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) `ads_count`\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY `ads_count`\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.p','2014-09-01 18:15:19'),
+	(114,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) `ads_count`\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY `ads_count`\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.p','2014-09-01 18:15:22'),
+	(115,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) ads_count\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY ads_count\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.php(2','2014-09-01 18:15:51'),
+	(116,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) ads_count\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY ads_count\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.php(2','2014-09-01 18:15:53'),
+	(117,'Uncaught exception \'Exception\' with message \'Error with the database: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'\'1\'\' at line 7\nQuery: SELECT `games`.*, COUNT(*) ads_count\nFROM `ads`\nJOIN `games` ON `ads`.`game_id` = `games`.`id`\nWHERE `ads`.`type` = \'game\'\nGROUP BY `games`.`id`\nORDER BY ads_count DESC\nLIMIT \'1\'\' in /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php:140\nStack trace:\n#0 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(44): Common\\Db::throw_exception_if_error(\'SELECT `games`....\')\n#1 /Users/whatyouhide/Sites/gamespot/app/classes/db.class.php(53): Common\\Db::query(\'SELECT `games`....\')\n#2 /Users/whatyouhide/Sites/gamespot/app/classes/model.class.php(308): Common\\Db::get_rows(\'SELECT `games`....\')\n#3 /Users/whatyouhide/Sites/gamespot/app/models/game.php(109): Models\\Model::new_instances_from_query(\'SELECT `games`....\')\n#4 /Users/whatyouhide/Sites/gamespot/app/controllers/games_controller.','2014-09-01 18:16:17'),
+	(118,'Object of class Models\\Game could not be converted to string','2014-09-01 18:17:26'),
+	(119,'Object of class Models\\Game could not be converted to string','2014-09-01 18:17:35'),
+	(120,'Trying to get property of non-object','2014-09-01 18:21:04');
 
 /*!40000 ALTER TABLE `errors` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -307,7 +318,7 @@ LOCK TABLES `games` WRITE;
 
 INSERT INTO `games` (`id`, `name`, `release_date`, `description`, `software_house`, `created_at`, `console_id`, `game_category_id`)
 VALUES
-	(1,'1886: The Order','2014-02-23','Integer turpis erat, gravida vitae lacinia id, congue ac eros. Etiam sodales velit porttitor iaculis porttitor. Nullam condimentum lorem sit amet interdum euismod. Nulla cursus eros sed condimentum pharetra. Fusce sodales sed justo et consectetur. Duis congue odio nunc, ut accumsan elit euismod eget. Aenean tempor velit in lectus elementum, quis semper lacus auctor. Ut nisi enim, mattis vel lorem ac, vehicula dictum sapien. Praesent auctor mauris turpis, ac venenatis metus rutrum vitae. Aliquam dolor tellus, rhoncus ac tincidunt mattis, consectetur eget risus.','SWHouse','2014-02-23 12:17:19',2,1),
+	(1,'1886: The Order','2014-02-23','Integer turpis erat, gravida vitae lacinia id, congue ac eros. Etiam sodales velit porttitor iaculis porttitor. Nullam condimentum lorem sit amet interdum euismod. Nulla cursus eros sed condimentum pharetra. Fusce sodales sed justo et consectetur. Duis congue odio nunc, ut accumsan elit euismod eget. Aenean tempor velit in lectus elementum, quis semper lacus auctor. Ut nisi enim, mattis vel lorem ac, vehicula dictum sapien. Praesent auctor mauris turpis, ac venenatis metus rutrum vitae. Aliquam dolor tellus, rhoncus ac tincidunt mattis, consectetur eget risus.','SWHouse','2014-02-23 12:17:19',2,8),
 	(2,'Battlefield 4','2013-11-29','Curabitur convallis tortor vitae massa vehicula, sed tincidunt turpis malesuada. Curabitur aliquet eu nunc nec commodo. Maecenas faucibus augue id sem porta, sed ultricies tortor posuere. Nullam sed nulla sed lectus placerat tristique. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin eros erat, venenatis sit amet leo non, scelerisque auctor tellus. Quisque vel tellus ut sem euismod pharetra. Ut iaculis magna volutpat laoreet venenatis. Integer quis massa mauris. In luctus eros quis purus vehicula posuere. Phasellus sed sapien neque. Proin bibendum leo vitae lectus luctus, sed convallis eros pulvinar. Ut interdum turpis nisl, non commodo orci facilisis eget. Nunc faucibus urna ac dolor semper, quis iaculis nisi consequat.','Dice','2014-02-24 00:50:17',2,2),
 	(3,'Beyond','2013-05-05','Nullam venenatis quis augue vel pellentesque. Fusce sed neque quam. Praesent ante purus, ultrices quis augue ut, cursus vehicula diam. In non eros justo. Ut molestie mattis placerat. Vestibulum et lobortis arcu, ac tempus diam. Integer eget lacinia leo. Aenean at neque accumsan, suscipit lacus vitae, convallis libero. Etiam sit amet eros a augue dapibus semper nec viverra augue. Praesent id malesuada nisi. Sed ultricies, neque ac euismod adipiscing, velit enim porta elit, sed feugiat nunc nunc n','Bethesda','2014-02-23 12:17:18',1,7),
 	(4,'Call Of Duty: Ghosts','2013-11-14','Donec aliquet, velit sed mollis luctus, orci lacus tincidunt tellus, ac blandit est orci quis metus. In gravida elit ligula. Donec vel augue sit amet lorem imperdiet tincidunt ut lacinia elit. Morbi eleifend viverra diam non rhoncus. Proin suscipit tortor non mauris congue, eget tristique ligula commodo. Sed pellentesque dapibus molestie. Aenean dui mi, pretium at nulla in, suscipit euismod mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi laoreet diam ut ligula ullamcorper blandit. Mauris vulputate posuere magna ut feugiat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor non felis et placerat. Pellentesque dignissim odio malesuada felis placerat dignissim sit amet vitae magna. Suspendisse nec aliquam magna, sit amet aliquam augue. Praesent dictum egestas est, sit amet scelerisque leo pellentesque sit amet. Mauris et interdum lacus, in tristique eros.','Activision','2014-02-23 12:23:04',1,2),
@@ -527,12 +538,7 @@ VALUES
 	(19,'19/1373299467.jpg',230637,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23,NULL),
 	(20,'20/1373298726.jpg',193272,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23,NULL),
 	(21,'21/1373334244.jpg',352374,'image/jpeg','2014-08-19 18:21:56',NULL,NULL,NULL,NULL,23,NULL),
-	(25,'',0,'','2014-08-20 21:13:55',NULL,NULL,NULL,NULL,NULL,NULL),
-	(39,'',0,'','2014-08-21 20:53:05',NULL,NULL,NULL,NULL,NULL,NULL),
-	(40,'',0,'','2014-08-21 20:55:48',NULL,NULL,NULL,NULL,NULL,NULL),
-	(41,'',0,'','2014-08-21 20:59:58',NULL,NULL,NULL,NULL,NULL,NULL),
 	(54,'54/ClitIrD.jpg',113613,'image/jpeg','2014-08-26 19:10:21',10,NULL,NULL,NULL,NULL,NULL),
-	(55,'55/TheOrder_1886.jpg',328692,'image/jpeg','2014-08-27 15:14:41',NULL,1,NULL,NULL,NULL,NULL),
 	(56,'56/2013-08-24 21.47.15.jpg',2117499,'image/jpeg','2014-08-29 17:24:47',4,NULL,NULL,NULL,NULL,NULL),
 	(57,'57/1370955297-knack-2.jpg',1659155,'image/jpeg','2014-09-01 02:00:31',NULL,NULL,NULL,NULL,27,NULL),
 	(58,'58/3EtzCi3.jpg',105741,'image/jpeg','2014-09-01 12:59:28',NULL,NULL,NULL,NULL,27,NULL),
@@ -608,15 +614,15 @@ VALUES
 	(5,'/backend/game_categories','::1','2014-08-31 18:21:31',16),
 	(6,'/backend/ads','::1','2014-08-31 18:21:48',6),
 	(7,'/backend/groups','::1','2014-08-31 18:26:06',16),
-	(8,'/backend','::1','2014-08-31 18:33:57',122),
+	(8,'/backend','::1','2014-08-31 18:33:57',131),
 	(9,'/backend/accessories','::1','2014-08-31 18:50:47',16),
 	(10,'/backend/posts','::1','2014-08-31 18:52:59',83),
 	(11,'/backend/support_tickets','::1','2014-08-31 18:53:01',28),
 	(12,'/backend/users','::1','2014-08-31 18:53:02',18),
 	(13,'/backend/errors','::1','2014-08-31 19:00:01',10),
 	(14,'/backend/consoles','::1','2014-08-31 19:40:15',45),
-	(15,'/backend/games','::1','2014-08-31 19:40:15',12),
-	(16,'/','::1','2014-08-31 19:41:21',149),
+	(15,'/backend/games','::1','2014-08-31 19:40:15',15),
+	(16,'/','::1','2014-08-31 19:41:21',156),
 	(17,'/users/sign_out','::1','2014-08-31 19:41:25',17),
 	(18,'/users/sign_in','::1','2014-08-31 19:41:25',39),
 	(19,'/users/forgot_password','::1','2014-09-01 01:56:10',1),
@@ -645,13 +651,16 @@ VALUES
 	(42,'/ads/show?id=23','::1','2014-09-01 12:19:15',2),
 	(43,'/ads/show?id=6','::1','2014-09-01 12:20:01',2),
 	(44,'/users/settings','::1','2014-09-01 12:43:25',1),
-	(45,'/games','::1','2014-09-01 12:43:45',1),
-	(46,'/accessories','::1','2014-09-01 12:43:49',1),
+	(45,'/games','::1','2014-09-01 12:43:45',13),
+	(46,'/accessories','::1','2014-09-01 12:43:49',6),
 	(47,'/ads/nuevo?type=accessory','::1','2014-09-01 13:09:14',1),
 	(48,'/ads/edit?id=28','::1','2014-09-01 13:09:14',14),
 	(49,'/ads/update?id=28','::1','2014-09-01 13:09:31',2),
 	(50,'/ads/upload_image?id=28','::1','2014-09-01 13:09:35',3),
-	(51,'/backend/game_categories/create','::1','2014-09-01 13:58:17',1);
+	(51,'/backend/game_categories/create','::1','2014-09-01 13:58:17',1),
+	(52,'/backend/games/edit?id=1','::1','2014-09-01 17:53:56',12),
+	(53,'/backend/games/update?id=1','::1','2014-09-01 17:57:22',1),
+	(54,'/backend/games/edit?id=2','::1','2014-09-01 17:57:24',1);
 
 /*!40000 ALTER TABLE `visits` ENABLE KEYS */;
 UNLOCK TABLES;
