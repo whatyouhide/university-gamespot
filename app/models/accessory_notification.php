@@ -40,5 +40,15 @@ class AccessoryNotification extends Model {
     $user_ids = array_pluck(self::where(['accessory_id' => $accessory->id]), 'user_id');
     return User::emails_of_ids($user_ids);
   }
+
+  /**
+   * Return the accessories to which a given user is subscribed.
+   * @param int $user_id
+   * @return array
+   */
+  public static function accessories_for_user($user_id) {
+    $accessory_ids = array_pluck(self::where(['user_id' => $user_id]), 'accessory_id');
+    return Accessory::find_multiple($accessory_ids);
+  }
 }
 ?>

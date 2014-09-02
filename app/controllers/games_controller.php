@@ -40,5 +40,26 @@ class GamesController extends Controller {
 
     redirect('/games', $flash);
   }
+
+  /**
+   * GET /games/unsubscribe?id=1
+   * Unsubscribe from a game.
+   */
+  public function unsubscribe() {
+    $game_id = $this->params['id'];
+    $results = GameNotification::where([
+      'user_id' => $this->current_user->id,
+      'game_id' => $game_id
+    ]);
+
+    if (empty($results)) {
+      $flash = ['info' => "Wasn't subscribed"];
+    } else {
+      $results[0]->destroy();
+      $flash = ['notice' => 'Unsubscribed'];
+    }
+
+    redirect('/users/profile', $flash);
+  }
 }
 ?>

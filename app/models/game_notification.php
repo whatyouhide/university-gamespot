@@ -40,5 +40,15 @@ class GameNotification extends Model {
     $user_ids = array_pluck(self::where(['game_id' => $game->id]), 'user_id');
     return User::emails_of_ids($user_ids);
   }
+
+  /**
+   * Return the games to which a given user is subscribed.
+   * @param int $user_id
+   * @return array
+   */
+  public static function games_for_user($user_id) {
+    $game_ids = array_pluck(self::where(['user_id' => $user_id]), 'game_id');
+    return Game::find_multiple($game_ids);
+  }
 }
 ?>

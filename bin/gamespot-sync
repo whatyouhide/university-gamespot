@@ -3,7 +3,7 @@
 rsync -vzrP --exclude-from=.rsync-excludes \
   . whatyouhide@do.whatyouhi.de:/home/whatyouhide/gamespot/
 
-if [[ $1 == '--db' ]];
+if [[ $1 == '--db' ]]; then
   ssh whatyouhide@do.whatyouhi.de \
     '~/gamespot/load_db.sh'
 fi

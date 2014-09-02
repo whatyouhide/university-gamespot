@@ -9,6 +9,8 @@ use Common\Session;
 use Models\User;
 use Models\Ad;
 use Models\Upload;
+use Models\GameNotification;
+use Models\AccessoryNotification;
 
 /**
  * A controller for signin in/up/out and other user-related stuff.
@@ -73,6 +75,8 @@ class UsersController extends Controller {
 
     $this->game_ads = $ads['game'];
     $this->accessory_ads = $ads['accessory'];
+    $this->subscribed_games = GameNotification::games_for_user($this->current_user->id);
+    $this->subscribed_accessories = AccessoryNotification::accessories_for_user($this->current_user->id);
   }
 
   /**

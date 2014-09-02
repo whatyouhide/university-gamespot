@@ -24,7 +24,13 @@
   & > h1 { margin-bottom: 30px; }
 }
 
-
 a.new-item {
   @include button;
+}
+
+table.staff_members {
+  tr.group-header {
+    font-weight: 100;
+    font-style: italic;
+  }
 }

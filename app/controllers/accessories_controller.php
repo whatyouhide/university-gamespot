@@ -40,5 +40,26 @@ class AccessoriesController extends Controller {
 
     redirect('/accessories', $flash);
   }
+
+  /**
+   * GET /accessories/unsubscribe?id=1
+   * Unsubscribe from a accessory.
+   */
+  public function unsubscribe() {
+    $accessory_id = $this->params['id'];
+    $results = AccessoryNotification::where([
+      'user_id' => $this->current_user->id,
+      'accessory_id' => $accessory_id
+    ]);
+
+    if (empty($results)) {
+      $flash = ['info' => "Wasn't subscribed"];
+    } else {
+      $results[0]->destroy();
+      $flash = ['notice' => 'Unsubscribed'];
+    }
+
+    redirect('/users/profile', $flash);
+  }
 }
 ?>
