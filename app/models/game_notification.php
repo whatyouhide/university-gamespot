@@ -48,7 +48,7 @@ class GameNotification extends Model {
    */
   public static function games_for_user($user_id) {
     $game_ids = array_pluck(self::where(['user_id' => $user_id]), 'game_id');
-    return Game::find_multiple($game_ids);
+    return empty($game_ids) ? array() : Game::find_multiple($game_ids);
   }
 }
 ?>

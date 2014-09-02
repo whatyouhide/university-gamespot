@@ -21,6 +21,8 @@
           {$game->name}
           <a href="{url to='/games/unsubscribe' id=$game->id}">Unsubscribe</a>
         </li>
+      {foreachelse}
+        <p>You aren't subscribed to any games.</p>
       {/foreach}
 
       <h4>Accessories</h4>
@@ -29,6 +31,8 @@
           {$accessory->name}
           <a href="{url to='/accessories/unsubscribe' id=$accessory->id}">Unsubscribe</a>
         </li>
+      {foreachelse}
+        <p>You aren't subscribed to any accessory.</p>
       {/foreach}
     </ul>
   </section>

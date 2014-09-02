@@ -48,7 +48,7 @@ class AccessoryNotification extends Model {
    */
   public static function accessories_for_user($user_id) {
     $accessory_ids = array_pluck(self::where(['user_id' => $user_id]), 'accessory_id');
-    return Accessory::find_multiple($accessory_ids);
+    return empty($accessory_ids) ? array() : Accessory::find_multiple($accessory_ids);
   }
 }
 ?>

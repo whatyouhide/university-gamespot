@@ -200,6 +200,8 @@ class User extends Model {
    * @return array
    */
   public static function emails_of_ids($ids) {
+    if (empty($ids)) { return array(); }
+
     $t = static::$table_name;
     $ids = '(' . implode(', ', $ids) . ')';
     $q = "SELECT `email` FROM `$t` WHERE `id` IN $ids";

@@ -241,6 +241,7 @@ class AdsController extends Controller {
       $name = $ad->accessory->name;
     }
 
+    if (empty($emails)) { return; }
 
     $message = $this->render_as_string('mails/ad_notification', [
       'ad' => $ad,
