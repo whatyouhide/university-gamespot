@@ -2,6 +2,8 @@
 
 {block name=content}
 
+<h1 class="main-title">Accessories</h1>
+
 <section class="all">
 
   <article class="with-most-ads">

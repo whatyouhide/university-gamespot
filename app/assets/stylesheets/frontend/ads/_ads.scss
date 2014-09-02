@@ -1,41 +1,44 @@
 .ads.index, .ads.filter {
+  .ads-listing { @extend %clear-after; }
+
   article {
-    border: 1px solid $light-gray;
-    height: 400px;
-    margin: 25px 0;
-    padding: 25px;
+    display: block;
+    width: 49%;
+    height: 670px;
+    background: $very-light-gray;
+    float: left;
     position: relative;
-    transition: transform 0.2s;
+    padding: 20px;
+    margin-bottom: 20px;
+    &:nth-child(2n+1) { margin-right: 1%; }
+    &:nth-child(2n) { margin-left: 1%; }
 
-    &:hover { transform: scale(1.1); }
-
-    header {
-      @include absolute-at($top: 0, $right: 0);
-      text-align: right;
-      padding: 15px;
+    .see-ad {
+      @include absolute-at($top: 25px, $right: 20px);
+      background: $primary-color;
+      color: $white;
+      padding: 5px;
     }
 
-    .image {
-      @include column(70%);
-      img {
-        max-height: 347px;
-        max-width: 100%;
-        display: block;
-      }
+    img {
+      max-height: 240px;
+      max-width: 100%;
+      display: block;
+      @include center;
     }
+
+
+    h2 { color: $primary-color; }
+    .type { font-weight: 200; }
 
     .city-and-price {
-      @include column(30%);
-      @include absolute-at($bottom: 0, $right: 0);
-      text-align: right;
-      padding: 15px;
-
-      .city { font-weight: 200; }
-    }
-
-    .type {
-      color: $light-gray;
-      font-weight: 200;
+      @extend %clear-after;
+      .city, .price { @include column(50%); }
+      .price { text-align: right; }
+      .city {
+        margin-top: 10px;
+        font-style: italic;
+      }
     }
   }
 
